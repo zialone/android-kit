@@ -1,9 +1,14 @@
 
-- 代码规范 & commit msg规范
+- 代码规范 & commit msg规范  
+[readme](./DEVELOPERS.md)
 
-- version code v1R00S00I000 & 渠道包名 & app name
+- version code v1R00S00I000 & 包名 & app name
 
-- signingConfigs 生产配置权限
+- signingConfigs 生产配置安全
+
+gradlew assembleRelease -Pandroid.injected.signing.store.file=$KEYFILE -Pandroid.injected.signing.store.password=$STORE_PASSWORD -Pandroid.injected.signing.key.alias=$KEY_ALIAS -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+
+$KEYFILE 使用绝对路径
 
 - grade aar&project依赖模式动态切换
 
@@ -13,9 +18,7 @@
 
 - 混淆文件模块化 & manifestPlaceholders模块化(三方sdk key)
 
-- 启动时间：application初始化优化（三方sdk）* splash优化
-
-- 模块独立初始化（代码注入）
+- 模块独立初始化（代码注入）,启动时间：application初始化优化（三方sdk）* splash优化
 
 - res管理 & 换肤
 
