@@ -1,41 +1,38 @@
 
-- 代码规范 & commit msg规范  
-[readme](./DEVELOPERS.md)
+- [x] 代码规范 & commit msg规范
+    [readme](./DEVELOPERS.md)
 
-- version code v1R00S00I000 & 包名 & app name
+- [x] version code v1R00S00I00 & 包名 & app name
 
-- signingConfigs 生产配置安全
+- [x] signingConfigs 生产keystore配置安全
+    [readme](https://juejin.im/post/6855939988715438088)
 
-gradlew assembleRelease -Pandroid.injected.signing.store.file=$KEYFILE -Pandroid.injected.signing.store.password=$STORE_PASSWORD -Pandroid.injected.signing.key.alias=$KEY_ALIAS -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+- [ ] gradle aar&project依赖模式动态切换
 
-$KEYFILE 使用绝对路径
+- [ ] 环境切换（api、三方key）
 
-- grade aar&project依赖模式动态切换
+- [ ] 工程分包（host + app(p + api) + lib + vendor）
 
-- 环境切换（api、三方key）
+- [ ] 混淆文件模块化 & manifestPlaceholders模块化(三方sdk key)
 
-- 工程分包（host + app(p + api) + lib + vendor）
+- [ ] 模块独立初始化（代码注入）,启动时间：application初始化优化（三方sdk）* splash优化
 
-- 混淆文件模块化 & manifestPlaceholders模块化(三方sdk key)
+- [ ] res管理 & 换肤
 
-- 模块独立初始化（代码注入）,启动时间：application初始化优化（三方sdk）* splash优化
+- [ ] 数据库加密 & 数据库版本管理（跨多版本升级）
 
-- res管理 & 换肤
+- [ ] 用户数据存储分区 & 目录结构划分 & 权限受限降级处理
 
-- 数据库加密 & 数据库版本管理（跨多版本升级）
+- [ ] 灰度、abtest（业务点、版本、）& app全局配置数据（api、缓存、更新策略）
 
-- 用户数据存储分区 & 目录结构划分 & 权限受限降级处理
+- [ ] 页面route url & 统一外部入口（h5、推送通知栏、三方应用跳转）
 
-- 灰度、abtest（业务点、版本、）& app全局配置数据（api、缓存、更新策略）
+- [ ] js bridge  & flutter MethodCallHandler： 对外统一&方法版本控制&权限管理
 
-- 页面route url & 统一外部入口（h5、推送通知栏、三方应用跳转）
+- [ ] 公共组件（toast、dialog、theme、） & 工具类
 
-- js bridge  & flutter MethodCallHandler： 对外统一&方法版本控制&权限管理
+- [ ] 设计一个登录模块
 
-- 公共组件（toast、dialog、theme、） & 工具类
+- [ ] 设计一个RouterPortal
 
-- 设计一个登录模块
-
-- 设计一个RouterPortal
-
-- 设计一个EventDispatcher EventHandler
+- [ ] 设计一个EventDispatcher EventHandler
