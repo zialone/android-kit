@@ -1,11 +1,9 @@
 
-- [x] 代码规范 & commit msg规范
-    [readme](./DEVELOPERS.md)
+- [x] 代码规范 & commit msg规范 [readme](./DEVELOPERS.md)
 
 - [x] version code v1R00S00I00 & 包名 & app name
 
-- [x] signingConfigs 生产keystore配置安全
-    [readme](https://juejin.im/post/6855939988715438088)
+- [x] signingConfigs 生产keystore配置安全 [readme](https://juejin.im/post/6855939988715438088)
 
 - [ ] gradle aar&project依赖模式动态切换
 
