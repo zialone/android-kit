@@ -5,8 +5,8 @@ buildscript {
     repositories deps.gradleConfig.repositories
 
     dependencies {
-        classpath deps.build.androidPlugin
-        classpath deps.build.gradlePlugin
+        classpath deps.builds.androidPlugin
+        classpath deps.builds.gradlePlugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

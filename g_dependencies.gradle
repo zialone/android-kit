@@ -1,11 +1,10 @@
 def versions = [
         kotlin          : "1.3.72",
         support         : "1.1.0",
-        greendaoVersion : '3.2.2',
         lifecycleVersion: '2.1.0'
 ]
 
-def build = [
+def builds = [
         buildToolsVersion: "29.0.3",
         minSdkVersion    : 21,
         compileSdkVersion: 29,
@@ -14,20 +13,79 @@ def build = [
         gradlePlugin     : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
 ]
 
+def android = [
+        androidxCore       : "androidx.core:core:${versions.support}",
+        appcompat          : "androidx.appcompat:appcompat:${versions.support}",
+        recyclerview       : "androidx.recyclerview:recyclerview:${versions.support}",
+        constraintLayout   : "androidx.constraintlayout:constraintlayout:1.1.3",
+
+        lifecycleCompiler  : "androidx.lifecycle:lifecycle-compiler:${versions.lifecycleVersion}",
+        lifecycleextensions: "androidx.lifecycle:lifecycle-extensions:${versions.lifecycleVersion}",
+
+        coordinatorlayout  : "androidx.coordinatorlayout:coordinatorlayout:1.1.0",
+        material           : 'com.google.android.material:material:1.0.0',
+]
+
+def kotlin = [
+        reflect        : "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}",
+        stdLib         : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
+        androidxKtxCore: "androidx.core:core-ktx:1.3.1",
+]
+
+def vendor = [
+        glide                   : "com.github.bumptech.glide:glide:4.8.0",
+        glideCompiler           : "com.github.bumptech.glide:compiler:4.8.0",
+
+        androidtiffbitmapfactory: "com.github.beyka:androidtiffbitmapfactory:0.9.8.7",
+
+        retrofit                : "com.squareup.retrofit2:retrofit:2.5.0",
+        retrofitAdapter         : "com.squareup.retrofit2:adapter-rxjava2:2.5.0",
+        retrofitLogging         : "com.squareup.okhttp3:logging-interceptor:3.9.0",
+
+        arouter                 : "com.alibaba:arouter-api:1.4.1",
+        arouterCompiler         : "com.alibaba:arouter-compiler:1.2.2",
+
+        xlog                    : "com.tencent.mars:mars-xlog-core:1.0.5",
+
+        greendao                : "org.greenrobot:greendao:3.2.2",
+        greendaoSqlcipher       : 'net.zetetic:android-database-sqlcipher:4.2.0',
+
+        smartRefreshLayout      : 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1',
+
+        photoView               : 'com.github.chrisbanes:PhotoView:2.0.0',
+
+        liveEventBus            : 'com.jeremyliao:live-event-bus:1.5.1',
+
+        rxandroid               : 'io.reactivex.rxjava2:rxandroid:2.0.2',
+        rxjava2                 : 'io.reactivex.rxjava2:rxjava:2.1.12',
+
+        x5webview               : "com.tencent.tbs.tbssdk:sdk:43697",
+
+        gson                    : 'com.google.code.gson:gson:2.8.2',
+]
+
+def tests = [
+        junit   : "junit:junit:4.12",
+        runner  : "androidx.test:runner:1.2.0",
+        espresso: "androidx.test.espresso:espresso-core:3.2.0"
+]
+
+def libs = android + kotlin + vendor + tests
+
 def gradleConfig = [
-        repositories : {
+        repositories      : {
             maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
             maven { url "https://jitpack.io" }
             google()
             jcenter()
         },
-        simpleAndroid: { targetProject ->
-            return {
-                compileSdkVersion deps.build.compileSdkVersion
+        simpleAndroid     : { targetProject ->
+            targetProject.android {
+                compileSdkVersion deps.builds.compileSdkVersion
 
                 defaultConfig {
-                    minSdkVersion deps.build.minSdkVersion
-                    targetSdkVersion deps.build.targetSdkVersion
+                    minSdkVersion deps.builds.minSdkVersion
+                    targetSdkVersion deps.builds.targetSdkVersion
                     versionCode 1
                     versionName "1.0"
 
@@ -81,63 +139,27 @@ def gradleConfig = [
                     }
                 }
             }
+        },
+        simpleDependencies: { targetProject ->
+            targetProject.dependencies {
+                // libs
+                implementation fileTree(dir: "libs", include: ["*.jar"])
+
+                // kotlin
+                implementation deps.libs.stdLib
+                implementation deps.libs.androidxKtxCore
+
+                // test
+                testImplementation deps.libs.junit
+                androidTestImplementation deps.libs.runner
+                androidTestImplementation deps.libs.espresso
+            }
         }
 ]
 
-def android = [
-        reflect            : "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}",
-        stdLib             : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
-
-        constraintLayout   : "androidx.constraintlayout:constraintlayout:1.1.3",
-        androidxCore       : "androidx.core:core:${versions.support}",
-        androidxKtxCore    : "androidx.core:core-ktx:1.3.1",
-        recyclerview       : "androidx.recyclerview:recyclerview:${versions.support}",
-        appcompat          : "androidx.appcompat:appcompat:${versions.support}",
-
-        lifecycleCompiler  : "androidx.lifecycle:lifecycle-compiler:${versions.lifecycleVersion}",
-        lifecycleextensions: "androidx.lifecycle:lifecycle-extensions:${versions.lifecycleVersion}",
-
-        coordinatorlayout  : "androidx.coordinatorlayout:coordinatorlayout:1.1.0",
-        material           : 'com.google.android.material:material:1.0.0',
-]
-
-def test = [
-        junit   : "junit:junit:4.12",
-        runner  : "androidx.test:runner:1.2.0",
-        espresso: "androidx.test.espresso:espresso-core:3.2.0"
-]
-
-def third = [
-        glide                   : "com.github.bumptech.glide:glide:4.8.0",
-        glideCompiler           : "com.github.bumptech.glide:compiler:4.8.0",
-        androidtiffbitmapfactory: "com.github.beyka:androidtiffbitmapfactory:0.9.8.7",
-        retrofit                : "com.squareup.retrofit2:retrofit:2.5.0",
-        retrofitAdapter         : "com.squareup.retrofit2:adapter-rxjava2:2.5.0",
-        retrofitLogging         : "com.squareup.okhttp3:logging-interceptor:3.9.0",
-        arouter                 : "com.alibaba:arouter-api:1.4.1",
-        arouterCompiler         : "com.alibaba:arouter-compiler:1.2.2",
-        xlog                    : "com.tencent.mars:mars-xlog-core:1.0.5",
-        greendao                : "org.greenrobot:greendao:${versions.greendaoVersion}",
-        greendaoSqlcipher       : 'net.zetetic:android-database-sqlcipher:4.2.0',
-
-        smartRefreshLayout      : 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1',
-
-        photoView               : 'com.github.chrisbanes:PhotoView:2.0.0',
-
-        liveEventBus            : 'com.jeremyliao:live-event-bus:1.5.1',
-
-        rxandroid               : 'io.reactivex.rxjava2:rxandroid:2.0.2',
-        rxjava2                 : 'io.reactivex.rxjava2:rxjava:2.1.12',
-
-        x5webview               : "com.tencent.tbs.tbssdk:sdk:43697",
-
-        gson                    : 'com.google.code.gson:gson:2.8.2',
-]
 
 ext.deps = [
-        "build"       : build,
+        "builds"      : builds,
+        "libs"        : libs,
         "gradleConfig": gradleConfig,
-        "android"     : android,
-        "test"        : test,
-        "third"       : third,
 ]

@@ -2,16 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-android deps.gradleConfig.simpleAndroid(project)
+deps.gradleConfig.simpleAndroid(project)
 
 android {
     defaultConfig {
         applicationId "com.hcanyz.android_kit"
 
-        int ver_v = 11
-        int ver_r = 10
-        int ver_s = 02
-        int ver_increment = 33
+        int ver_v = 1
+        int ver_r = 0
+        int ver_s = 0
+        int ver_increment = 0
         //V1R00S00In00 1000000
         versionCode(((ver_v * 100 + ver_r) * 100 + ver_s) * 100 + ver_increment)
         //1.00.00.00
@@ -19,16 +19,10 @@ android {
     }
 }
 
+deps.gradleConfig.simpleDependencies(project)
+
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-
-    implementation deps.android.stdLib
-
-    implementation deps.android.androidxCore
-    implementation deps.android.appcompat
-    implementation deps.android.constraintLayout
-
-    testImplementation deps.test.junit
-    androidTestImplementation deps.test.runner
-    androidTestImplementation deps.test.espresso
+    implementation deps.libs.androidxCore
+    implementation deps.libs.appcompat
+    implementation deps.libs.constraintLayout
 }
