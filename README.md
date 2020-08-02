@@ -1,15 +1,17 @@
+> android-kit 致力于为android关键场景提供解决方案。
+> 知之非艰,行之惟艰。
 
-- [x] 代码规范 & commit msg规范 [readme](./DEVELOPERS.md)
+- [x] 规范（编码、commit msg、命名） [readme](./DEVELOPERS.md)
 
-- [x] version code v1R00S00I00 & 包名 & app name
+- [x] version code(name) v1R00S00I00  & app name [readme](app/build.gradle)
 
 - [x] signingConfigs 生产keystore配置安全 [readme](https://juejin.im/post/6855939988715438088)
 
-- [ ] gradle aar&project依赖模式动态切换
+- [x] 项目分包结构 [readme](./DEVELOPERS.md#项目分包结构)
+
+- [ ] 模块source引入与maven aar引入动态切换 [readme](https://github.com/hcanyz/android-dynamic-module)
 
 - [ ] 环境切换（api、三方key）
-
-- [ ] 工程分包（host + app(p + api) + lib + vendor）
 
 - [ ] 混淆文件模块化 & manifestPlaceholders模块化(三方sdk key)
 

@@ -6,17 +6,40 @@
 
 ## 命名规范
 
-### 工程
+### 关键字
+base：基础
+common：公共
+module：模块
+
+### 项目分包结构
+```（app + module_${business}（api + p_main + p_${feature} + p_base）+ widgets（widget_${name}）+ vendors（vendor_${name}）```
+
 - app
-- app_${name}
-- lib_${name}
-- widget
-  - widget_${name}
-- vendor
-  - vendor_${name}
+- module_${name}
+  - api
+  - p_main
+  - p_feature1
+  - p_feature2
+  - p_base
+- widgets
+  - widget_name1
+  - widget_name2
+- vendors
+  - vendor_name1
+  - vendor_name2
+
+```module_${business} 业务层：api module为对外接口，p_main module 负责聚合p_${feature}，p_${feature}为最小业务单元。p工程又涉及到公共代码下移到p_base问题，需要谨慎对待。```
+
+widgets 组件层：通用组件，如视频播放器、图片预览、文件选择等。
+
+vendors framework层：基础库，如网络请求、base类、glide封装等。
+
+[readme：组件化整体方案](https://github.com/hcanyz/android-dynamic-module)
+
+参考：[微信Android模块化架构重构实践](https://mp.weixin.qq.com/s/mkhCzeoLdev5TyO6DqHEdw) [美团外卖Android平台化架构演进实践](https://tech.meituan.com/2018/03/16/meituan-food-delivery-android-architecture-evolution.html)
 
 ### 资源
-${name}_${business}_${attrs}
+```${business}_${name}_${attrs}```
 
 ## 编码规范
 1. 编码前先思考，复杂方案先团队讨论，编码逻辑保持清晰简单。
