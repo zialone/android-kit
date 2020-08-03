@@ -41,6 +41,14 @@ vendors framework层：基础库，如网络请求、base类、glide封装等。
 ### 资源
 ```${business}_${name}_${attrs}```
 
+### Git TAG & RELEASE
+```
+${version}.${env}
+
+case
+...
+```
+
 ## 编码规范
 1. 编码前先思考，复杂方案先团队讨论，编码逻辑保持清晰简单。
 2. 代码格式工整有序，善用段落。不包含无用代码、历史代码。

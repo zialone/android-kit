@@ -154,7 +154,15 @@ def gradleConfig = [
                 androidTestImplementation deps.libs.runner
                 androidTestImplementation deps.libs.espresso
             }
-        }
+        },
+        simpleModule      : { targetProject, isApplication = false ->
+            targetProject.apply plugin: isApplication ? 'com.android.application' : 'com.android.library'
+            targetProject.apply plugin: 'kotlin-android'
+            targetProject.apply plugin: 'kotlin-android-extensions'
+
+            deps.gradleConfig.simpleAndroid(targetProject)
+            deps.gradleConfig.simpleDependencies(targetProject)
+        },
 ]
 
 

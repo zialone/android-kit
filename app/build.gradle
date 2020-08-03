@@ -1,8 +1,4 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-
-deps.gradleConfig.simpleAndroid(project)
+deps.gradleConfig.simpleModule(project, true)
 
 android {
     defaultConfig {
@@ -19,10 +15,7 @@ android {
     }
 }
 
-deps.gradleConfig.simpleDependencies(project)
-
 dependencies {
-    implementation deps.libs.androidxCore
     implementation deps.libs.appcompat
     implementation deps.libs.constraintLayout
 }

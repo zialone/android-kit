@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    apply from: "g_dependencies.gradle"
+    apply from: "z_gradle/dependencies.gradle"
 
     repositories deps.gradleConfig.repositories
 
