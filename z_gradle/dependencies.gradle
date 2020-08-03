@@ -66,7 +66,7 @@ def vendor = [
 
 def tests = [
         junit   : "junit:junit:4.12",
-        runner  : "androidx.test:runner:1.2.0",
+        runner  : "androidx.test.ext:junit:1.1.1",
         espresso: "androidx.test.espresso:espresso-core:3.2.0"
 ]
 
@@ -115,8 +115,8 @@ def gradleConfig = [
                 }
 
                 if (targetProject.getPlugins().findPlugin("com.android.library")) {
-                    packageBuildConfig(false)
-                } else {
+                    // packageBuildConfig(false)
+                } else if (targetProject.getPlugins().findPlugin("com.android.application")) {
                     //如果存在签名文件，则加入签名文件处理
                     File file = new File(targetProject.getProjectDir(), "../z_raw/dev.jks")
                     if (file.exists()) {
@@ -140,7 +140,7 @@ def gradleConfig = [
                 }
             }
         },
-        simpleDependencies: { targetProject ->
+        simpleDependencies: { targetProject, includeTest = true ->
             targetProject.dependencies {
                 // libs
                 implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -150,18 +150,20 @@ def gradleConfig = [
                 implementation deps.libs.androidxKtxCore
 
                 // test
-                testImplementation deps.libs.junit
-                androidTestImplementation deps.libs.runner
-                androidTestImplementation deps.libs.espresso
+                if (includeTest) {
+                    testImplementation deps.libs.junit
+                    androidTestImplementation deps.libs.runner
+                    androidTestImplementation deps.libs.espresso
+                }
             }
         },
-        simpleModule      : { targetProject, isApplication = false ->
+        simpleModule      : { targetProject, isApplication = false, includeTest = true ->
             targetProject.apply plugin: isApplication ? 'com.android.application' : 'com.android.library'
             targetProject.apply plugin: 'kotlin-android'
             targetProject.apply plugin: 'kotlin-android-extensions'
 
             deps.gradleConfig.simpleAndroid(targetProject)
-            deps.gradleConfig.simpleDependencies(targetProject)
+            deps.gradleConfig.simpleDependencies(targetProject, includeTest)
         },
 ]
 

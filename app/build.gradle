@@ -17,5 +17,6 @@ android {
 
 dependencies {
     implementation deps.libs.appcompat
+
     implementation deps.libs.constraintLayout
 }
