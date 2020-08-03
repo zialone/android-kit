@@ -1,4 +1,4 @@
-> android-kit 致力于为android关键场景提供解决方案。
+> android-kit 致力于为android关键场景提供解决方案。  
 > 知之非艰,行之惟艰。
 
 - [x] 规范（编码、commit msg、命名） [readme](./DEVELOPERS.md)
