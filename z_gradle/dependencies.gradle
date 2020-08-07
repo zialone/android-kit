@@ -76,13 +76,13 @@ def tests = [
 def libs = android + kotlin + vendor + tests
 
 def gradleConfig = [
-        repositories      : {
+        repositories         : {
             maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
             maven { url "https://jitpack.io" }
             google()
             jcenter()
         },
-        simpleAndroid     : { targetProject ->
+        simpleAndroid        : { targetProject ->
             targetProject.android {
                 compileSdkVersion deps.builds.compileSdkVersion
 
@@ -90,7 +90,7 @@ def gradleConfig = [
                     minSdkVersion deps.builds.minSdkVersion
                     targetSdkVersion deps.builds.targetSdkVersion
                     versionCode 1
-                    versionName "1.0"
+                    versionName "1.0.0"
 
                     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -143,7 +143,7 @@ def gradleConfig = [
                 }
             }
         },
-        simpleDependencies: { targetProject, params = [] ->
+        simpleDependencies   : { targetProject, params = [] ->
             params = [includeTest: true] + params
 
             targetProject.dependencies {
@@ -162,7 +162,7 @@ def gradleConfig = [
                 }
             }
         },
-        simpleModule      : { targetProject, params = [] ->
+        simpleModule         : { targetProject, params = [] ->
             params = [isApplication: false, includeTest: true] + params
 
             targetProject.apply plugin: params.isApplication ? 'com.android.application' : 'com.android.library'
@@ -172,7 +172,7 @@ def gradleConfig = [
             deps.gradleConfig.simpleAndroid(targetProject)
             deps.gradleConfig.simpleDependencies(targetProject, [includeTest: params.includeTest])
         },
-        simpleWHRouter    : { targetProject, params = [] ->
+        simpleWHRouter       : { targetProject, params = [] ->
             params = [includeCompiler: true, includeLib: true] + params
 
             if (targetProject.getPlugins().findPlugin("com.android.application")) {
@@ -192,6 +192,9 @@ def gradleConfig = [
                     implementation deps.libs.wmRouter
                 }
             }
+        },
+        simpleMavenPublishing: { targetProject ->
+            targetProject.apply from: "$rootDir/z_gradle/maven_publishing.gradle"
         }
 ]
 

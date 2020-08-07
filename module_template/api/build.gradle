@@ -1,3 +1,5 @@
 deps.gradleConfig.simpleModule(project, [isApplication: false, includeTest: false])
 
 deps.gradleConfig.simpleWHRouter(project, [includeCompiler: false])
+
+deps.gradleConfig.simpleMavenPublishing(project)

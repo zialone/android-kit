@@ -1,0 +1,40 @@
+apply plugin: 'maven-publish'
+
+def maven_groupId = _findProperty(project, "MAVEN_GROUPID") ?: "com.github.hcanyz"
+def maven_artifactId = _findProperty(project, "MAVEN_ARTIFACTID") ?: project.name
+def maven_version = _findProperty(project, "MAVEN_VERSION") ?: project.android.defaultConfig.versionName
+
+def SNAPSHOT_REPOSITORY_URL = "$rootDir/repo/snapshot"
+def RELEASE_REPOSITORY_URL = "$rootDir/repo/release"
+
+static def _findProperty(project, propertyName) {
+    try {
+        return project.ext[propertyName]
+    } catch (ignored) {
+    }
+    return null
+}
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+publishing {
+    publications {
+        Production(MavenPublication) {
+            groupId = maven_groupId
+            artifactId = maven_artifactId
+            version = maven_version
+            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
+            artifact generateSourcesJar
+        }
+    }
+    repositories {
+        maven {
+            // name = Maven
+            url = maven_version.endsWith('SNAPSHOT') ? SNAPSHOT_REPOSITORY_URL : RELEASE_REPOSITORY_URL
+        }
+    }
+}
+
