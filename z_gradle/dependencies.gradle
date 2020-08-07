@@ -143,7 +143,9 @@ def gradleConfig = [
                 }
             }
         },
-        simpleDependencies: { targetProject, includeTest = true ->
+        simpleDependencies: { targetProject, params = [] ->
+            params = [includeTest: true] + params
+
             targetProject.dependencies {
                 // libs
                 implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -153,27 +155,31 @@ def gradleConfig = [
                 implementation deps.libs.androidxKtxCore
 
                 // test
-                if (includeTest) {
+                if (params.includeTest) {
                     testImplementation deps.libs.junit
                     androidTestImplementation deps.libs.runner
                     androidTestImplementation deps.libs.espresso
                 }
             }
         },
-        simpleModule      : { targetProject, isApplication = false, includeTest = true ->
-            targetProject.apply plugin: isApplication ? 'com.android.application' : 'com.android.library'
+        simpleModule      : { targetProject, params = [] ->
+            params = [isApplication: false, includeTest: true] + params
+
+            targetProject.apply plugin: params.isApplication ? 'com.android.application' : 'com.android.library'
             targetProject.apply plugin: 'kotlin-android'
             targetProject.apply plugin: 'kotlin-android-extensions'
 
             deps.gradleConfig.simpleAndroid(targetProject)
-            deps.gradleConfig.simpleDependencies(targetProject, includeTest)
+            deps.gradleConfig.simpleDependencies(targetProject, [includeTest: params.includeTest])
         },
-        simpleWHRouter    : { targetProject, includeCompiler = true, includeLib = true ->
+        simpleWHRouter    : { targetProject, params = [] ->
+            params = [includeCompiler: true, includeLib: true] + params
+
             if (targetProject.getPlugins().findPlugin("com.android.application")) {
                 targetProject.apply plugin: 'WMRouter'
             }
 
-            if (includeCompiler) {
+            if (params.includeCompiler) {
                 targetProject.apply plugin: 'kotlin-kapt'
 
                 targetProject.dependencies {
@@ -181,7 +187,7 @@ def gradleConfig = [
                 }
             }
 
-            if (includeLib) {
+            if (params.includeLib) {
                 targetProject.dependencies {
                     implementation deps.libs.wmRouter
                 }

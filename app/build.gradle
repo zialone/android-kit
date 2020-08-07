@@ -1,6 +1,6 @@
-deps.gradleConfig.simpleModule(project, true)
+deps.gradleConfig.simpleModule(project, [isApplication: true])
 
-deps.gradleConfig.simpleWHRouter(project, false)
+deps.gradleConfig.simpleWHRouter(project, [includeCompiler: false, includeLib: false])
 
 android {
     defaultConfig {
