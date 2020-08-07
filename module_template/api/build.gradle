@@ -1,1 +1,3 @@
 deps.gradleConfig.simpleModule(project, false, false)
+
+deps.gradleConfig.simpleWHRouter(project, false, true)

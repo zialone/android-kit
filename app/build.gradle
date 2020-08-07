@@ -1,5 +1,7 @@
 deps.gradleConfig.simpleModule(project, true)
 
+deps.gradleConfig.simpleWHRouter(project, false)
+
 android {
     defaultConfig {
         applicationId "com.hcanyz.android_kit"
@@ -17,6 +19,8 @@ android {
 
 dependencies {
     implementation deps.libs.appcompat
-
     implementation deps.libs.constraintLayout
+
+    implementation "com.github.hcanyz.android_kit:module_template"
+    implementation "com.github.hcanyz.android_kit:module_template_api"
 }

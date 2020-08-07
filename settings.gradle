@@ -1,7 +1,9 @@
+apply from: "z_gradle/dynamic_include_module.gradle"
+
 include ':app'
 rootProject.name = "android-kit"
 
-include ':module_template'
-project(':module_template').projectDir = file('module_template/p_main')
-include ':module_template_api'
-project(':module_template_api').projectDir = file('module_template/api')
+includeDynamic(gradle, settings, [
+        [module: "com.github.hcanyz.android_kit:module_template", project: ":module_template", localPath: "module_template/p_main", mode: "module2project"],
+        [module: "com.github.hcanyz.android_kit:module_template_api", project: ":module_template_api", localPath: "module_template/api", mode: "module2project"],
+])

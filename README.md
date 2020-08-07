@@ -11,11 +11,11 @@
 
 - [ ] 模块source引入与maven aar引入动态切换 [readme](https://github.com/hcanyz/android-dynamic-module)
 
-- [ ] 环境切换（api、三方key）
+- [ ] 模块独立初始化，性能监听（首屏时间、）
 
 - [ ] 混淆文件模块化 & manifestPlaceholders模块化(三方sdk key)
 
-- [ ] 模块独立初始化（代码注入）,启动时间：application初始化优化（三方sdk）* splash优化
+- [ ] 环境切换（api、三方key）
 
 - [ ] res管理 & 换肤
 

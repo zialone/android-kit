@@ -1,0 +1,70 @@
+static void includeDynamic(Gradle gradle, Settings settings, List moduleInfoList) {
+    moduleInfoList.forEach({ info ->
+        String project = info["project"]
+        String localPath = info["localPath"]
+        String mode = info["mode"]
+
+        if (mode == "module2project") {
+            settings.include(project)
+            settings.project(project).projectDir = new File(localPath)
+        }
+    })
+    gradle.allprojects { prj ->
+        prj.configurations.all(new Action<Configuration>() {
+            @Override
+            void execute(Configuration config) {
+                config.resolutionStrategy.dependencySubstitution(new Action<DependencySubstitutions>() {
+                    @Override
+                    void execute(DependencySubstitutions dependencySubstitutions) {
+                        moduleInfoList.forEach { info ->
+                            String module = info["module"]
+                            String project = info["project"]
+                            String mode = info["mode"]
+
+                            ComponentSelector moduleS = dependencySubstitutions.module(module)
+                            ComponentSelector projectS = dependencySubstitutions.project(project)
+                            if (mode == "module2project") {
+                                dependencySubstitutions.substitute(moduleS).with(projectS)
+                            } else if (mode == "project2module") {
+                                dependencySubstitutions.substitute(projectS).with(moduleS)
+                            }
+                        }
+                    }
+                })
+            }
+        })
+    }
+}
+
+static void invalidChangingModuleCache(Gradle gradle) {
+    gradle.allprojects { prj ->
+        prj.configurations.all(new Action<Configuration>() {
+            @Override
+            void execute(Configuration config) {
+                config.resolutionStrategy {
+                    cacheChangingModulesFor 0, 'seconds'
+                }
+            }
+        })
+    }
+}
+
+static def findProperty(String file = 'local.properties', String key, def defValue) {
+    try {
+        def localProperties = new Properties()
+        def inputStream = new File(file).newDataInputStream()
+        localProperties.load(inputStream)
+
+        def result = localProperties.getProperty(key)
+
+        return result != null ? result : defValue
+    } catch (Exception ignored) {
+        return defValue
+    }
+}
+
+ext {
+    includeDynamic = this.&includeDynamic
+    invalidChangingModuleCache = this.&invalidChangingModuleCache
+    findProperty = this.&findProperty
+}

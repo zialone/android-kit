@@ -1,1 +1,7 @@
 deps.gradleConfig.simpleModule(project)
+
+deps.gradleConfig.simpleWHRouter(project)
+
+dependencies {
+    implementation "com.github.hcanyz.android_kit:module_template_api"
+}

@@ -9,8 +9,6 @@ def builds = [
         minSdkVersion    : 21,
         compileSdkVersion: 29,
         targetSdkVersion : 29,
-        androidPlugin    : "com.android.tools.build:gradle:4.0.1",
-        gradlePlugin     : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
 ]
 
 def android = [
@@ -33,6 +31,9 @@ def kotlin = [
 ]
 
 def vendor = [
+        androidPlugin           : "com.android.tools.build:gradle:4.0.1",
+        kotlinPlugin            : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+
         glide                   : "com.github.bumptech.glide:glide:4.8.0",
         glideCompiler           : "com.github.bumptech.glide:compiler:4.8.0",
 
@@ -41,9 +42,6 @@ def vendor = [
         retrofit                : "com.squareup.retrofit2:retrofit:2.5.0",
         retrofitAdapter         : "com.squareup.retrofit2:adapter-rxjava2:2.5.0",
         retrofitLogging         : "com.squareup.okhttp3:logging-interceptor:3.9.0",
-
-        arouter                 : "com.alibaba:arouter-api:1.4.1",
-        arouterCompiler         : "com.alibaba:arouter-compiler:1.2.2",
 
         xlog                    : "com.tencent.mars:mars-xlog-core:1.0.5",
 
@@ -62,6 +60,11 @@ def vendor = [
         x5webview               : "com.tencent.tbs.tbssdk:sdk:43697",
 
         gson                    : 'com.google.code.gson:gson:2.8.2',
+
+        // TODO 这个版本可以升级，一些优化方法没有release
+        wmRouter                : 'com.sankuai.waimai.router:router:1.2.0',
+        wmRouterCompiler        : 'com.sankuai.waimai.router:compiler:1.2.0',
+        wmRouterPlugin          : 'com.sankuai.waimai.router:plugin:1.2.0'
 ]
 
 def tests = [
@@ -165,6 +168,25 @@ def gradleConfig = [
             deps.gradleConfig.simpleAndroid(targetProject)
             deps.gradleConfig.simpleDependencies(targetProject, includeTest)
         },
+        simpleWHRouter    : { targetProject, includeCompiler = true, includeLib = true ->
+            if (targetProject.getPlugins().findPlugin("com.android.application")) {
+                targetProject.apply plugin: 'WMRouter'
+            }
+
+            if (includeCompiler) {
+                targetProject.apply plugin: 'kotlin-kapt'
+
+                targetProject.dependencies {
+                    kapt deps.libs.wmRouterCompiler
+                }
+            }
+
+            if (includeLib) {
+                targetProject.dependencies {
+                    implementation deps.libs.wmRouter
+                }
+            }
+        }
 ]
 
 
