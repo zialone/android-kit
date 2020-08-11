@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.Headline" parent="TextAppearance.AppCompat">
+
+    </style>
+
+    <style name="TextAppearance.Subtitle" parent="TextAppearance.AppCompat">
+
+    </style>
+
+    <style name="TextAppearance.Body" parent="TextAppearance.AppCompat">
+
+    </style>
+
+    <style name="TextAppearance.Caption" parent="TextAppearance.AppCompat">
+
+    </style>
+
+    <style name="TextAppearance.Button" parent="TextAppearance.AppCompat">
+
+    </style>
+
+    <style name="ShapeAppearance.Rectangle" parent="">
+
+    </style>
+
+    <style name="ShapeAppearance.RoundRectangle" parent="">
+
+    </style>
+</resources>

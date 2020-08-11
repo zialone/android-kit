@@ -20,8 +20,9 @@
 - [ ] res管理 & 换肤
     采用官方Theme方案，切换主题时重启所有activity。
     参考：
+    [总结&翻译](https://juejin.im/post/6844904200673968141)
     [material](https://material.io/design/color/the-color-system.html#color-theme-creation)
-    [styling](https://medium.com/androiddevelopers/android-styling-themes-vs-styles-ebe05f917578) [翻译版](https://juejin.im/post/6844904200673968141)
+    [styling](https://medium.com/androiddevelopers/android-styling-themes-vs-styles-ebe05f917578)
     [activity reCreate过渡](https://github.com/iKirby/ithomereader/blob/1f1b2ceac8c70305b37b24f13797af48e0e146d4/app/src/main/java/me/ikirby/ithomereader/ui/activity/ThemeSwitchTransitionActivity.kt)
 
 - [ ] 数据库加密 & 数据库版本管理（跨多版本升级）
