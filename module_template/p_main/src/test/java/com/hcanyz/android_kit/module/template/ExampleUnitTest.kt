@@ -1,4 +1,4 @@
-package com.hcanyz.android_kit.template
+package com.hcanyz.android_kit.module.template
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

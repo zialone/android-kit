@@ -1,4 +1,4 @@
-deps.gradleConfig.simpleModule(project, [isApplication: false, includeTest: false])
+deps.gradleConfig.simpleModule(project, [includeTest: false])
 
 deps.gradleConfig.simpleWHRouter(project, [includeCompiler: false])
 
