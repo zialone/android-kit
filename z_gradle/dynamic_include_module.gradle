@@ -4,7 +4,7 @@ static void includeDynamic(Gradle gradle, Settings settings, List moduleInfoList
         String localPath = info["localPath"]
         String mode = info["mode"]
 
-        if (mode == "module2project") {
+        if (mode == "module2project" || mode == "project") {
             settings.include(project)
             settings.project(project).projectDir = new File(localPath)
         }
