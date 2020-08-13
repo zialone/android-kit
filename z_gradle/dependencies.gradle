@@ -22,6 +22,8 @@ def android = [
 
         coordinatorlayout  : "androidx.coordinatorlayout:coordinatorlayout:1.1.0",
         material           : 'com.google.android.material:material:1.0.0',
+
+        startupRuntime     : 'androidx.startup:startup-runtime:1.0.0-alpha02'
 ]
 
 def kotlin = [
@@ -43,7 +45,7 @@ def vendor = [
         retrofitAdapter         : "com.squareup.retrofit2:adapter-rxjava2:2.5.0",
         retrofitLogging         : "com.squareup.okhttp3:logging-interceptor:3.9.0",
 
-        xlog                    : "com.tencent.mars:mars-xlog-core:1.0.5",
+        xlog                    : "com.tencent.mars:mars-xlog:1.2.4",
 
         greendao                : "org.greenrobot:greendao:3.2.2",
         greendaoSqlcipher       : 'net.zetetic:android-database-sqlcipher:4.2.0',
@@ -64,7 +66,7 @@ def vendor = [
         // TODO 这个版本可以升级，一些优化方法没有release
         wmRouter                : 'com.sankuai.waimai.router:router:1.2.0',
         wmRouterCompiler        : 'com.sankuai.waimai.router:compiler:1.2.0',
-        wmRouterPlugin          : 'com.sankuai.waimai.router:plugin:1.2.0'
+        wmRouterPlugin          : 'com.sankuai.waimai.router:plugin:1.2.0',
 ]
 
 def tests = [
@@ -135,6 +137,15 @@ def gradleConfig = [
                         buildTypes {
                             debug {
                                 signingConfig signingConfigs.dev
+                            }
+
+                            release {
+                                signingConfig signingConfigs.dev
+
+                                // debuggable true
+                                minifyEnabled true
+                                shrinkResources true
+                                zipAlignEnabled true
                             }
                         }
                     } else {

@@ -4,7 +4,14 @@ include ':app'
 rootProject.name = "android-kit"
 
 includeDynamic(gradle, settings, [
-        [module: "com.github.hcanyz.android_kit:module_template", project: ":module_template", localPath: "module_template/p_main", mode: "module2project"],
-        [module: "com.github.hcanyz.android_kit:module_template_api", project: ":module_template_api", localPath: "module_template/api", mode: "module2project"],
-        [module: "com.github.hcanyz.android_kit:widget_res", project: ":widget_res", localPath: "widgets/widget_res", mode: "module2project"],
+        [module   : "com.github.hcanyz.android_kit:module_template", project: ":module_template",
+         localPath: "module_template/p_main", mode: "module2project"],
+        [module   : "com.github.hcanyz.android_kit:module_template_api", project: ":module_template_api",
+         localPath: "module_template/api", mode: "module2project"],
+
+        [module   : "com.github.hcanyz.android_kit:vendor_log", project: ":vendor_log",
+         localPath: "vendors/vendor_log", mode: "module2project"],
+
+        [module   : "com.github.hcanyz.android_kit:widget_res", project: ":widget_res",
+         localPath: "widgets/widget_res", mode: "module2project"],
 ])

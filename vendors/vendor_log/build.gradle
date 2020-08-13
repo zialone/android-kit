@@ -1,0 +1,8 @@
+deps.gradleConfig.simpleModule(project, [includeTest: false])
+
+deps.gradleConfig.simpleMavenPublishing(project)
+
+dependencies {
+    implementation deps.libs.startupRuntime
+    implementation deps.libs.xlog
+}
