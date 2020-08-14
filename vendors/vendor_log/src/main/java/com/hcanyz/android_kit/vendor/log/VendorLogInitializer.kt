@@ -4,40 +4,57 @@ import android.app.ActivityManager
 import android.content.Context
 import android.os.Process
 import androidx.startup.Initializer
+import com.hcanyz.android_kit.vendor.config.IZConfig
+import com.hcanyz.android_kit.vendor.config.VendorConfigInitializer
 import com.tencent.mars.xlog.Log
 import com.tencent.mars.xlog.Xlog
 
 class VendorLogInitializer : Initializer<Unit> {
 
-    override fun create(context: Context) {
-        android.util.Log.i("VendorLogInitializer", "hello,world!")
+    companion object {
+        private const val TAG = "VendorLogInitializer"
+    }
 
-        val logPath = context.filesDir.absolutePath + "/log"
+    override fun create(context: Context) {
+        val izConfig = IZConfig.getInstance(context)
+
+        val subPath = "/zlog${izConfig.envMark()
+            .let { return@let if (it.isBlank()) "" else "-${it}" }}"
+
+        val logPath = context.filesDir.absolutePath + subPath
 
         // this is necessary, or may crash for SIGBUS
-        val cachePath = context.cacheDir.absolutePath + "/log"
+        val cachePath = context.cacheDir.absolutePath + subPath
 
+        val canLog = izConfig.canLog
         Xlog.open(
             true,
-            if (BuildConfig.DEBUG) Xlog.LEVEL_VERBOSE else Xlog.LEVEL_INFO,
+            if (canLog) Xlog.LEVEL_VERBOSE else Xlog.LEVEL_INFO,
             Xlog.AppednerModeAsync,
             cachePath,
             logPath,
-            "${getProcessName(context) ?: "main"}-",
+            getProcessName(context) ?: "main",
             ""
         )
-        Xlog.setConsoleLogOpen(BuildConfig.DEBUG)
+        Xlog.setConsoleLogOpen(canLog)
+
+        izConfig.canLogLiveData().observeForever {
+            ZLog.v(TAG, "change log switch $it")
+
+            Xlog.setLogLevel(if (it) Xlog.LEVEL_VERBOSE else Xlog.LEVEL_INFO)
+            Xlog.setConsoleLogOpen(it)
+        }
 
         Log.setLogImp(Xlog())
 
-        Log.v("VendorLogInitializer", "init success")
+        ZLog.v(TAG, "init success,canLog:$canLog")
 
         // Log.appenderClose()
         return
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {
-        return emptyList()
+        return arrayListOf(VendorConfigInitializer::class.java)
     }
 
     private fun getProcessName(context: Context): String? {

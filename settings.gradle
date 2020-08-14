@@ -11,6 +11,8 @@ includeDynamic(gradle, settings, [
 
         [module   : "com.github.hcanyz.android_kit:vendor_log", project: ":vendor_log",
          localPath: "vendors/vendor_log", mode: "module2project"],
+        [module   : "com.github.hcanyz.android_kit:vendor_config", project: ":vendor_config",
+         localPath: "vendors/vendor_config", mode: "module2project"],
 
         [module   : "com.github.hcanyz.android_kit:widget_res", project: ":widget_res",
          localPath: "widgets/widget_res", mode: "module2project"],

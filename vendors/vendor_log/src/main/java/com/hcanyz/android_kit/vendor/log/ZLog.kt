@@ -2,6 +2,12 @@ package com.hcanyz.android_kit.vendor.log
 
 import com.tencent.mars.xlog.Log
 
+/**
+ * 日志记录原则:
+ * 1. 鉴权数据不能入库 level>=LEVEL_INFO
+ * 2. 隐私数据不能入库 level>=LEVEL_INFO
+ * 3. 无用日志不能入库 level>=LEVEL_INFO
+ */
 class ZLog {
     companion object {
         private val timeMap by lazy { hashMapOf<String, Long>() }
@@ -42,6 +48,10 @@ class ZLog {
 
         fun printErrStackTrace(tag: String, tr: Throwable?, format: String, vararg obj: Any?) {
             Log.printErrStackTrace(tag, tr, format, obj)
+        }
+
+        fun flush(isSync: Boolean) {
+            Log.appenderFlush(isSync)
         }
     }
 }

@@ -25,6 +25,7 @@ dependencies {
     implementation "com.github.hcanyz.android_kit:module_template_api"
 
     implementation "com.github.hcanyz.android_kit:vendor_log"
+    implementation "com.github.hcanyz.android_kit:vendor_config"
 
     implementation "com.github.hcanyz.android_kit:widget_res"
 }

@@ -4,7 +4,6 @@ deps.gradleConfig.simpleMavenPublishing(project)
 
 dependencies {
     implementation deps.libs.startupRuntime
-    implementation deps.libs.xlog
 
-    implementation "com.github.hcanyz.android_kit:vendor_config"
+    api deps.libs.lifecycleLivedata
 }
