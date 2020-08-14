@@ -28,4 +28,6 @@ dependencies {
     implementation "com.github.hcanyz.android_kit:vendor_config"
 
     implementation "com.github.hcanyz.android_kit:widget_res"
+
+    debugImplementation deps.libs.leakcanary
 }

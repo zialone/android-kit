@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 class ThemeSwitchTransitionActivity : AppCompatActivity() {
 
     companion object {
-        var screenshot: Bitmap? = null
+        private var screenshot: Bitmap? = null
 
         @Suppress("DEPRECATION")
         fun transition(activity: AppCompatActivity) {

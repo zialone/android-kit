@@ -69,6 +69,8 @@ def vendor = [
         wmRouter                : 'com.sankuai.waimai.router:router:1.2.0',
         wmRouterCompiler        : 'com.sankuai.waimai.router:compiler:1.2.0',
         wmRouterPlugin          : 'com.sankuai.waimai.router:plugin:1.2.0',
+
+        leakcanary              : 'com.squareup.leakcanary:leakcanary-android:2.4',
 ]
 
 def tests = [
