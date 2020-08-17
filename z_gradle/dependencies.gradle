@@ -1,3 +1,5 @@
+apply from: "z_gradle/dependencies_app.gradle"
+
 def versions = [
         kotlin          : "1.3.72",
         support         : "1.1.0",
@@ -75,13 +77,13 @@ def vendor = [
         autosize                : 'me.jessyan:autosize:1.2.1',
 ]
 
-def tests = [
+def test = [
         junit   : "junit:junit:4.12",
         runner  : "androidx.test.ext:junit:1.1.1",
         espresso: "androidx.test.espresso:espresso-core:3.2.0"
 ]
 
-def libs = android + kotlin + vendor + tests
+def libs = android + kotlin + vendor + test
 
 def gradleConfig = [
         repositories         : {
@@ -98,7 +100,7 @@ def gradleConfig = [
                     minSdkVersion deps.builds.minSdkVersion
                     targetSdkVersion deps.builds.targetSdkVersion
                     versionCode 1
-                    versionName "1.0.0"
+                    versionName depsApp.findVersionNameByModuleName(targetProject.getName()) ?: "1.0.0.0-notfound"
 
                     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -197,7 +199,9 @@ def gradleConfig = [
             }
 
             if (params.includeCompiler) {
-                targetProject.apply plugin: 'kotlin-kapt'
+                if (!targetProject.getPlugins().findPlugin("kotlin-kapt")) {
+                    targetProject.apply plugin: 'kotlin-kapt'
+                }
 
                 targetProject.dependencies {
                     kapt deps.libs.wmRouterCompiler

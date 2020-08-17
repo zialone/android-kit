@@ -1,0 +1,41 @@
+static def version(module, version = "1.0.0.0-SNAPSHOT") {
+    return "$module:$version"
+}
+
+static def moduleVersion(module, version = "1.0.0.0-SNAPSHOT") {
+    return "$module:$version"
+}
+
+def module = [
+        module_template    : moduleVersion("com.github.hcanyz.android_kit:module_template"),
+        module_template_api: moduleVersion("com.github.hcanyz.android_kit:module_template_api"),
+]
+def vendor = [
+        vendor_log   : "com.github.hcanyz.android_kit:vendor_log:1.0.0.0-SNAPSHOT",
+        vendor_config: "com.github.hcanyz.android_kit:vendor_config:1.0.0.0-SNAPSHOT",
+]
+def widget = [
+        widget_res: "com.github.hcanyz.android_kit:widget_res:1.0.0.0-SNAPSHOT",
+]
+
+def tool = [
+        findVersionNameByModuleName: { String moduleName ->
+            String moduleStr = (module + vendor + widget).get(moduleName)
+            if (moduleStr == null) {
+                getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
+                return null
+            }
+            String[] moduleSplit = moduleStr.split(":")
+            // group:artifact:version
+            if (moduleSplit && moduleSplit.length == 3) {
+                getLogger().log(LogLevel.LIFECYCLE, "findVersionName:moduleName:${moduleName},finded:${moduleSplit[2]}")
+                return moduleSplit[2]
+            }
+            getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
+            return null
+        }
+]
+
+def all = module + vendor + widget + tool
+
+ext.depsApp = all

@@ -21,13 +21,13 @@ dependencies {
     implementation deps.libs.appcompat
     implementation deps.libs.constraintLayout
 
-    implementation "com.github.hcanyz.android_kit:module_template"
-    implementation "com.github.hcanyz.android_kit:module_template_api"
+    implementation depsApp.module_template
+    implementation depsApp.module_template_api
 
-    implementation "com.github.hcanyz.android_kit:vendor_log"
-    implementation "com.github.hcanyz.android_kit:vendor_config"
+    implementation depsApp.vendor_log
+    implementation depsApp.vendor_config
 
-    implementation "com.github.hcanyz.android_kit:widget_res"
+    implementation depsApp.widget_res
 
     debugImplementation deps.libs.leakcanary
 }

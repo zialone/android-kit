@@ -5,5 +5,5 @@ deps.gradleConfig.simpleWHRouter(project)
 deps.gradleConfig.simpleMavenPublishing(project)
 
 dependencies {
-    implementation "com.github.hcanyz.android_kit:module_template_api"
+    implementation depsApp.module_template_api
 }
