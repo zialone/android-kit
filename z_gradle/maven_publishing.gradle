@@ -1,6 +1,6 @@
 apply plugin: 'maven-publish'
 
-def maven_groupId = _findProperty(project, "MAVEN_GROUPID") ?: "com.github.hcanyz"
+def maven_groupId = _findProperty(project, "MAVEN_GROUPID") ?: "com.hcanyz.android_kit"
 def maven_artifactId = _findProperty(project, "MAVEN_ARTIFACTID") ?: project.name
 def maven_version = _findProperty(project, "MAVEN_VERSION") ?: project.android.defaultConfig.versionName
 

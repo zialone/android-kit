@@ -1,21 +1,19 @@
-static def version(module, version = "1.0.0.0-SNAPSHOT") {
-    return "$module:$version"
-}
+def defaultGroupId = "com.hcanyz.android_kit"
 
 static def moduleVersion(module, version = "1.0.0.0-SNAPSHOT") {
     return "$module:$version"
 }
 
 def module = [
-        module_template    : moduleVersion("com.github.hcanyz.android_kit:module_template"),
-        module_template_api: moduleVersion("com.github.hcanyz.android_kit:module_template_api"),
+        module_template    : moduleVersion("$defaultGroupId:module_template"),
+        module_template_api: moduleVersion("$defaultGroupId:module_template_api"),
 ]
 def vendor = [
-        vendor_log   : "com.github.hcanyz.android_kit:vendor_log:1.0.0.0-SNAPSHOT",
-        vendor_config: "com.github.hcanyz.android_kit:vendor_config:1.0.0.0-SNAPSHOT",
+        vendor_log   : "$defaultGroupId:vendor_log:1.0.0.0-SNAPSHOT",
+        vendor_config: "$defaultGroupId:vendor_config:1.0.0.0-SNAPSHOT",
 ]
 def widget = [
-        widget_res: "com.github.hcanyz.android_kit:widget_res:1.0.0.0-SNAPSHOT",
+        widget_res: "$defaultGroupId:widget_res:1.0.0.0-SNAPSHOT",
 ]
 
 def tool = [
@@ -39,17 +37,17 @@ def tool = [
 
             invalidChangingModuleCache(gradle)
             includeDynamic(gradle, settings, [
-                    [module   : "com.github.hcanyz.android_kit:module_template", project: ":module_template",
+                    [module   : "$defaultGroupId:module_template", project: ":module_template",
                      localPath: "module_template/p_main", mode: "module2project"],
-                    [module   : "com.github.hcanyz.android_kit:module_template_api", project: ":module_template_api",
+                    [module   : "$defaultGroupId:module_template_api", project: ":module_template_api",
                      localPath: "module_template/api", mode: "module2project"],
 
-                    [module   : "com.github.hcanyz.android_kit:vendor_log", project: ":vendor_log",
+                    [module   : "$defaultGroupId:vendor_log", project: ":vendor_log",
                      localPath: "vendors/vendor_log", mode: "module2project"],
-                    [module   : "com.github.hcanyz.android_kit:vendor_config", project: ":vendor_config",
+                    [module   : "$defaultGroupId:vendor_config", project: ":vendor_config",
                      localPath: "vendors/vendor_config", mode: "module2project"],
 
-                    [module   : "com.github.hcanyz.android_kit:widget_res", project: ":widget_res",
+                    [module   : "$defaultGroupId:widget_res", project: ":widget_res",
                      localPath: "widgets/widget_res", mode: "module2project"],
             ])
         }
