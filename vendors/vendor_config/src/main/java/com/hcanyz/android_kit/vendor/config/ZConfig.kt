@@ -20,6 +20,12 @@ interface IZConfig {
     fun canDebugLiveData(): LiveData<Boolean>
     fun canLogLiveData(): LiveData<Boolean>
 
+    // 编译时间
+    val buildTime: Long
+
+    // git HEAD hash
+    val buildGitHash: String
+
     // 包真实类型
     val buildType: String
 
@@ -58,6 +64,10 @@ internal class ZConfigImpl(canDebug: Boolean, canLog: Boolean) :
     override fun canLogLiveData(): LiveData<Boolean> {
         return canLogLiveData
     }
+
+    override val buildTime: Long = BuildConfig.BUILD_TIME
+
+    override val buildGitHash: String = BuildConfig.BUILD_GIT_HASH
 
     override val buildType: String = BuildConfig.BUILD_TYPE
 
