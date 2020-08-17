@@ -1,10 +1,18 @@
+/**
+ * @param gradle
+ * @param settings
+ * @param moduleInfoList
+ *        [mode] egg.module_template
+ *          module2project: 所有implementation depsApp.module_template依赖都转为project(:module_template)
+ *          module: 不改变
+ */
 static void includeDynamic(Gradle gradle, Settings settings, List moduleInfoList) {
     moduleInfoList.forEach({ info ->
         String project = info["project"]
         String localPath = info["localPath"]
         String mode = info["mode"]
 
-        if (mode == "module2project" || mode == "project") {
+        if (mode == "module2project") {
             settings.include(project)
             settings.project(project).projectDir = new File(localPath)
         }
@@ -22,11 +30,9 @@ static void includeDynamic(Gradle gradle, Settings settings, List moduleInfoList
                             String mode = info["mode"]
 
                             ComponentSelector moduleS = dependencySubstitutions.module(module)
-                            ComponentSelector projectS = dependencySubstitutions.project(project)
                             if (mode == "module2project") {
+                                ComponentSelector projectS = dependencySubstitutions.project(project)
                                 dependencySubstitutions.substitute(moduleS).with(projectS)
-                            } else if (mode == "project2module") {
-                                dependencySubstitutions.substitute(projectS).with(moduleS)
                             }
                         }
                     }

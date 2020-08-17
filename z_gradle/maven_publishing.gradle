@@ -4,9 +4,6 @@ def maven_groupId = _findProperty(project, "MAVEN_GROUPID") ?: "com.hcanyz.andro
 def maven_artifactId = _findProperty(project, "MAVEN_ARTIFACTID") ?: project.name
 def maven_version = _findProperty(project, "MAVEN_VERSION") ?: project.android.defaultConfig.versionName
 
-def SNAPSHOT_REPOSITORY_URL = "$rootDir/repo/snapshot"
-def RELEASE_REPOSITORY_URL = "$rootDir/repo/release"
-
 static def _findProperty(project, propertyName) {
     try {
         return project.ext[propertyName]
@@ -33,7 +30,7 @@ publishing {
     repositories {
         maven {
             // name = Maven
-            url = maven_version.endsWith('SNAPSHOT') ? SNAPSHOT_REPOSITORY_URL : RELEASE_REPOSITORY_URL
+            url = maven_version.endsWith('SNAPSHOT') ? deps.maven.SNAPSHOT_REPOSITORY_URL : deps.maven.RELEASE_REPOSITORY_URL
         }
     }
 }

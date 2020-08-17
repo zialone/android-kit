@@ -35,20 +35,21 @@ def tool = [
         includeDynamic             : { aware, gradle, settings ->
             aware.apply from: "z_gradle/dynamic_include_module.gradle"
 
+            def globalMode = "module2project"
             invalidChangingModuleCache(gradle)
             includeDynamic(gradle, settings, [
                     [module   : "$defaultGroupId:module_template", project: ":module_template",
-                     localPath: "module_template/p_main", mode: "module2project"],
+                     localPath: "module_template/p_main", mode: globalMode ?: "module"],
                     [module   : "$defaultGroupId:module_template_api", project: ":module_template_api",
-                     localPath: "module_template/api", mode: "module2project"],
+                     localPath: "module_template/api", mode: globalMode ?: "module"],
 
                     [module   : "$defaultGroupId:vendor_log", project: ":vendor_log",
-                     localPath: "vendors/vendor_log", mode: "module2project"],
+                     localPath: "vendors/vendor_log", mode: globalMode ?: "module"],
                     [module   : "$defaultGroupId:vendor_config", project: ":vendor_config",
-                     localPath: "vendors/vendor_config", mode: "module2project"],
+                     localPath: "vendors/vendor_config", mode: globalMode ?: "module"],
 
                     [module   : "$defaultGroupId:widget_res", project: ":widget_res",
-                     localPath: "widgets/widget_res", mode: "module2project"],
+                     localPath: "widgets/widget_res", mode: globalMode ?: "module"],
             ])
         }
 ]

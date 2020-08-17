@@ -87,6 +87,8 @@ def libs = android + kotlin + vendor + test
 
 def gradleConfig = [
         repositories         : {
+            maven { url deps.maven.SNAPSHOT_REPOSITORY_URL }
+            maven { url deps.maven.RELEASE_REPOSITORY_URL }
             maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
             maven { url "https://jitpack.io" }
             google()
@@ -219,9 +221,14 @@ def gradleConfig = [
         }
 ]
 
+def maven = [
+        SNAPSHOT_REPOSITORY_URL: "$rootDir/repo/snapshot",
+        RELEASE_REPOSITORY_URL : "$rootDir/repo/release"
+]
 
 ext.deps = [
         "builds"      : builds,
         "libs"        : libs,
         "gradleConfig": gradleConfig,
+        "maven"       : maven
 ]
