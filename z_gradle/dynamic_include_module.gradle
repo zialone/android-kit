@@ -42,35 +42,6 @@ static void includeDynamic(Gradle gradle, Settings settings, List moduleInfoList
     }
 }
 
-static void invalidChangingModuleCache(Gradle gradle) {
-    gradle.allprojects { prj ->
-        prj.configurations.all(new Action<Configuration>() {
-            @Override
-            void execute(Configuration config) {
-                config.resolutionStrategy {
-                    cacheChangingModulesFor 0, 'seconds'
-                }
-            }
-        })
-    }
-}
-
-static def findProperty(String file = 'local.properties', String key, def defValue) {
-    try {
-        def localProperties = new Properties()
-        def inputStream = new File(file).newDataInputStream()
-        localProperties.load(inputStream)
-
-        def result = localProperties.getProperty(key)
-
-        return result != null ? result : defValue
-    } catch (Exception ignored) {
-        return defValue
-    }
-}
-
-ext {
-    includeDynamic = this.&includeDynamic
-    invalidChangingModuleCache = this.&invalidChangingModuleCache
-    findProperty = this.&findProperty
-}
+ext.dynamic = [
+        includeDynamic: this.&includeDynamic
+]

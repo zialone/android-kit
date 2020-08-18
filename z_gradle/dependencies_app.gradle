@@ -1,3 +1,5 @@
+apply from: "$rootDir/z_gradle/tools.gradle"
+
 def defaultGroupId = "com.hcanyz.android_kit"
 
 static def moduleVersion(module, version = "1.0.0.0-SNAPSHOT") {
@@ -36,8 +38,8 @@ def tool = [
             aware.apply from: "z_gradle/dynamic_include_module.gradle"
 
             def globalMode = "module2project"
-            invalidChangingModuleCache(gradle)
-            includeDynamic(gradle, settings, [
+            tools.invalidChangingModuleCache(gradle)
+            dynamic.includeDynamic(gradle, settings, [
                     [module   : "$defaultGroupId:module_template", project: ":module_template",
                      localPath: "module_template/p_main", mode: globalMode ?: "module"],
                     [module   : "$defaultGroupId:module_template_api", project: ":module_template_api",

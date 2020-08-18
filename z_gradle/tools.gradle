@@ -1,0 +1,46 @@
+def gitHeadHash() {
+    try {
+        return "git rev-parse HEAD".execute().text.trim()
+    } catch (e) {
+        getLogger().log(LogLevel.WARN, "find gitHeadHash fail: $e")
+    }
+    return ""
+}
+
+static def buildTime() {
+    return new Date().time
+}
+
+static void invalidChangingModuleCache(Gradle gradle) {
+    gradle.allprojects { prj ->
+        prj.configurations.all(new Action<Configuration>() {
+            @Override
+            void execute(Configuration config) {
+                config.resolutionStrategy {
+                    cacheChangingModulesFor 0, 'seconds'
+                }
+            }
+        })
+    }
+}
+
+static def findProperty(String file = 'local.properties', String key, def defValue) {
+    try {
+        def localProperties = new Properties()
+        def inputStream = new File(file).newDataInputStream()
+        localProperties.load(inputStream)
+
+        def result = localProperties.getProperty(key)
+
+        return result != null ? result : defValue
+    } catch (Exception ignored) {
+        return defValue
+    }
+}
+
+ext.tools = [
+        gitHeadHash               : this.&gitHeadHash,
+        buildTime                 : this.&buildTime,
+        invalidChangingModuleCache: this.&invalidChangingModuleCache,
+        findProperty              : this.&findProperty
+]

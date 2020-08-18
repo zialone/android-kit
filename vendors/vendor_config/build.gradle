@@ -2,28 +2,8 @@ deps.gradleConfig.simpleModule(project, [includeTest: false])
 
 deps.gradleConfig.simpleMavenPublishing(project)
 
-android {
-    defaultConfig {
-        buildConfigField("long", "BUILD_TIME", "${buildTime()}L")
-        buildConfigField("String", "BUILD_GIT_HASH", "\"${gitHeadHash()}\"")
-    }
-}
-
 dependencies {
     implementation deps.libs.startupRuntime
 
     api deps.libs.lifecycleLivedata
-}
-
-private static def buildTime() {
-    return new Date().time
-}
-
-private def gitHeadHash() {
-    try {
-        return "git rev-parse HEAD".execute().text.trim()
-    } catch (e) {
-        getLogger().log(LogLevel.WARN, "find gitHeadHash fail: $e")
-    }
-    return ""
 }

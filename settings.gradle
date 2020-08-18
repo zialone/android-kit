@@ -1,5 +1,5 @@
 include ':app'
 rootProject.name = "android-kit"
 
-apply from: "z_gradle/dependencies_app.gradle"
+apply from: "$rootDir/z_gradle/dependencies_app.gradle"
 depsApp.includeDynamic(this, gradle, settings)
