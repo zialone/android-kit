@@ -85,143 +85,168 @@ def test = [
 
 def libs = android + kotlin + vendor + test
 
-def gradleConfig = [
-        repositories         : {
-            maven { url deps.maven.SNAPSHOT_REPOSITORY_URL }
-            maven { url deps.maven.RELEASE_REPOSITORY_URL }
-            maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-            maven { url "https://jitpack.io" }
-            google()
-            jcenter()
-        },
-        simpleAndroid        : { targetProject ->
-            targetProject.android {
-                compileSdkVersion deps.builds.compileSdkVersion
+def repositories() {
+    return {
+        maven { url deps.maven.SNAPSHOT_REPOSITORY_URL }
+        maven { url deps.maven.RELEASE_REPOSITORY_URL }
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://jitpack.io" }
+        google()
+        jcenter()
+    }
+}
 
-                defaultConfig {
-                    minSdkVersion deps.builds.minSdkVersion
-                    targetSdkVersion deps.builds.targetSdkVersion
-                    versionCode 1
-                    versionName depsApp.findVersionNameByModuleName(targetProject.getName()) ?: "1.0.0.0-notfound"
+def simpleAndroid() {
+    return { targetProject ->
+        targetProject.android {
+            compileSdkVersion deps.builds.compileSdkVersion
 
-                    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+            defaultConfig {
+                minSdkVersion deps.builds.minSdkVersion
+                targetSdkVersion deps.builds.targetSdkVersion
+                versionCode 1
+                versionName depsApp.findVersionNameByModuleName(targetProject.getName()) ?: "1.0.0.0-notfound"
 
-                    proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+                testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-                    consumerProguardFiles 'proguard-rules.pro'
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-                    ndk {
-                        abiFilters "armeabi-v7a"
-                    }
+                consumerProguardFiles 'proguard-rules.pro'
 
-                    buildConfigField("String", "BUILD_GIT_HASH", "\"${tools.gitHeadHash()}\"")
-                    buildConfigField("long", "BUILD_TIME", "${tools.buildTime()}L")
+                ndk {
+                    abiFilters "armeabi-v7a"
                 }
 
-                sourceSets {
-                    main {
-                        java {
-                            include '**/*.java'
-                            include '**/*.kt'
-                        }
-                    }
-                }
+                buildConfigField("String", "BUILD_GIT_HASH", "\"${tools.gitHeadHash()}\"")
+                buildConfigField("long", "BUILD_TIME", "${tools.buildTime()}L")
+            }
 
-                compileOptions {
-                    sourceCompatibility 1.8
-                    targetCompatibility 1.8
-                }
-
-                if (targetProject.getPlugins().findPlugin("com.android.library")) {
-                    // packageBuildConfig(false)
-                } else if (targetProject.getPlugins().findPlugin("com.android.application")) {
-                    //如果存在签名文件，则加入签名文件处理
-                    File file = new File(targetProject.getProjectDir(), "../z_raw/dev.jks")
-                    if (file.exists()) {
-                        signingConfigs {
-                            dev {
-                                keyAlias 'key0'
-                                keyPassword 'hc@nYz_3'
-                                storeFile file
-                                storePassword 'hc@nYz_3'
-                            }
-                        }
-
-                        buildTypes {
-                            debug {
-                                signingConfig signingConfigs.dev
-                            }
-
-                            release {
-                                signingConfig signingConfigs.dev
-
-                                // debuggable true
-                                minifyEnabled true
-                                shrinkResources true
-                                zipAlignEnabled true
-                            }
-                        }
-                    } else {
-                        println("未配置dev keystore，请将dev.jks放置到${file.absolutePath}")
+            sourceSets {
+                main {
+                    java {
+                        include '**/*.java'
+                        include '**/*.kt'
                     }
                 }
             }
-        },
-        simpleDependencies   : { targetProject, params = [] ->
-            params = [includeTest: true] + params
+
+            compileOptions {
+                sourceCompatibility 1.8
+                targetCompatibility 1.8
+            }
+
+            if (targetProject.getPlugins().findPlugin("com.android.library")) {
+                // packageBuildConfig(false)
+            } else if (targetProject.getPlugins().findPlugin("com.android.application")) {
+                //如果存在签名文件，则加入签名文件处理
+                File file = new File(targetProject.getProjectDir(), "../z_raw/dev.jks")
+                if (file.exists()) {
+                    signingConfigs {
+                        dev {
+                            keyAlias 'key0'
+                            keyPassword 'hc@nYz_3'
+                            storeFile file
+                            storePassword 'hc@nYz_3'
+                        }
+                    }
+
+                    buildTypes {
+                        debug {
+                            signingConfig signingConfigs.dev
+                        }
+
+                        release {
+                            signingConfig signingConfigs.dev
+
+                            // debuggable true
+                            minifyEnabled true
+                            shrinkResources true
+                            zipAlignEnabled true
+                        }
+                    }
+                } else {
+                    println("未配置dev keystore，请将dev.jks放置到${file.absolutePath}")
+                }
+            }
+        }
+    }
+}
+
+def simpleDependencies() {
+    return { targetProject, params = [] ->
+        params = [includeTest: true] + params
+
+        targetProject.dependencies {
+            // libs
+            implementation fileTree(dir: "libs", include: ["*.jar"])
+
+            // kotlin
+            implementation deps.libs.stdLib
+            implementation deps.libs.androidxKtxCore
+
+            // test
+            if (params.includeTest) {
+                testImplementation deps.libs.junit
+                androidTestImplementation deps.libs.runner
+                androidTestImplementation deps.libs.espresso
+            }
+        }
+    }
+}
+
+@SuppressWarnings("GrMethodMayBeStatic")
+def simpleModule() {
+    return { targetProject, params = [] ->
+        params = [isApplication: false, includeTest: true] + params
+
+        targetProject.apply plugin: params.isApplication ? 'com.android.application' : 'com.android.library'
+        targetProject.apply plugin: 'kotlin-android'
+        targetProject.apply plugin: 'kotlin-android-extensions'
+
+        deps.gradleConfig.simpleAndroid(targetProject)
+        deps.gradleConfig.simpleDependencies(targetProject, [includeTest: params.includeTest])
+    }
+}
+
+def simpleWHRouter() {
+    return { targetProject, params = [] ->
+        params = [includeCompiler: true, includeLib: true] + params
+
+        if (targetProject.getPlugins().findPlugin("com.android.application")) {
+            targetProject.apply plugin: 'WMRouter'
+        }
+
+        if (params.includeCompiler) {
+            if (!targetProject.getPlugins().findPlugin("kotlin-kapt")) {
+                targetProject.apply plugin: 'kotlin-kapt'
+            }
 
             targetProject.dependencies {
-                // libs
-                implementation fileTree(dir: "libs", include: ["*.jar"])
-
-                // kotlin
-                implementation deps.libs.stdLib
-                implementation deps.libs.androidxKtxCore
-
-                // test
-                if (params.includeTest) {
-                    testImplementation deps.libs.junit
-                    androidTestImplementation deps.libs.runner
-                    androidTestImplementation deps.libs.espresso
-                }
+                kapt deps.libs.wmRouterCompiler
             }
-        },
-        simpleModule         : { targetProject, params = [] ->
-            params = [isApplication: false, includeTest: true] + params
-
-            targetProject.apply plugin: params.isApplication ? 'com.android.application' : 'com.android.library'
-            targetProject.apply plugin: 'kotlin-android'
-            targetProject.apply plugin: 'kotlin-android-extensions'
-
-            deps.gradleConfig.simpleAndroid(targetProject)
-            deps.gradleConfig.simpleDependencies(targetProject, [includeTest: params.includeTest])
-        },
-        simpleWHRouter       : { targetProject, params = [] ->
-            params = [includeCompiler: true, includeLib: true] + params
-
-            if (targetProject.getPlugins().findPlugin("com.android.application")) {
-                targetProject.apply plugin: 'WMRouter'
-            }
-
-            if (params.includeCompiler) {
-                if (!targetProject.getPlugins().findPlugin("kotlin-kapt")) {
-                    targetProject.apply plugin: 'kotlin-kapt'
-                }
-
-                targetProject.dependencies {
-                    kapt deps.libs.wmRouterCompiler
-                }
-            }
-
-            if (params.includeLib) {
-                targetProject.dependencies {
-                    implementation deps.libs.wmRouter
-                }
-            }
-        },
-        simpleMavenPublishing: { targetProject ->
-            targetProject.apply from: "$rootDir/z_gradle/maven_publishing.gradle"
         }
+
+        if (params.includeLib) {
+            targetProject.dependencies {
+                implementation deps.libs.wmRouter
+            }
+        }
+    }
+}
+
+def simpleMavenPublishing() {
+    return { targetProject ->
+        targetProject.apply from: "$rootDir/z_gradle/maven_publishing.gradle"
+    }
+}
+
+def gradleConfig = [
+        repositories         : repositories(),
+        simpleAndroid        : simpleAndroid(),
+        simpleDependencies   : simpleDependencies(),
+        simpleModule         : simpleModule(),
+        simpleWHRouter       : simpleWHRouter(),
+        simpleMavenPublishing: simpleMavenPublishing()
 ]
 
 def maven = [

@@ -18,42 +18,50 @@ def widget = [
         widget_res: "$defaultGroupId:widget_res:1.0.0.0-SNAPSHOT",
 ]
 
-def tool = [
-        findVersionNameByModuleName: { String moduleName ->
-            String moduleStr = (module + vendor + widget).get(moduleName)
-            if (moduleStr == null) {
-                getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
-                return null
-            }
-            String[] moduleSplit = moduleStr.split(":")
-            // group:artifact:version
-            if (moduleSplit && moduleSplit.length == 3) {
-                getLogger().log(LogLevel.LIFECYCLE, "findVersionName:moduleName:${moduleName},finded:${moduleSplit[2]}")
-                return moduleSplit[2]
-            }
+def findVersionNameByModuleName(module, vendor, widget) {
+    return { String moduleName ->
+        String moduleStr = (module + vendor + widget).get(moduleName)
+        if (moduleStr == null) {
             getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
             return null
-        },
-        includeDynamic             : { aware, gradle, settings ->
-            aware.apply from: "z_gradle/dynamic_include_module.gradle"
-
-            def globalMode = "module2project"
-            tools.invalidChangingModuleCache(gradle)
-            dynamic.includeDynamic(gradle, settings, [
-                    [module   : "$defaultGroupId:module_template", project: ":module_template",
-                     localPath: "module_template/p_main", mode: globalMode ?: "module"],
-                    [module   : "$defaultGroupId:module_template_api", project: ":module_template_api",
-                     localPath: "module_template/api", mode: globalMode ?: "module"],
-
-                    [module   : "$defaultGroupId:vendor_log", project: ":vendor_log",
-                     localPath: "vendors/vendor_log", mode: globalMode ?: "module"],
-                    [module   : "$defaultGroupId:vendor_config", project: ":vendor_config",
-                     localPath: "vendors/vendor_config", mode: globalMode ?: "module"],
-
-                    [module   : "$defaultGroupId:widget_res", project: ":widget_res",
-                     localPath: "widgets/widget_res", mode: globalMode ?: "module"],
-            ])
         }
+        String[] moduleSplit = moduleStr.split(":")
+        // group:artifact:version
+        if (moduleSplit && moduleSplit.length == 3) {
+            getLogger().log(LogLevel.LIFECYCLE, "findVersionName:moduleName:${moduleName},finded:${moduleSplit[2]}")
+            return moduleSplit[2]
+        }
+        getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
+        return null
+    }
+}
+
+def includeDynamic(defaultGroupId) {
+    return { aware, gradle, settings ->
+        aware.apply from: "z_gradle/dynamic_include_module.gradle"
+
+        def globalMode = "module2project"
+        tools.invalidChangingModuleCache(gradle)
+        dynamic.includeDynamic(gradle, settings, [
+                [module   : "$defaultGroupId:module_template", project: ":module_template",
+                 localPath: "module_template/p_main", mode: globalMode ?: "module"],
+                [module   : "$defaultGroupId:module_template_api", project: ":module_template_api",
+                 localPath: "module_template/api", mode: globalMode ?: "module"],
+
+                [module   : "$defaultGroupId:vendor_log", project: ":vendor_log",
+                 localPath: "vendors/vendor_log", mode: globalMode ?: "module"],
+                [module   : "$defaultGroupId:vendor_config", project: ":vendor_config",
+                 localPath: "vendors/vendor_config", mode: globalMode ?: "module"],
+
+                [module   : "$defaultGroupId:widget_res", project: ":widget_res",
+                 localPath: "widgets/widget_res", mode: globalMode ?: "module"],
+        ])
+    }
+}
+
+def tool = [
+        findVersionNameByModuleName: findVersionNameByModuleName(module, vendor, widget),
+        includeDynamic             : includeDynamic(defaultGroupId)
 ]
 
 def all = module + vendor + widget + tool
