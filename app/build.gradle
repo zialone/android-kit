@@ -21,8 +21,8 @@ dependencies {
     implementation deps.libs.appcompat
     implementation deps.libs.constraintLayout
 
-    implementation depsApp.module_template
-    implementation depsApp.module_template_api
+    implementation depsApp.feature_template
+    implementation depsApp.feature_template_api
 
     implementation depsApp.vendor_log
     implementation depsApp.vendor_config

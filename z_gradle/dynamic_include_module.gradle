@@ -2,8 +2,8 @@
  * @param gradle
  * @param settings
  * @param moduleInfoList
- *        [mode] egg.module_template
- *          module2project: 所有implementation depsApp.module_template依赖都转为project(:module_template)
+ *        [mode] egg.feature_template
+ *          module2project: 所有implementation depsApp.feature_template依赖都转为project(:feature_template)
  *          module: 不改变
  */
 static void includeDynamic(Gradle gradle, Settings settings, List moduleInfoList) {

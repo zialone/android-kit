@@ -27,7 +27,7 @@ interface IZConfig {
     val buildGitHash: String
 
     // 包真实类型
-    // 需要注意，如果vendor_config为module依赖，buildType将不跟随host app buildType变化
+    // 需要注意，如果vendor_config为aar依赖，buildType在打包时就被确定
     val buildType: String
 
     // 切换后类型

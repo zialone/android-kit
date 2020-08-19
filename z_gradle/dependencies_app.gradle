@@ -2,13 +2,13 @@ apply from: "$rootDir/z_gradle/tools.gradle"
 
 def defaultGroupId = "com.hcanyz.android_kit"
 
-static def moduleVersion(module, version = "1.0.0.0-SNAPSHOT") {
-    return "$module:$version"
+static def featureVersion(feature, version = "1.0.0.0-SNAPSHOT") {
+    return "$feature:$version"
 }
 
-def module = [
-        module_template    : moduleVersion("$defaultGroupId:module_template"),
-        module_template_api: moduleVersion("$defaultGroupId:module_template_api"),
+def feature = [
+        feature_template    : featureVersion("$defaultGroupId:feature_template"),
+        feature_template_api: featureVersion("$defaultGroupId:feature_template_api"),
 ]
 def vendor = [
         vendor_log   : "$defaultGroupId:vendor_log:1.0.0.0-SNAPSHOT",
@@ -18,9 +18,9 @@ def widget = [
         widget_res: "$defaultGroupId:widget_res:1.0.0.0-SNAPSHOT",
 ]
 
-def findVersionNameByModuleName(module, vendor, widget) {
+def findVersionNameByModuleName(feature, vendor, widget) {
     return { String moduleName ->
-        String moduleStr = (module + vendor + widget).get(moduleName)
+        String moduleStr = (feature + vendor + widget).get(moduleName)
         if (moduleStr == null) {
             getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
             return null
@@ -43,10 +43,10 @@ def includeDynamic(defaultGroupId) {
         def globalMode = "module2project"
         tools.invalidChangingModuleCache(gradle)
         dynamic.includeDynamic(gradle, settings, [
-                [module   : "$defaultGroupId:module_template", project: ":module_template",
-                 localPath: "module_template/p_main", mode: globalMode ?: "module"],
-                [module   : "$defaultGroupId:module_template_api", project: ":module_template_api",
-                 localPath: "module_template/api", mode: globalMode ?: "module"],
+                [module   : "$defaultGroupId:feature_template", project: ":feature_template",
+                 localPath: "feature_template/p_main", mode: globalMode ?: "module"],
+                [module   : "$defaultGroupId:feature_template_api", project: ":feature_template_api",
+                 localPath: "feature_template/api", mode: globalMode ?: "module"],
 
                 [module   : "$defaultGroupId:vendor_log", project: ":vendor_log",
                  localPath: "vendors/vendor_log", mode: globalMode ?: "module"],
@@ -60,10 +60,10 @@ def includeDynamic(defaultGroupId) {
 }
 
 def tool = [
-        findVersionNameByModuleName: findVersionNameByModuleName(module, vendor, widget),
+        findVersionNameByModuleName: findVersionNameByModuleName(feature, vendor, widget),
         includeDynamic             : includeDynamic(defaultGroupId)
 ]
 
-def all = module + vendor + widget + tool
+def all = feature + vendor + widget + tool
 
 ext.depsApp = all

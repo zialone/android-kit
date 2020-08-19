@@ -12,8 +12,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/module_template/api" />
-            <option value="$PROJECT_DIR$/module_template/p_main" />
+            <option value="$PROJECT_DIR$/feature_template/api" />
+            <option value="$PROJECT_DIR$/feature_template/p_main" />
             <option value="$PROJECT_DIR$/vendors/vendor_config" />
             <option value="$PROJECT_DIR$/vendors/vendor_log" />
             <option value="$PROJECT_DIR$/widgets/widget_res" />
