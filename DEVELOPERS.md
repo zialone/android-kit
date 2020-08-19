@@ -10,12 +10,13 @@
 base：基础
 common：公共
 module：模块
+feature：业务单位
 
 ### 项目分包结构
-```（app + module_${business}（api + p_main + p_${feature} + p_base）+ widgets（widget_${name}）+ vendors（vendor_${name}）```
+```（app + feature_${business}（api + p_main + p_${} + p_base）+ widgets（widget_${name}）+ vendors（vendor_${name}）```
 
 - app
-- module_${name}
+- feature_${name}
   - api
   - p_main
   - p_feature1
@@ -28,7 +29,7 @@ module：模块
   - vendor_name1
   - vendor_name2
 
-```module_${business} 业务层：api module为对外接口，p_main module 负责聚合p_${feature}，p_${feature}为最小业务单元。p工程又涉及到公共代码下移到p_base问题，需要谨慎对待。```
+```feature_${business} 业务层：api feature为对外接口，p_main module 负责聚合p_${feature}，p_${feature}为最小业务单元。p工程又涉及到公共代码下移到p_base问题，需要谨慎对待。```
 
 widgets 组件层：通用组件，如视频播放器、图片预览、文件选择等。
 
