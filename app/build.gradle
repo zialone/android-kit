@@ -27,6 +27,7 @@ dependencies {
     implementation depsApp.vendor_log
     implementation depsApp.vendor_config
 
+    implementation depsApp.widget_storage
     implementation depsApp.widget_res
 
     debugImplementation deps.libs.leakcanary

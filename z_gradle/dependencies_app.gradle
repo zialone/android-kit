@@ -15,7 +15,8 @@ def vendor = [
         vendor_config: "$defaultGroupId:vendor_config:1.0.0.0-SNAPSHOT",
 ]
 def widget = [
-        widget_res: "$defaultGroupId:widget_res:1.0.0.0-SNAPSHOT",
+        widget_res    : "$defaultGroupId:widget_res:1.0.0.0-SNAPSHOT",
+        widget_storage: "$defaultGroupId:widget_storage:1.0.0.0-SNAPSHOT",
 ]
 
 def findVersionNameByModuleName(feature, vendor, widget) {
@@ -55,6 +56,8 @@ def includeDynamic(defaultGroupId) {
 
                 [module   : "$defaultGroupId:widget_res", project: ":widget_res",
                  localPath: "widgets/widget_res", mode: globalMode ?: "module"],
+                [module   : "$defaultGroupId:widget_storage", project: ":widget_storage",
+                 localPath: "widgets/widget_storage", mode: globalMode ?: "module"],
         ])
     }
 }

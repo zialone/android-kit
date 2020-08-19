@@ -1,0 +1,8 @@
+deps.gradleConfig.simpleModule(project)
+
+deps.gradleConfig.simpleMavenPublishing(project)
+
+deps.gradleConfig.simpleRoom(project)
+
+dependencies {
+}

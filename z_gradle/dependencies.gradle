@@ -3,7 +3,8 @@ apply from: "$rootDir/z_gradle/tools.gradle"
 def versions = [
         kotlin          : "1.3.72",
         support         : "1.1.0",
-        lifecycleVersion: '2.2.0'
+        lifecycleVersion: '2.2.0',
+        roomVersion     : '2.2.5',
 ]
 
 def builds = [
@@ -13,7 +14,7 @@ def builds = [
         targetSdkVersion : 29,
 ]
 
-def android = [
+def google = [
         androidxCore      : "androidx.core:core:${versions.support}",
         appcompat         : "androidx.appcompat:appcompat:${versions.support}",
         recyclerview      : "androidx.recyclerview:recyclerview:${versions.support}",
@@ -27,7 +28,10 @@ def android = [
         coordinatorlayout : "androidx.coordinatorlayout:coordinatorlayout:1.1.0",
         material          : 'com.google.android.material:material:1.0.0',
 
-        startupRuntime    : 'androidx.startup:startup-runtime:1.0.0-alpha02'
+        startupRuntime    : 'androidx.startup:startup-runtime:1.0.0-alpha02',
+
+        room              : "androidx.room:room-runtime:${versions.roomVersion}",
+        roomCompiler      : "androidx.room:room-compiler:${versions.roomVersion}",
 ]
 
 def kotlin = [
@@ -83,7 +87,7 @@ def test = [
         espresso: "androidx.test.espresso:espresso-core:3.2.0"
 ]
 
-def libs = android + kotlin + vendor + test
+def libs = google + kotlin + vendor + test
 
 def repositories() {
     return {
@@ -234,6 +238,28 @@ def simpleWHRouter() {
     }
 }
 
+def simpleRoom() {
+    return { targetProject, params = [] ->
+        params = [includeCompiler: true, includeLib: true] + params
+
+        if (params.includeCompiler) {
+            if (!targetProject.getPlugins().findPlugin("kotlin-kapt")) {
+                targetProject.apply plugin: 'kotlin-kapt'
+            }
+
+            targetProject.dependencies {
+                kapt deps.libs.roomCompiler
+            }
+        }
+
+        if (params.includeLib) {
+            targetProject.dependencies {
+                implementation deps.libs.room
+            }
+        }
+    }
+}
+
 def simpleMavenPublishing() {
     return { targetProject ->
         targetProject.apply from: "$rootDir/z_gradle/maven_publishing.gradle"
@@ -242,10 +268,11 @@ def simpleMavenPublishing() {
 
 def gradleConfig = [
         repositories         : repositories(),
+        simpleModule         : simpleModule(),
         simpleAndroid        : simpleAndroid(),
         simpleDependencies   : simpleDependencies(),
-        simpleModule         : simpleModule(),
         simpleWHRouter       : simpleWHRouter(),
+        simpleRoom           : simpleRoom(),
         simpleMavenPublishing: simpleMavenPublishing()
 ]
 

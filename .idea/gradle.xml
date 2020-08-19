@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/vendors/vendor_config" />
             <option value="$PROJECT_DIR$/vendors/vendor_log" />
             <option value="$PROJECT_DIR$/widgets/widget_res" />
+            <option value="$PROJECT_DIR$/widgets/widget_storage" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
