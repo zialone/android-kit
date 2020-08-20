@@ -9,34 +9,41 @@ import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
+import com.hcanyz.android_kit.widget.storage.ZStorage
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        private const val TAG = "TAG.Main"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
 
     fun hello(view: View) {
-        ZLog.dTime("MainActivity", "hello")
+        ZLog.dTime(TAG, "hello")
 
         IApiTemplate.api().hello(view.context)
 
         ThemeSwitchTransitionActivity.transition(this)
 
-        ZLog.dTime("MainActivity", "bye")
+        ZLog.dTime(TAG, "bye")
 
-        ZLog.w("MainActivity", BuildConfig.BUILD_GIT_HASH)
+        ZLog.w(TAG, BuildConfig.BUILD_GIT_HASH)
+
+        ZLog.i(TAG, ZStorage.uniqueKeyUntilUninstalled(this))
 
         ZLog.flush(true)
     }
 
     @SuppressLint("SetTextI18n")
     fun logSwitch(view: View) {
-        val zConfig = IZConfig.getInstance(view.context)
+        val izConfig = IZConfig.getInstance(view.context)
 
-        zConfig.canLog = !zConfig.canLog
+        izConfig.canLog = !izConfig.canLog
 
-        tv_logSwitch.text = "logSwitch: ${zConfig.canLog}"
+        tv_logSwitch.text = "logSwitch: ${izConfig.canLog}"
     }
 }

@@ -23,31 +23,59 @@ class ZLog {
         }
 
         fun f(tag: String, format: String, vararg obj: Any?) {
-            Log.f(tag, format, obj)
+            try {
+                Log.f(tag, format, obj)
+            } catch (e: Exception) {
+                Log.f(tag, format)
+            }
         }
 
         fun e(tag: String, format: String, vararg obj: Any?) {
-            Log.e(tag, format, obj)
+            try {
+                Log.e(tag, format, obj)
+            } catch (e: Exception) {
+                Log.e(tag, format)
+            }
         }
 
         fun w(tag: String, format: String, vararg obj: Any?) {
-            Log.w(tag, format, obj)
+            try {
+                Log.w(tag, format, obj)
+            } catch (e: Exception) {
+                Log.w(tag, format)
+            }
         }
 
         fun i(tag: String, format: String, vararg obj: Any?) {
-            Log.i(tag, format, obj)
+            try {
+                Log.i(tag, format, obj)
+            } catch (e: Exception) {
+                Log.i(tag, format)
+            }
         }
 
         fun d(tag: String, format: String, vararg obj: Any?) {
-            Log.d(tag, format, obj)
+            try {
+                Log.d(tag, format, obj)
+            } catch (e: Exception) {
+                Log.d(tag, format)
+            }
         }
 
         fun v(tag: String, format: String, vararg obj: Any?) {
-            Log.v(tag, format, obj)
+            try {
+                Log.v(tag, format, obj)
+            } catch (e: Exception) {
+                Log.v(tag, format)
+            }
         }
 
         fun printErrStackTrace(tag: String, tr: Throwable?, format: String, vararg obj: Any?) {
-            Log.printErrStackTrace(tag, tr, format, obj)
+            try {
+                Log.printErrStackTrace(tag, tr, format, obj)
+            } catch (e: Exception) {
+                Log.printErrStackTrace(tag, tr, format)
+            }
         }
 
         fun flush(isSync: Boolean) {

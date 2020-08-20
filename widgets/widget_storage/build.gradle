@@ -4,6 +4,17 @@ deps.gradleConfig.simpleMavenPublishing(project)
 
 deps.gradleConfig.simpleRoom(project)
 
+android {
+    defaultConfig {
+        minSdkVersion 21
+    }
+}
+
 dependencies {
+    implementation depsApp.vendor_config
+    implementation depsApp.vendor_log
+
+    api deps.libs.securityCrypto
+
     api deps.libs.lifecycleLivedata
 }
