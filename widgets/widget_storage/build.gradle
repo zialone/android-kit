@@ -5,4 +5,5 @@ deps.gradleConfig.simpleMavenPublishing(project)
 deps.gradleConfig.simpleRoom(project)
 
 dependencies {
+    api deps.libs.lifecycleLivedata
 }

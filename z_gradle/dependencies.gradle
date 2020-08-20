@@ -31,6 +31,7 @@ def google = [
         startupRuntime    : 'androidx.startup:startup-runtime:1.0.0-alpha02',
 
         room              : "androidx.room:room-runtime:${versions.roomVersion}",
+        roomKtx           : "androidx.room:room-ktx:${versions.roomVersion}",
         roomCompiler      : "androidx.room:room-compiler:${versions.roomVersion}",
 ]
 
