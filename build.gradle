@@ -22,13 +22,18 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+
+import org.apache.commons.io.FileUtils
+
+import java.util.regex.Matcher
+
 task fastPackageTransform {
     def targetDirFile = file("$rootDir")
     def srcPackage = "com.hcanyz.android_kit"
     def destPackage = "com.test.test"
 
     def ignoreDirs = [".gradle", "build", "gradle", ".git"]
-    def ignoreFiles = [new File(rootDir.absolutePath, "build.gradle").absolutePath]
+    def ignoreFiles = [file("${rootDir.absolutePath}${Matcher.quoteReplacement(File.separator)}build.gradle")]
     def applyFileTypes = ["xml", "java", "kt", "pro", "gradle"]
 
     def filter = new FileFilter() {
@@ -45,7 +50,7 @@ task fastPackageTransform {
                 if (lastIndex == -1 || !applyFileTypes.contains(name.substring(lastIndex + 1, name.size()))) {
                     return false
                 }
-                if (ignoreFiles.contains(file.absolutePath)) {
+                if (ignoreFiles.contains(file)) {
                     return false
                 }
                 return true
@@ -57,21 +62,19 @@ task fastPackageTransform {
     doFastPackageTransform(targetDirFile, filter, srcPackage, destPackage)
 }
 
-import org.apache.commons.io.FileUtils
-
 def doFastPackageTransform(File targetFile, FileFilter filter, String srcPackage, String destPackage) {
     if (targetFile.isFile()) {
         // 替换文件中package引用
         def text = targetFile.text
-        def replacedText = text.replaceAll(srcPackage.replaceAll("\\.", "\\."), destPackage)
+        def replacedText = text.replaceAll(srcPackage, destPackage)
         if (text != replacedText) {
             targetFile.setText(replacedText, "utf-8")
             println("replaceText,target:$targetFile")
         }
     } else if (targetFile.isDirectory()) {
         // 1. 当前路径匹配了srcPackage，则将移动到destPackage目录下
-        def srcPackageDirsStr = srcPackage.replaceAll("\\.", "\\\\")
-        def destPackageDirsStr = destPackage.replaceAll("\\.", "\\\\")
+        def srcPackageDirsStr = srcPackage.replaceAll("\\.", Matcher.quoteReplacement(File.separator))
+        def destPackageDirsStr = destPackage.replaceAll("\\.", Matcher.quoteReplacement(File.separator))
 
         def targetFilePath = targetFile.absolutePath
         if (targetFilePath.endsWith(srcPackageDirsStr)) {
