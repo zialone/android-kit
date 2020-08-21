@@ -28,38 +28,40 @@ import org.apache.commons.io.FileUtils
 import java.util.regex.Matcher
 
 task fastPackageTransform {
-    def targetDirFile = file("$rootDir")
-    def srcPackage = "com.hcanyz.android_kit"
-    def destPackage = "com.test.test"
+    doLast {
+        def targetDirFile = file("$rootDir")
+        def srcPackage = "com.hcanyz.android_kit"
+        def destPackage = "com.test.test"
 
-    def ignoreDirs = [".gradle", "build", "gradle", ".git"]
-    def ignoreFiles = [file("${rootDir.absolutePath}${Matcher.quoteReplacement(File.separator)}build.gradle")]
-    def applyFileTypes = ["xml", "java", "kt", "pro", "gradle"]
+        def ignoreDirs = [".gradle", "build", "gradle", ".git"]
+        def ignoreFiles = [file("${rootDir.absolutePath}${Matcher.quoteReplacement(File.separator)}build.gradle")]
+        def applyFileTypes = ["xml", "java", "kt", "pro", "gradle"]
 
-    def filter = new FileFilter() {
-        @Override
-        boolean accept(File file) {
-            def name = file.name
-            if (file.isDirectory()) {
-                if (ignoreDirs.contains(name)) {
-                    return false
+        def filter = new FileFilter() {
+            @Override
+            boolean accept(File file) {
+                def name = file.name
+                if (file.isDirectory()) {
+                    if (ignoreDirs.contains(name)) {
+                        return false
+                    }
+                    return true
+                } else if (file.isFile()) {
+                    def lastIndex = name.lastIndexOf(".")
+                    if (lastIndex == -1 || !applyFileTypes.contains(name.substring(lastIndex + 1, name.size()))) {
+                        return false
+                    }
+                    if (ignoreFiles.contains(file)) {
+                        return false
+                    }
+                    return true
                 }
-                return true
-            } else if (file.isFile()) {
-                def lastIndex = name.lastIndexOf(".")
-                if (lastIndex == -1 || !applyFileTypes.contains(name.substring(lastIndex + 1, name.size()))) {
-                    return false
-                }
-                if (ignoreFiles.contains(file)) {
-                    return false
-                }
-                return true
+                return false
             }
-            return false
         }
-    }
 
-    doFastPackageTransform(targetDirFile, filter, srcPackage, destPackage)
+        doFastPackageTransform(targetDirFile, filter, srcPackage, destPackage)
+    }
 }
 
 def doFastPackageTransform(File targetFile, FileFilter filter, String srcPackage, String destPackage) {
