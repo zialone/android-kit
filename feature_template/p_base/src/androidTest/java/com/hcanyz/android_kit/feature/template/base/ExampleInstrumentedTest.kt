@@ -1,4 +1,4 @@
-package com.hcanyz.android_kit.feature.template
+package com.hcanyz.android_kit.feature.template.base
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.hcanyz.android_kit.feature.template.test", appContext.packageName)
+        assertEquals("com.hcanyz.android_kit.feature.template.base.test", appContext.packageName)
     }
 }

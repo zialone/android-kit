@@ -100,11 +100,11 @@ def doFastPackageTransform(File targetFile, FileFilter filter, String srcPackage
 
 task fastInitModuleBySame {
     doLast {
-        def srcDir = file("$rootDir/widgets/widget_res")
-        def srcPackage = "com.hcanyz.android_kit.widget.res"
+        def srcDir = file("$rootDir/feature_template/p_main")
+        def srcPackage = "com.hcanyz.android_kit.feature.template"
 
-        def destDir = file("$rootDir/widgets/widget_test")
-        def destPackage = "com.hcanyz.android_kit.widget.test"
+        def destDir = file("$rootDir/feature_template/p_base")
+        def destPackage = "com.hcanyz.android_kit.feature.template.base"
 
         FileUtils.copyDirectory(srcDir, destDir)
 
