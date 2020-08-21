@@ -6,7 +6,7 @@
 当前项目使用的默认package为 com.hcanyz.android_kit，实际项目中需要更换为自己的package  
 提供一个快速转换工具，使用步骤:
 1. 注意备份当前目录代码
-2. 打开根目录 build.gradle，找到 task fastPackageTransform
+2. 打开根目录 build_ext.gradle，找到 task fastPackageTransform
 3. 修改destPackage，如果需要忽略一些文件夹或者文件，请修改 ignoreDirs ignoreFiles applyFileTypes
 5. 执行task
 
