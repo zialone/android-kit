@@ -2,7 +2,7 @@ package com.hcanyz.android_kit.feature.template
 
 import android.content.Context
 import android.widget.Toast
-import com.hcanyz.android_kit.template.feature.api.IApiTemplate
+import com.hcanyz.android_kit.feature.template.api.IApiTemplate
 import com.sankuai.waimai.router.annotation.RouterService
 
 

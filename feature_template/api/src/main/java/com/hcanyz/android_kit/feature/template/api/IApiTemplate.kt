@@ -1,4 +1,4 @@
-package com.hcanyz.android_kit.template.feature.api
+package com.hcanyz.android_kit.feature.template.api
 
 import android.content.Context
 import com.sankuai.waimai.router.Router
