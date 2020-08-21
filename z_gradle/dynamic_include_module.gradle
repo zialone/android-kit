@@ -6,7 +6,7 @@
  *          module2project: 所有implementation depsApp.feature_template依赖都转为project(:feature_template)
  *          module: 不改变
  */
-static void includeDynamic(Gradle gradle, Settings settings, List moduleInfoList) {
+static void dynamicInclude(Gradle gradle, Settings settings, List moduleInfoList) {
     moduleInfoList.forEach({ info ->
         String project = info["project"]
         String localPath = info["localPath"]
@@ -43,5 +43,5 @@ static void includeDynamic(Gradle gradle, Settings settings, List moduleInfoList
 }
 
 ext.dynamic = [
-        includeDynamic: this.&includeDynamic
+        dynamicInclude: this.&dynamicInclude
 ]

@@ -37,13 +37,13 @@ def findVersionNameByModuleName(feature, vendor, widget) {
     }
 }
 
-def includeDynamic(defaultGroupId) {
+def dynamicIncludeImpl(defaultGroupId) {
     return { aware, gradle, settings ->
         aware.apply from: "z_gradle/dynamic_include_module.gradle"
 
         def globalMode = "module2project"
         tools.invalidChangingModuleCache(gradle)
-        dynamic.includeDynamic(gradle, settings, [
+        dynamic.dynamicInclude(gradle, settings, [
                 [module   : "$defaultGroupId:feature_template", project: ":feature_template",
                  localPath: "feature_template/p_main", mode: globalMode ?: "module"],
                 [module   : "$defaultGroupId:feature_template_api", project: ":feature_template_api",
@@ -64,7 +64,7 @@ def includeDynamic(defaultGroupId) {
 
 def tool = [
         findVersionNameByModuleName: findVersionNameByModuleName(feature, vendor, widget),
-        includeDynamic             : includeDynamic(defaultGroupId)
+        dynamicIncludeImpl         : dynamicIncludeImpl(defaultGroupId)
 ]
 
 def all = feature + vendor + widget + tool
