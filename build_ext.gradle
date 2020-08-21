@@ -1,0 +1,96 @@
+buildscript {
+    repositories deps.gradleConfig.repositories
+
+    dependencies {
+        classpath deps.libs.androidPlugin
+    }
+}
+
+import org.apache.commons.io.FileUtils
+
+import java.util.regex.Matcher
+
+task fastPackageTransform {
+    doLast {
+        def targetDirFile = file("$rootDir")
+        def srcPackage = "com.hcanyz.android_kit"
+        def destPackage = "com.test.test"
+
+        def ignoreDirs = [".gradle", "build", "gradle", ".git"]
+        def ignoreFiles = [file("${rootDir.absolutePath}${Matcher.quoteReplacement(File.separator)}build.gradle")]
+        def applyFileTypes = ["xml", "java", "kt", "pro", "gradle"]
+
+        def filter = new FileFilter() {
+            @Override
+            boolean accept(File file) {
+                def name = file.name
+                if (file.isDirectory()) {
+                    if (ignoreDirs.contains(name)) {
+                        return false
+                    }
+                    return true
+                } else if (file.isFile()) {
+                    def lastIndex = name.lastIndexOf(".")
+                    if (lastIndex == -1 || !applyFileTypes.contains(name.substring(lastIndex + 1, name.size()))) {
+                        return false
+                    }
+                    if (ignoreFiles.contains(file)) {
+                        return false
+                    }
+                    return true
+                }
+                return false
+            }
+        }
+
+        doFastPackageTransform(targetDirFile, filter, srcPackage, destPackage)
+    }
+}
+
+def doFastPackageTransform(File targetFile, FileFilter filter, String srcPackage, String destPackage) {
+    if (targetFile.isFile()) {
+        // 替换文件中package引用
+        def text = targetFile.text
+        def replacedText = text.replaceAll(srcPackage, destPackage)
+        if (text != replacedText) {
+            targetFile.setText(replacedText, "utf-8")
+            println("replaceText,target:$targetFile")
+        }
+    } else if (targetFile.isDirectory()) {
+        // 1. 当前路径匹配了srcPackage，则将移动到destPackage目录下
+        def srcPackageDirsStr = srcPackage.replaceAll("\\.", Matcher.quoteReplacement(File.separator))
+        def destPackageDirsStr = destPackage.replaceAll("\\.", Matcher.quoteReplacement(File.separator))
+
+        def targetFilePath = targetFile.absolutePath
+        if (targetFilePath.endsWith(srcPackageDirsStr)) {
+            def lastIndexOf = targetFilePath.lastIndexOf(srcPackageDirsStr)
+            def destFile = new File(targetFilePath.substring(0, lastIndexOf), destPackageDirsStr)
+            destFile.deleteDir()
+            println("moveDirectory,src:$targetFile")
+            println("moveDirectory,dest:$destFile")
+            FileUtils.moveDirectory(targetFile, destFile)
+
+            // 2. 删除srcPackage下空文件夹
+            def targetFileTmp = targetFile
+            def deletedTargetFilePath = ""
+            while (deletedTargetFilePath != srcPackage) {
+                deletedTargetFilePath = targetFileTmp.name + (deletedTargetFilePath.isEmpty() ? "" : ".") + deletedTargetFilePath
+                def targetFileTmpList = targetFileTmp.list()
+                if (targetFileTmpList == null || targetFileTmpList.length == 0) {
+                    targetFileTmp.deleteDir()
+                    println("deleteDir:$targetFileTmp")
+                }
+                targetFileTmp = targetFileTmp.getParentFile()
+                println("deletedTargetFilePath:$deletedTargetFilePath")
+            }
+
+            targetFile = destFile
+        }
+
+        // 3. 对移动后的文件夹再次执行替换逻辑
+        def next = targetFile.listFiles(filter)
+        next.each { file ->
+            doFastPackageTransform(file, filter, srcPackage, destPackage)
+        }
+    }
+}
