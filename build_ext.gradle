@@ -16,35 +16,38 @@ task fastPackageTransform {
         def srcPackage = "com.hcanyz.android_kit"
         def destPackage = "com.test.test"
 
-        def ignoreDirs = [".gradle", "build", "gradle", ".git"]
-        def ignoreFiles = [file("${rootDir.absolutePath}${Matcher.quoteReplacement(File.separator)}build.gradle")]
-        def applyFileTypes = ["xml", "java", "kt", "pro", "gradle"]
-
-        def filter = new FileFilter() {
-            @Override
-            boolean accept(File file) {
-                def name = file.name
-                if (file.isDirectory()) {
-                    if (ignoreDirs.contains(name)) {
-                        return false
-                    }
-                    return true
-                } else if (file.isFile()) {
-                    def lastIndex = name.lastIndexOf(".")
-                    if (lastIndex == -1 || !applyFileTypes.contains(name.substring(lastIndex + 1, name.size()))) {
-                        return false
-                    }
-                    if (ignoreFiles.contains(file)) {
-                        return false
-                    }
-                    return true
-                }
-                return false
-            }
-        }
-
-        doFastPackageTransform(targetDirFile, filter, srcPackage, destPackage)
+        doFastPackageTransform(targetDirFile, defaultFileFilter(), srcPackage, destPackage)
     }
+}
+
+def defaultFileFilter() {
+    def ignoreDirs = [".gradle", "build", "gradle", ".git"]
+    def ignoreFiles = [file("${rootDir.absolutePath}${Matcher.quoteReplacement(File.separator)}build.gradle")]
+    def applyFileTypes = ["xml", "java", "kt", "pro", "gradle"]
+
+    def filter = new FileFilter() {
+        @Override
+        boolean accept(File file) {
+            def name = file.name
+            if (file.isDirectory()) {
+                if (ignoreDirs.contains(name)) {
+                    return false
+                }
+                return true
+            } else if (file.isFile()) {
+                def lastIndex = name.lastIndexOf(".")
+                if (lastIndex == -1 || !applyFileTypes.contains(name.substring(lastIndex + 1, name.size()))) {
+                    return false
+                }
+                if (ignoreFiles.contains(file)) {
+                    return false
+                }
+                return true
+            }
+            return false
+        }
+    }
+    return filter
 }
 
 def doFastPackageTransform(File targetFile, FileFilter filter, String srcPackage, String destPackage) {
@@ -87,10 +90,27 @@ def doFastPackageTransform(File targetFile, FileFilter filter, String srcPackage
             targetFile = destFile
         }
 
-        // 3. 对移动后的文件夹再次执行替换逻辑
+        // 3. 对移动后的文件夹再次执行转换逻辑
         def next = targetFile.listFiles(filter)
         next.each { file ->
             doFastPackageTransform(file, filter, srcPackage, destPackage)
         }
+    }
+}
+
+task fastInitModuleBySame {
+    doLast {
+        def srcDir = file("$rootDir/widgets/widget_res")
+        def srcPackage = "com.hcanyz.android_kit.widget.res"
+
+        def destDir = file("$rootDir/widgets/widget_test")
+        def destPackage = "com.hcanyz.android_kit.widget.test"
+
+        FileUtils.copyDirectory(srcDir, destDir)
+
+        doFastPackageTransform(destDir, defaultFileFilter(), srcPackage, destPackage)
+
+        println("module init success")
+        println("plase add dynamicInclude config to `dependencies_app.gradle`")
     }
 }
