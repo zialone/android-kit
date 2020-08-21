@@ -19,24 +19,6 @@ def widget = [
         widget_storage: "$defaultGroupId:widget_storage:1.0.0.0-SNAPSHOT",
 ]
 
-def findVersionNameByModuleName(feature, vendor, widget) {
-    return { String moduleName ->
-        String moduleStr = (feature + vendor + widget).get(moduleName)
-        if (moduleStr == null) {
-            getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
-            return null
-        }
-        String[] moduleSplit = moduleStr.split(":")
-        // group:artifact:version
-        if (moduleSplit && moduleSplit.length == 3) {
-            getLogger().log(LogLevel.LIFECYCLE, "findVersionName:moduleName:${moduleName},finded:${moduleSplit[2]}")
-            return moduleSplit[2]
-        }
-        getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
-        return null
-    }
-}
-
 def dynamicIncludeImpl(defaultGroupId) {
     return { aware, gradle, settings ->
         aware.apply from: "z_gradle/dynamic_include_module.gradle"
@@ -59,6 +41,24 @@ def dynamicIncludeImpl(defaultGroupId) {
                 [module   : "$defaultGroupId:widget_storage", project: ":widget_storage",
                  localPath: "widgets/widget_storage", mode: globalMode ?: "module"],
         ])
+    }
+}
+
+def findVersionNameByModuleName(feature, vendor, widget) {
+    return { String moduleName ->
+        String moduleStr = (feature + vendor + widget).get(moduleName)
+        if (moduleStr == null) {
+            getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
+            return null
+        }
+        String[] moduleSplit = moduleStr.split(":")
+        // group:artifact:version
+        if (moduleSplit && moduleSplit.length == 3) {
+            getLogger().log(LogLevel.LIFECYCLE, "findVersionName:moduleName:${moduleName},finded:${moduleSplit[2]}")
+            return moduleSplit[2]
+        }
+        getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
+        return null
     }
 }
 
