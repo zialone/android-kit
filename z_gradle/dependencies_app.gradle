@@ -7,9 +7,9 @@ static def featureVersion(feature, version = "1.0.0.0-SNAPSHOT") {
 }
 
 def feature = [
-        feature_template     : featureVersion("$defaultGroupId:feature_template"),
-        feature_template_base: featureVersion("$defaultGroupId:feature_template_base"),
-        feature_template_api : featureVersion("$defaultGroupId:feature_template_api"),
+        feature_template       : featureVersion("$defaultGroupId:feature_template"),
+        i_feature_template_base: featureVersion("$defaultGroupId:i_feature_template_base"),
+        feature_template_api   : featureVersion("$defaultGroupId:feature_template_api"),
 ]
 def vendor = [
         vendor_log   : "$defaultGroupId:vendor_log:1.0.0.0-SNAPSHOT",
@@ -29,7 +29,7 @@ def dynamicIncludeImpl(defaultGroupId) {
         dynamic.dynamicInclude(gradle, settings, [
                 [module   : "$defaultGroupId:feature_template", project: ":feature_template",
                  localPath: "feature_template/p_main", mode: globalMode ?: "module"],
-                [module   : "$defaultGroupId:feature_template_base", project: ":feature_template_base",
+                [module   : "$defaultGroupId:i_feature_template_base", project: ":i_feature_template_base",
                  localPath: "feature_template/p_base", mode: globalMode ?: "module"],
                 [module   : "$defaultGroupId:feature_template_api", project: ":feature_template_api",
                  localPath: "feature_template/api", mode: globalMode ?: "module"],

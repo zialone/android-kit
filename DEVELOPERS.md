@@ -29,7 +29,7 @@ feature：业务单位
   - vendor_name1
   - vendor_name2
 
-```feature_${business} 业务层：api feature为对外接口，p_main module 负责聚合p_${feature}，p_${feature}为最小业务单元。p工程又涉及到公共代码下移到p_base问题，需要谨慎对待。```
+```feature_${business}业务层：api feature为对外接口，p_main module 负责聚合p_${feature_*}，p_${feature_*}为最小业务单元（不允许被其他feature_${business}直接依赖）。p工程又涉及到公共代码下移到p_base问题，需要谨慎对待。```
 
 widgets 组件层：通用组件，如视频播放器、图片预览、文件选择等。
 
