@@ -18,13 +18,26 @@ task generateSourcesJar(type: Jar) {
 }
 
 publishing {
-    publications {
-        Production(MavenPublication) {
-            groupId = maven_groupId
-            artifactId = maven_artifactId
-            version = maven_version
-            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
-            artifact generateSourcesJar
+    afterEvaluate {
+        publications {
+            if (android.libraryVariants.isEmpty()) {
+                Production(MavenPublication) {
+                    groupId = maven_groupId
+                    artifactId = maven_artifactId
+                    version = maven_version
+                    artifact(tasks.getByName("bundleReleaseAar"))
+                    artifact generateSourcesJar
+                }
+            } else {
+                android.libraryVariants.all { variant ->
+                    "maven${variant.name.capitalize()}Aar"(MavenPublication) {
+                        artifact(tasks.getByName("bundle${variant.name.capitalize()}Aar"))
+                        groupId = maven_groupId
+                        artifactId = maven_artifactId + "-" + variant.name
+                        version = maven_version
+                    }
+                }
+            }
         }
     }
     repositories {
