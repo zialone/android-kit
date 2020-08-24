@@ -20,22 +20,15 @@ task generateSourcesJar(type: Jar) {
 publishing {
     afterEvaluate {
         publications {
-            if (android.libraryVariants.isEmpty()) {
-                Production(MavenPublication) {
-                    groupId = maven_groupId
-                    artifactId = maven_artifactId
-                    version = maven_version
-                    artifact(tasks.getByName("bundleReleaseAar"))
-                    artifact generateSourcesJar
+            android.libraryVariants.all { variant ->
+                if (!variant.buildType.name.equalsIgnoreCase("release")) {
+                    return
                 }
-            } else {
-                android.libraryVariants.all { variant ->
-                    "maven${variant.name.capitalize()}Aar"(MavenPublication) {
-                        artifact(tasks.getByName("bundle${variant.name.capitalize()}Aar"))
-                        groupId = maven_groupId
-                        artifactId = maven_artifactId + "-" + variant.name
-                        version = maven_version
-                    }
+                "maven${variant.flavorName.capitalize()}ReleaseAar"(MavenPublication) {
+                    artifact(tasks.getByName("bundle${variant.flavorName.capitalize()}ReleaseAar"))
+                    groupId = maven_groupId
+                    artifactId = maven_artifactId + ((variant.flavorName.isEmpty() ? "" : ".") + variant.flavorName)
+                    version = maven_version
                 }
             }
         }
