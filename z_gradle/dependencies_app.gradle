@@ -1,55 +1,72 @@
 apply from: "$rootDir/z_gradle/tools.gradle"
 
-def defaultGroupId = "com.hcanyz.android_kit"
+class I {
+    static def defaultGroupId = "com.hcanyz.android_kit"
 
-static def featureVersion(feature, version = "1.0.0.0-SNAPSHOT") {
-    return "$feature:$version"
+    static int ver_v = 1
+    static int ver_r = 0
+    static int ver_s = 0
+    static int ver_increment = 0
+    //V1R00S00In00 1000000
+    static def appVersionCode = (((ver_v * 100 + ver_r) * 100 + ver_s) * 100 + ver_increment)
+    //1.00.00.00
+    static def appVersionName = String.format("%s.%d.%d.%d", ver_v, ver_r, ver_s, ver_increment)
+}
+
+static def m(featureName, version = I.appVersionName, groupId = I.defaultGroupId) {
+    if (version.isEmpty()) {
+        return "$groupId:$featureName"
+    }
+    return "$groupId:$featureName:$version"
 }
 
 def feature = [
-        feature_template       : featureVersion("$defaultGroupId:feature_template"),
-        i_feature_template_base: featureVersion("$defaultGroupId:i_feature_template_base"),
-        feature_template_api   : featureVersion("$defaultGroupId:feature_template_api"),
+        defaultGroupId         : I.defaultGroupId,
+        appVersionCode         : I.appVersionCode,
+        appVersionName         : I.appVersionName,
+        feature_template       : m("feature_template"),
+        i_feature_template_base: m("i_feature_template_base"),
+        feature_template_api   : m("feature_template_api"),
 ]
 def vendor = [
-        vendor_log   : "$defaultGroupId:vendor_log:1.0.0.0-SNAPSHOT",
-        vendor_config: "$defaultGroupId:vendor_config:1.0.0.0-SNAPSHOT",
+        vendor_log   : m("vendor_log", "1.0.0.0-SNAPSHOT"),
+        vendor_config: m("vendor_config", "1.0.0.0-SNAPSHOT"),
 ]
 def widget = [
-        widget_res    : "$defaultGroupId:widget_res:1.0.0.0-SNAPSHOT",
-        widget_storage: "$defaultGroupId:widget_storage:1.0.0.0-SNAPSHOT",
+        widget_res    : m("widget_res", "1.0.0.0-SNAPSHOT"),
+        widget_storage: m("widget_storage", "1.0.0.0-SNAPSHOT"),
 ]
 
-def dynamicIncludeImpl(defaultGroupId) {
+def dynamicIncludeImpl() {
     return { aware, gradle, settings ->
         aware.apply from: "z_gradle/dynamic_include_module.gradle"
 
         def globalMode = "module2project"
         tools.invalidChangingModuleCache(gradle)
         dynamic.dynamicInclude(gradle, settings, [
-                [module   : "$defaultGroupId:feature_template", project: ":feature_template",
+                [module   : m("feature_template", ""), project: ":feature_template",
                  localPath: "feature_template/p_main", mode: globalMode ?: "module"],
-                [module   : "$defaultGroupId:i_feature_template_base", project: ":i_feature_template_base",
+                [module   : m("i_feature_template_base", ""), project: ":i_feature_template_base",
                  localPath: "feature_template/p_base", mode: globalMode ?: "module"],
-                [module   : "$defaultGroupId:feature_template_api", project: ":feature_template_api",
+                [module   : m("feature_template_api", ""), project: ":feature_template_api",
                  localPath: "feature_template/api", mode: globalMode ?: "module"],
 
-                [module   : "$defaultGroupId:vendor_log", project: ":vendor_log",
+                [module   : m("vendor_log", ""), project: ":vendor_log",
                  localPath: "vendors/vendor_log", mode: globalMode ?: "module"],
-                [module   : "$defaultGroupId:vendor_config", project: ":vendor_config",
+                [module   : m("vendor_config", ""), project: ":vendor_config",
                  localPath: "vendors/vendor_config", mode: globalMode ?: "module"],
 
-                [module   : "$defaultGroupId:widget_res", project: ":widget_res",
+                [module   : m("widget_res", ""), project: ":widget_res",
                  localPath: "widgets/widget_res", mode: globalMode ?: "module"],
-                [module   : "$defaultGroupId:widget_storage", project: ":widget_storage",
+                [module   : m("widget_storage", ""), project: ":widget_storage",
                  localPath: "widgets/widget_storage", mode: globalMode ?: "module"],
         ])
     }
 }
 
-def findVersionNameByModuleName(feature, vendor, widget) {
+def findVersionNameByModuleName(all) {
     return { String moduleName ->
-        String moduleStr = (feature + vendor + widget).get(moduleName)
+        String moduleStr = all.get(moduleName)
         if (moduleStr == null) {
             getLogger().log(LogLevel.WARN, "findVersionName:moduleName:${moduleName},not found,maybe error")
             return null
@@ -66,8 +83,8 @@ def findVersionNameByModuleName(feature, vendor, widget) {
 }
 
 def tool = [
-        findVersionNameByModuleName: findVersionNameByModuleName(feature, vendor, widget),
-        dynamicIncludeImpl         : dynamicIncludeImpl(defaultGroupId)
+        findVersionNameByModuleName: findVersionNameByModuleName(feature + vendor + widget),
+        dynamicIncludeImpl         : dynamicIncludeImpl()
 ]
 
 def all = feature + vendor + widget + tool

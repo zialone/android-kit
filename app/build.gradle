@@ -4,16 +4,10 @@ deps.gradleConfig.simpleWHRouter(project, [includeCompiler: false, includeLib: f
 
 android {
     defaultConfig {
-        applicationId "com.hcanyz.android_kit"
+        applicationId depsApp.defaultGroupId
 
-        int ver_v = 1
-        int ver_r = 0
-        int ver_s = 0
-        int ver_increment = 0
-        //V1R00S00In00 1000000
-        versionCode(((ver_v * 100 + ver_r) * 100 + ver_s) * 100 + ver_increment)
-        //1.00.00.00
-        versionName String.format("%s.%d.%d.%d", ver_v, ver_r, ver_s, ver_increment)
+        versionCode depsApp.appVersionCode
+        versionName depsApp.appVersionName
     }
 }
 
