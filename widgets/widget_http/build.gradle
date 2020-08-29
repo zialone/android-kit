@@ -1,0 +1,7 @@
+deps.gradleConfig.simpleModule(project)
+
+deps.gradleConfig.simpleMavenPublishing(project)
+
+dependencies {
+    api deps.libs.retrofit
+}

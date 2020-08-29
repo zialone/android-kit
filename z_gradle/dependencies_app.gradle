@@ -33,6 +33,9 @@ def vendor = [
         vendor_config: m("vendor_config", "1.0.0.0-SNAPSHOT"),
 ]
 def widget = [
+        widget_core   : m("widget_core", "1.0.0.0-SNAPSHOT"),
+        widget_di     : m("widget_di", "1.0.0.0-SNAPSHOT"),
+        widget_http   : m("widget_http", "1.0.0.0-SNAPSHOT"),
         widget_res    : m("widget_res", "1.0.0.0-SNAPSHOT"),
         widget_storage: m("widget_storage", "1.0.0.0-SNAPSHOT"),
 ]
@@ -56,6 +59,12 @@ def dynamicIncludeImpl() {
                 [module   : m("vendor_config", ""), project: ":vendor_config",
                  localPath: "vendors/vendor_config", mode: globalMode ?: "module"],
 
+                [module   : m("widget_core", ""), project: ":widget_core",
+                 localPath: "widgets/widget_core", mode: globalMode ?: "module"],
+                [module   : m("widget_di", ""), project: ":widget_di",
+                 localPath: "widgets/widget_di", mode: globalMode ?: "module"],
+                [module   : m("widget_http", ""), project: ":widget_http",
+                 localPath: "widgets/widget_http", mode: globalMode ?: "module"],
                 [module   : m("widget_res", ""), project: ":widget_res",
                  localPath: "widgets/widget_res", mode: globalMode ?: "module"],
                 [module   : m("widget_storage", ""), project: ":widget_storage",

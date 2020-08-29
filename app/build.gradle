@@ -1,5 +1,7 @@
 deps.gradleConfig.simpleModule(project, [isApplication: true])
 
+deps.gradleConfig.simpleHilt(project)
+
 deps.gradleConfig.simpleWHRouter(project, [includeCompiler: false, includeLib: false])
 
 android {
@@ -21,6 +23,8 @@ dependencies {
     implementation depsApp.vendor_log
     implementation depsApp.vendor_config
 
+    implementation depsApp.widget_core
+    implementation depsApp.widget_di
     implementation depsApp.widget_storage
     implementation depsApp.widget_res
 

@@ -22,11 +22,11 @@ task fastPackageTransform {
 
 task fastInitModuleBySame {
     doLast {
-        def srcDir = file("$rootDir/feature_template/p_main")
-        def srcPackage = "com.hcanyz.android_kit.feature.template"
+        def srcDir = file("$rootDir/widgets/widget_http")
+        def srcPackage = "com.hcanyz.android_kit.widget.http"
 
-        def destDir = file("$rootDir/feature_template/p_base")
-        def destPackage = "com.hcanyz.android_kit.feature.template.base"
+        def destDir = file("$rootDir/widgets/widget_core")
+        def destPackage = "com.hcanyz.android_kit.widget.core"
 
         FileUtils.copyDirectory(srcDir, destDir)
 

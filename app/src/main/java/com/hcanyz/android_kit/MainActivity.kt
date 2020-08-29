@@ -10,12 +10,19 @@ import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
 import com.hcanyz.android_kit.widget.storage.ZStorage
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Retrofit
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "TAG.Main"
     }
+
+    @Inject
+    lateinit var retrofit: Retrofit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         ZLog.w(TAG, BuildConfig.BUILD_GIT_HASH)
 
         ZLog.i(TAG, ZStorage.uniqueKeyUntilUninstalled(this))
+
+        ZLog.i(TAG, retrofit.toString())
 
         ZLog.flush(true)
     }

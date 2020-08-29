@@ -31,9 +31,11 @@ feature：业务单位
 
 ```feature_${business}业务层：api feature为对外接口，p_main module 负责聚合p_${feature_*}，p_${feature_*}为最小业务单元（不允许被其他feature_${business}直接依赖）。p工程又涉及到公共代码下移到p_base问题，需要谨慎对待。```
 
-widgets 组件层：通用组件，如视频播放器、图片预览、文件选择等。
+widgets 组件层：通用组件，如视频播放器、图片预览、文件选择、通用数据库、res等。需要根据实际业务进行一些定制（ui、参数） 
 
-vendors framework层：基础库，如网络请求、base类、glide封装等。
+vendors framework层：基础库，如debug开关、日志等。与业务完全无关。 
+
+widgets 与 vendors 没有明确的界限，尽量保持高内聚低耦合即可。widgets在vendors上层，不能反向依赖。
 
 [readme：组件化整体方案](https://github.com/hcanyz/android-dynamic-module)
 
