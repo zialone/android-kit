@@ -20,6 +20,23 @@ task fastPackageTransform {
     }
 }
 
+task fastInitModuleBySame {
+    doLast {
+        def srcDir = file("$rootDir/feature_template/p_main")
+        def srcPackage = "com.hcanyz.android_kit.feature.template"
+
+        def destDir = file("$rootDir/feature_template/p_base")
+        def destPackage = "com.hcanyz.android_kit.feature.template.base"
+
+        FileUtils.copyDirectory(srcDir, destDir)
+
+        doFastPackageTransform(destDir, defaultFileFilter(), srcPackage, destPackage)
+
+        println("module init success")
+        println("plase add dynamicInclude config to `dependencies_app.gradle`")
+    }
+}
+
 def defaultFileFilter() {
     def ignoreDirs = [".gradle", "build", "gradle", ".git"]
     def ignoreFiles = [file("${rootDir.absolutePath}${Matcher.quoteReplacement(File.separator)}build.gradle")]
@@ -95,22 +112,5 @@ def doFastPackageTransform(File targetFile, FileFilter filter, String srcPackage
         next.each { file ->
             doFastPackageTransform(file, filter, srcPackage, destPackage)
         }
-    }
-}
-
-task fastInitModuleBySame {
-    doLast {
-        def srcDir = file("$rootDir/feature_template/p_main")
-        def srcPackage = "com.hcanyz.android_kit.feature.template"
-
-        def destDir = file("$rootDir/feature_template/p_base")
-        def destPackage = "com.hcanyz.android_kit.feature.template.base"
-
-        FileUtils.copyDirectory(srcDir, destDir)
-
-        doFastPackageTransform(destDir, defaultFileFilter(), srcPackage, destPackage)
-
-        println("module init success")
-        println("plase add dynamicInclude config to `dependencies_app.gradle`")
     }
 }
