@@ -10,7 +10,7 @@
             tools:node="merge">
 
             <meta-data
-                android:name="com.hcanyz.android_kit.vendor.config.VendorConfigInitializer"
+                android:name="com.hcanyz.android_kit.vendor.config.ZVendorConfigInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>

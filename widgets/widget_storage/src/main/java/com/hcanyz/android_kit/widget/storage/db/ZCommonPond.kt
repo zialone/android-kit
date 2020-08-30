@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class CommonPond(
+data class ZCommonPond(
     @PrimaryKey @ColumnInfo(name = "pond_key") val key: String,
     @ColumnInfo(name = "value") val value: String?
 )

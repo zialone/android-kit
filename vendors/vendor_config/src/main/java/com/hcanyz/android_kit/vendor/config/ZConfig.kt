@@ -10,7 +10,7 @@ interface IZConfig {
     companion object {
         fun getInstance(context: Context): IZConfig {
             return AppInitializer.getInstance(context)
-                .initializeComponent(VendorConfigInitializer::class.java)
+                .initializeComponent(ZVendorConfigInitializer::class.java)
         }
     }
 

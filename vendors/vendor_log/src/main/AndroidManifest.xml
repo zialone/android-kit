@@ -10,7 +10,7 @@
             tools:node="merge">
 
             <meta-data
-                android:name="com.hcanyz.android_kit.vendor.log.VendorLogInitializer"
+                android:name="com.hcanyz.android_kit.vendor.log.ZVendorLogInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>

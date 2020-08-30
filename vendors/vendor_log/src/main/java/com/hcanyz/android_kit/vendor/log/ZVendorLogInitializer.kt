@@ -5,11 +5,11 @@ import android.content.Context
 import android.os.Process
 import androidx.startup.Initializer
 import com.hcanyz.android_kit.vendor.config.IZConfig
-import com.hcanyz.android_kit.vendor.config.VendorConfigInitializer
+import com.hcanyz.android_kit.vendor.config.ZVendorConfigInitializer
 import com.tencent.mars.xlog.Log
 import com.tencent.mars.xlog.Xlog
 
-class VendorLogInitializer : Initializer<Unit> {
+class ZVendorLogInitializer : Initializer<Unit> {
 
     companion object {
         private const val TAG = "VendorLogInitializer"
@@ -54,7 +54,7 @@ class VendorLogInitializer : Initializer<Unit> {
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {
-        return arrayListOf(VendorConfigInitializer::class.java)
+        return arrayListOf(ZVendorConfigInitializer::class.java)
     }
 
     private fun getProcessName(context: Context): String? {

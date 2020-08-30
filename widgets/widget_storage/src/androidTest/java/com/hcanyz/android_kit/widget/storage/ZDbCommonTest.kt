@@ -5,9 +5,9 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.hcanyz.android_kit.widget.storage.db.CommonDb
-import com.hcanyz.android_kit.widget.storage.db.CommonPond
-import com.hcanyz.android_kit.widget.storage.db.CommonPondDao
+import com.hcanyz.android_kit.widget.storage.db.ZDbCommon
+import com.hcanyz.android_kit.widget.storage.db.ZCommonPond
+import com.hcanyz.android_kit.widget.storage.db.ZDaoCommonPond
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -21,33 +21,33 @@ import java.io.IOException
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class CommonDbTest {
-    private lateinit var commonPondDao: CommonPondDao
-    private lateinit var db: CommonDb
+class ZDbCommonTest {
+    private lateinit var zDaoCommonPond: ZDaoCommonPond
+    private lateinit var dbCommon: ZDbCommon
 
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(
-            context, CommonDb::class.java
+        dbCommon = Room.inMemoryDatabaseBuilder(
+            context, ZDbCommon::class.java
         ).build()
-        commonPondDao = db.commonPondDao()
+        zDaoCommonPond = dbCommon.commonPondDao()
     }
 
     @After
     @Throws(IOException::class)
     fun closeDb() {
-        db.close()
+        dbCommon.close()
     }
 
     @Test
     @Throws(Exception::class)
     fun pondDaoTest() {
-        val pondDao = db.commonPondDao()
-        pondDao.insert(CommonPond("feature_login_accountInfo", "{}"))
-        pondDao.insert(CommonPond("feature_login_accountInfo_135xxxxxxxx", "{\"name\":\"135\"}"))
-        pondDao.insert(CommonPond("feature_login_accountInfo_152xxxxxxxx", "{}"))
-        pondDao.insert(CommonPond("vendor_config_global_config", "{}"))
+        val pondDao = dbCommon.commonPondDao()
+        pondDao.insert(ZCommonPond("feature_login_accountInfo", "{}"))
+        pondDao.insert(ZCommonPond("feature_login_accountInfo_135xxxxxxxx", "{\"name\":\"135\"}"))
+        pondDao.insert(ZCommonPond("feature_login_accountInfo_152xxxxxxxx", "{}"))
+        pondDao.insert(ZCommonPond("vendor_config_global_config", "{}"))
 
         val all = pondDao.getAll()
         assertThat(all.size, equalTo(4))
@@ -58,7 +58,7 @@ class CommonDbTest {
         pondDao.delete(accountInfo135)
         assertThat(
             pondDao.loadByKey("feature_login_accountInfo_135xxxxxxxx"),
-            equalTo<CommonPond>(null)
+            equalTo<ZCommonPond>(null)
         )
 
         val finByKeyPrefix = pondDao.finByKeyPrefix("feature_login_accountInfo")

@@ -5,7 +5,7 @@ import android.content.pm.ApplicationInfo
 import androidx.startup.Initializer
 
 
-class VendorConfigInitializer : Initializer<IZConfig> {
+class ZVendorConfigInitializer : Initializer<IZConfig> {
 
     override fun create(context: Context): IZConfig {
         val canDebugInit =
