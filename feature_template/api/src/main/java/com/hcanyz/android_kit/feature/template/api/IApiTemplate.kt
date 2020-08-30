@@ -11,4 +11,6 @@ interface IApiTemplate {
     }
 
     fun hello(context: Context)
+
+    fun provideDiTemplate(): IDiTemplateProvided
 }
