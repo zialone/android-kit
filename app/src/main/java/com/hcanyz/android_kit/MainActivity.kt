@@ -36,8 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         ThemeSwitchTransitionActivity.transition(this)
 
-        ZLog.dTime(TAG, "bye")
-
         ZLog.w(TAG, BuildConfig.BUILD_GIT_HASH)
 
         ZLog.i(TAG, ZStorage.uniqueKeyUntilUninstalled(this))
@@ -45,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         ZLog.i(TAG, retrofit.toString())
 
         ZLog.flush(true)
+        ZLog.dTime(TAG, "bye")
     }
 
     @SuppressLint("SetTextI18n")

@@ -1,4 +1,4 @@
-package com.hcanyz.android_kit.widget.core
+package com.hcanyz.android_kit
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

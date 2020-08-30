@@ -3,6 +3,7 @@
     package="com.hcanyz.android_kit">
 
     <application
+        android:name="com.hcanyz.android_kit.ZApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

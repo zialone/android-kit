@@ -1,5 +1,3 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hcanyz.android_kit.widget.core">
+<manifest package="com.hcanyz.android_kit.widget.core">
 
-    <application android:name=".ZApplication" />
 </manifest>
