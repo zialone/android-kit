@@ -4,6 +4,7 @@ deps.gradleConfig.simpleMavenPublishing(project)
 
 dependencies {
     implementation deps.libs.appcompat
+    implementation deps.libs.lifecycleViewmodel
 
     implementation deps.libs.autosize
 }
