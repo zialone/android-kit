@@ -27,7 +27,7 @@ class ZStorageTest {
         val map = mutableMapOf<Int, String>()
         for (i in 0 until size) {
             thread {
-                map[i] = ZStorage.uniqueKeyUntilUninstalled(context)
+                map[i] = context.uniqueKeyUntilUninstalled()
             }
         }
 

@@ -10,7 +10,7 @@ import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
-import com.hcanyz.android_kit.widget.storage.ZStorage
+import com.hcanyz.android_kit.widget.storage.uniqueKeyUntilUninstalled
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Retrofit
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         ZLog.w(TAG, BuildConfig.BUILD_GIT_HASH)
 
-        ZLog.i(TAG, ZStorage.uniqueKeyUntilUninstalled(this))
+        ZLog.i(TAG, this.uniqueKeyUntilUninstalled())
 
         ZLog.i(TAG, retrofit.toString())
         ZLog.i(TAG, iDiTemplateProvided.toString())
