@@ -91,9 +91,23 @@ def findVersionNameByModuleName(all) {
     }
 }
 
+static def excludeSomeDependencies() {
+    return { gradle ->
+        gradle.allprojects { prj ->
+            prj.configurations.all(new Action<Configuration>() {
+                @Override
+                void execute(Configuration config) {
+                    // config.all*.exclude(group: 'androidx.viewpager', module: 'viewpager')
+                }
+            })
+        }
+    }
+}
+
 def tool = [
+        dynamicIncludeImpl         : dynamicIncludeImpl(),
         findVersionNameByModuleName: findVersionNameByModuleName(feature + vendor + widget),
-        dynamicIncludeImpl         : dynamicIncludeImpl()
+        excludeSomeDependencies    : excludeSomeDependencies(),
 ]
 
 def all = feature + vendor + widget + tool
