@@ -103,6 +103,9 @@ def simpleAndroid() {
     return { targetProject ->
         targetProject.android {
             compileSdkVersion deps.builds.compileSdkVersion
+            if (targetProject.getPlugins().findPlugin("com.android.application")) {
+                buildToolsVersion deps.builds.buildToolsVersion
+            }
 
             defaultConfig {
                 minSdkVersion deps.builds.minSdkVersion
@@ -137,7 +140,7 @@ def simpleAndroid() {
                 sourceCompatibility 1.8
                 targetCompatibility 1.8
             }
-            
+
             kotlinOptions { jvmTarget = 1.8 }
 
             if (targetProject.getPlugins().findPlugin("com.android.library")) {
@@ -304,7 +307,11 @@ def gradleConfig = [
 
 def maven = [
         SNAPSHOT_REPOSITORY_URL: "$rootDir/repo/snapshot",
-        RELEASE_REPOSITORY_URL : "$rootDir/repo/release"
+        RELEASE_REPOSITORY_URL : "$rootDir/repo/release",
+        credentials            : {
+            username ''
+            password ''
+        }
 ]
 
 ext.deps = [
