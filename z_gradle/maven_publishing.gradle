@@ -26,6 +26,7 @@ publishing {
                 }
                 "maven${variant.flavorName.capitalize()}ReleaseAar"(MavenPublication) {
                     artifact(tasks.getByName("bundle${variant.flavorName.capitalize()}ReleaseAar"))
+                    artifact generateSourcesJar
                     groupId = maven_groupId
                     artifactId = maven_artifactId + ((variant.flavorName.isEmpty() ? "" : ".") + variant.flavorName)
                     version = maven_version
