@@ -30,6 +30,36 @@ publishing {
                     groupId = maven_groupId
                     artifactId = maven_artifactId + ((variant.flavorName.isEmpty() ? "" : ".") + variant.flavorName)
                     version = maven_version
+
+                    pom.withXml {
+                        //Creating additional node for dependencies
+                        def dependenciesNode = asNode().appendNode('dependencies')
+
+                        //Defining configuration names from which dependencies will be taken (debugCompile or releaseCompile and compile)
+                        //TODO variant.flavorName未处理  https://stackoverflow.com/questions/24743562/gradle-not-including-dependencies-in-published-pom-xml 这种方式会导致重复
+                        def configurationNames = ['api']
+
+                        configurationNames.each { configurationName ->
+                            configurations[configurationName].allDependencies.each {
+                                if (it.group != null && it.name != null) {
+                                    def dependencyNode = dependenciesNode.appendNode('dependency')
+                                    dependencyNode.appendNode('groupId', it.group)
+                                    dependencyNode.appendNode('artifactId', it.name)
+                                    dependencyNode.appendNode('version', it.version)
+
+                                    //If there are any exclusions in dependency
+                                    if (it.excludeRules.size() > 0) {
+                                        def exclusionsNode = dependencyNode.appendNode('exclusions')
+                                        it.excludeRules.each { rule ->
+                                            def exclusionNode = exclusionsNode.appendNode('exclusion')
+                                            exclusionNode.appendNode('groupId', rule.group)
+                                            exclusionNode.appendNode('artifactId', rule.module)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
