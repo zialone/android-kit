@@ -13,21 +13,38 @@ class I {
     static def appVersionName = String.format("%s.%d.%d.%d", ver_v, ver_r, ver_s, ver_increment)
 }
 
-static def m(featureName, version = I.appVersionName, groupId = I.defaultGroupId) {
+static def m(String featureName, String version = I.appVersionName, String groupId = I.defaultGroupId) {
     if (version.isEmpty()) {
         return "$groupId:$featureName"
     }
     return "$groupId:$featureName:$version"
 }
 
-def feature = [
-        defaultGroupId         : I.defaultGroupId,
-        appVersionCode         : I.appVersionCode,
-        appVersionName         : I.appVersionName,
-        feature_template       : m("feature_template"),
-        i_feature_template_base: m("i_feature_template_base"),
-        feature_template_api   : m("feature_template_api"),
-]
+static def featureM(String featureName, List<String> iModuleNames, String mode) {
+    def main = [[module   : m("feature_$featureName", ""), project: ":feature_$featureName",
+                 localPath: "feature_$featureName/p_main", mode: mode]]
+
+    def iModule = []
+    iModuleNames.forEach { name ->
+        iModule.add([module   : m("i_feature_${featureName}_$name", ""), project: ":i_feature_${featureName}_${name}",
+                     localPath: "feature_${featureName}/p_$name", mode: mode])
+    }
+
+    def api = [[module   : m("feature_${featureName}_api", ""), project: ":feature_${featureName}_api",
+                localPath: "feature_${featureName}/api", mode: mode]]
+    return main + iModule + api
+}
+
+static def featureAar(String featureName, List<String> iModuleNames) {
+    def main = [("feature_" + featureName): m("feature_$featureName")]
+    def iModule = [:]
+    iModuleNames.forEach { name ->
+        iModule.put("i_feature_" + "${featureName}_${name}", m("i_feature_${featureName}_${name}"))
+    }
+    def api = [("feature_" + featureName + "_api"): m("feature_${featureName}_api")]
+    return main + iModule + api
+}
+
 def vendor = [
         vendor_log   : m("vendor_log", "1.0.0.0-SNAPSHOT"),
         vendor_config: m("vendor_config", "1.0.0.0-SNAPSHOT"),
@@ -39,6 +56,13 @@ def widget = [
         widget_res    : m("widget_res", "1.0.0.0-SNAPSHOT"),
         widget_storage: m("widget_storage", "1.0.0.0-SNAPSHOT"),
 ]
+def feature = ([
+        defaultGroupId: I.defaultGroupId,
+        appVersionCode: I.appVersionCode,
+        appVersionName: I.appVersionName,
+]
+        + featureAar("template", ["base"])
+)
 
 def dynamicIncludeImpl() {
     return { aware, gradle, settings ->
@@ -46,30 +70,25 @@ def dynamicIncludeImpl() {
 
         def globalMode = "module2project"
         tools.invalidChangingModuleCache(gradle)
-        dynamic.dynamicInclude(gradle, settings, [
-                [module   : m("feature_template", ""), project: ":feature_template",
-                 localPath: "feature_template/p_main", mode: globalMode ?: "module"],
-                [module   : m("i_feature_template_base", ""), project: ":i_feature_template_base",
-                 localPath: "feature_template/p_base", mode: globalMode ?: "module"],
-                [module   : m("feature_template_api", ""), project: ":feature_template_api",
-                 localPath: "feature_template/api", mode: globalMode ?: "module"],
+        dynamic.dynamicInclude(gradle, settings,
+                featureM("template", ["base"], globalMode ?: "module") +
 
-                [module   : m("vendor_log", ""), project: ":vendor_log",
-                 localPath: "vendors/vendor_log", mode: globalMode ?: "module"],
-                [module   : m("vendor_config", ""), project: ":vendor_config",
-                 localPath: "vendors/vendor_config", mode: globalMode ?: "module"],
+                        [[module   : m("vendor_log", ""), project: ":vendor_log",
+                          localPath: "vendors/vendor_log", mode: globalMode ?: "module"],
+                         [module   : m("vendor_config", ""), project: ":vendor_config",
+                          localPath: "vendors/vendor_config", mode: globalMode ?: "module"],
 
-                [module   : m("widget_core", ""), project: ":widget_core",
-                 localPath: "widgets/widget_core", mode: globalMode ?: "module"],
-                [module   : m("widget_di", ""), project: ":widget_di",
-                 localPath: "widgets/widget_di", mode: globalMode ?: "module"],
-                [module   : m("widget_http", ""), project: ":widget_http",
-                 localPath: "widgets/widget_http", mode: globalMode ?: "module"],
-                [module   : m("widget_res", ""), project: ":widget_res",
-                 localPath: "widgets/widget_res", mode: globalMode ?: "module"],
-                [module   : m("widget_storage", ""), project: ":widget_storage",
-                 localPath: "widgets/widget_storage", mode: globalMode ?: "module"],
-        ])
+                         [module   : m("widget_core", ""), project: ":widget_core",
+                          localPath: "widgets/widget_core", mode: globalMode ?: "module"],
+                         [module   : m("widget_di", ""), project: ":widget_di",
+                          localPath: "widgets/widget_di", mode: globalMode ?: "module"],
+                         [module   : m("widget_http", ""), project: ":widget_http",
+                          localPath: "widgets/widget_http", mode: globalMode ?: "module"],
+                         [module   : m("widget_res", ""), project: ":widget_res",
+                          localPath: "widgets/widget_res", mode: globalMode ?: "module"],
+                         [module   : m("widget_storage", ""), project: ":widget_storage",
+                          localPath: "widgets/widget_storage", mode: globalMode ?: "module"],
+                        ])
     }
 }
 
