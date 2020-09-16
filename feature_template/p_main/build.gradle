@@ -5,6 +5,6 @@ deps.gradleConfig.simpleWHRouter(project)
 deps.gradleConfig.simpleMavenPublishing(project)
 
 dependencies {
-    implementation depsApp.i_feature_template_base
-    implementation depsApp.feature_template_api
+    api depsApp.i_feature_template_base
+    api depsApp.feature_template_api
 }
