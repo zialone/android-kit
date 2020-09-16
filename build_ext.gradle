@@ -41,7 +41,7 @@ task fastInitModuleBySame {
 
 def defaultFileFilter() {
     def ignoreDirs = [".gradle", "build", "gradle", ".git"]
-    def ignoreFiles = [file("${rootDir.absolutePath}${Matcher.quoteReplacement(File.separator)}build.gradle")]
+    def ignoreFiles = [file("${rootDir.absolutePath}${Matcher.quoteReplacement(File.separator)}build_ext.gradle")]
     def applyFileTypes = ["xml", "java", "kt", "pro", "gradle"]
 
     def filter = new FileFilter() {
@@ -69,7 +69,7 @@ def defaultFileFilter() {
     return filter
 }
 
-def doFastPackageTransform(File targetFile, FileFilter filter, String srcPackage, String destPackage, Map<String, String> replacePairs = []) {
+def doFastPackageTransform(File targetFile, FileFilter filter, String srcPackage, String destPackage, Map<String, String> replacePairs = [:]) {
     if (targetFile.isFile()) {
         // 替换文件中package引用
         def text = targetFile.text
