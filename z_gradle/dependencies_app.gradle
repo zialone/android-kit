@@ -10,7 +10,7 @@ class I {
     //V1R00S00In00 1000000
     static def appVersionCode = (((ver_v * 100 + ver_r) * 100 + ver_s) * 100 + ver_increment)
     //1.00.00.00
-    static def appVersionName = String.format("%s.%d.%d.%d", ver_v, ver_r, ver_s, ver_increment)
+    static def appVersionName = String.format("%s.%d.%d.%d-SNAPSHOT", ver_v, ver_r, ver_s, ver_increment)
 }
 
 static def m(String featureName, String version = I.appVersionName, String groupId = I.defaultGroupId) {
