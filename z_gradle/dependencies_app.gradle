@@ -60,29 +60,29 @@ def dynamicIncludeImpl() {
     }
 }
 
-static def featureDynamic(String featureName, List<String> iModuleNames, String mode) {
+static def featureDynamic(String featureName, List<String> privateModuleNames, String mode) {
     def main = [[module   : m("feature_$featureName", ""), project: ":feature_$featureName",
                  localPath: "feature_$featureName/p_main", mode: mode]]
 
-    def iModule = []
-    iModuleNames.forEach { name ->
-        iModule.add([module   : m("i_feature_${featureName}_$name", ""), project: ":i_feature_${featureName}_${name}",
-                     localPath: "feature_${featureName}/p_$name", mode: mode])
+    def privateModule = []
+    privateModuleNames.forEach { name ->
+        privateModule.add([module   : m("i_feature_${featureName}_$name", ""), project: ":i_feature_${featureName}_${name}",
+                           localPath: "feature_${featureName}/p_$name", mode: mode])
     }
 
     def api = [[module   : m("feature_${featureName}_api", ""), project: ":feature_${featureName}_api",
                 localPath: "feature_${featureName}/api", mode: mode]]
-    return main + iModule + api
+    return main + privateModule + api
 }
 
-static def featureM(String featureName, List<String> iModuleNames) {
+static def featureM(String featureName, List<String> privateModuleNames) {
     def main = [("feature_" + featureName): m("feature_$featureName")]
-    def iModule = [:]
-    iModuleNames.forEach { name ->
-        iModule.put("i_feature_" + "${featureName}_${name}", m("i_feature_${featureName}_${name}"))
+    def privateModule = [:]
+    privateModuleNames.forEach { name ->
+        privateModule.put("i_feature_" + "${featureName}_${name}", m("i_feature_${featureName}_${name}"))
     }
     def api = [("feature_" + featureName + "_api"): m("feature_${featureName}_api")]
-    return main + iModule + api
+    return main + privateModule + api
 }
 
 static def otherM(String type, String name, String mode) {
