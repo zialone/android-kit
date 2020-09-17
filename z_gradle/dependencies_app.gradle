@@ -60,18 +60,41 @@ def dynamicIncludeImpl() {
     }
 }
 
-static def featureDynamic(String featureName, List<String> privateModuleNames, String mode) {
+
+/**
+ * 创建feature_*及子模块
+ * 同时会创建一个 maven pushing task，可以同时执行[featureName]下所有Module的publish
+ * gradlew publishMavenFeature*All
+ * @param featureName name
+ * @param privateModuleNames 私有p工程
+ * @param mode dynamic mode
+ */
+def featureDynamic(String featureName, List<String> privateModuleNames, String mode) {
+    def allPushTaskDependsOn = []
+
     def main = [[module   : m("feature_$featureName", ""), project: ":feature_$featureName",
                  localPath: "feature_$featureName/p_main", mode: mode]]
+    allPushTaskDependsOn.add(":feature_$featureName:publish")
 
     def privateModule = []
     privateModuleNames.forEach { name ->
         privateModule.add([module   : m("i_feature_${featureName}_$name", ""), project: ":i_feature_${featureName}_${name}",
                            localPath: "feature_${featureName}/p_$name", mode: mode])
+
+        allPushTaskDependsOn.add(":i_feature_${featureName}_$name:publish")
     }
 
     def api = [[module   : m("feature_${featureName}_api", ""), project: ":feature_${featureName}_api",
                 localPath: "feature_${featureName}/api", mode: mode]]
+
+    allPushTaskDependsOn.add(":feature_${featureName}_api:publish")
+
+    gradle.projectsEvaluated {
+        def allPushTask = gradle.rootProject.tasks.create("publishMavenFeature${featureName.capitalize()}All")
+        allPushTaskDependsOn.forEach {
+            allPushTask.dependsOn(it)
+        }
+    }
     return main + privateModule + api
 }
 
