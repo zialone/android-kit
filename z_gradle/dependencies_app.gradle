@@ -20,31 +20,6 @@ static def m(String featureName, String version = I.appVersionName, String group
     return "$groupId:$featureName:$version"
 }
 
-static def featureM(String featureName, List<String> iModuleNames, String mode) {
-    def main = [[module   : m("feature_$featureName", ""), project: ":feature_$featureName",
-                 localPath: "feature_$featureName/p_main", mode: mode]]
-
-    def iModule = []
-    iModuleNames.forEach { name ->
-        iModule.add([module   : m("i_feature_${featureName}_$name", ""), project: ":i_feature_${featureName}_${name}",
-                     localPath: "feature_${featureName}/p_$name", mode: mode])
-    }
-
-    def api = [[module   : m("feature_${featureName}_api", ""), project: ":feature_${featureName}_api",
-                localPath: "feature_${featureName}/api", mode: mode]]
-    return main + iModule + api
-}
-
-static def featureAar(String featureName, List<String> iModuleNames) {
-    def main = [("feature_" + featureName): m("feature_$featureName")]
-    def iModule = [:]
-    iModuleNames.forEach { name ->
-        iModule.put("i_feature_" + "${featureName}_${name}", m("i_feature_${featureName}_${name}"))
-    }
-    def api = [("feature_" + featureName + "_api"): m("feature_${featureName}_api")]
-    return main + iModule + api
-}
-
 def vendor = [
         vendor_log   : m("vendor_log", "1.0.0.0-SNAPSHOT"),
         vendor_config: m("vendor_config", "1.0.0.0-SNAPSHOT"),
@@ -61,35 +36,58 @@ def feature = ([
         appVersionCode: I.appVersionCode,
         appVersionName: I.appVersionName,
 ]
-        + featureAar("template", ["base"])
+        + featureM("template", ["base"])
 )
 
 def dynamicIncludeImpl() {
     return { aware, gradle, settings ->
         aware.apply from: "z_gradle/dynamic_include_module.gradle"
 
-        def globalMode = "module2project"
         tools.invalidChangingModuleCache(gradle)
+
+        def globalMode = "module2project"
         dynamic.dynamicInclude(gradle, settings,
-                featureM("template", ["base"], globalMode ?: "module") +
+                featureDynamic("template", ["base"], globalMode ?: "module")
+                        + otherM("vendor", "log", globalMode ?: "module")
+                        + otherM("vendor", "config", globalMode ?: "module")
 
-                        [[module   : m("vendor_log", ""), project: ":vendor_log",
-                          localPath: "vendors/vendor_log", mode: globalMode ?: "module"],
-                         [module   : m("vendor_config", ""), project: ":vendor_config",
-                          localPath: "vendors/vendor_config", mode: globalMode ?: "module"],
-
-                         [module   : m("widget_core", ""), project: ":widget_core",
-                          localPath: "widgets/widget_core", mode: globalMode ?: "module"],
-                         [module   : m("widget_di", ""), project: ":widget_di",
-                          localPath: "widgets/widget_di", mode: globalMode ?: "module"],
-                         [module   : m("widget_http", ""), project: ":widget_http",
-                          localPath: "widgets/widget_http", mode: globalMode ?: "module"],
-                         [module   : m("widget_res", ""), project: ":widget_res",
-                          localPath: "widgets/widget_res", mode: globalMode ?: "module"],
-                         [module   : m("widget_storage", ""), project: ":widget_storage",
-                          localPath: "widgets/widget_storage", mode: globalMode ?: "module"],
-                        ])
+                        + otherM("widget", "core", globalMode ?: "module")
+                        + otherM("widget", "di", globalMode ?: "module")
+                        + otherM("widget", "http", globalMode ?: "module")
+                        + otherM("widget", "res", globalMode ?: "module")
+                        + otherM("widget", "storage", globalMode ?: "module")
+        )
     }
+}
+
+static def featureDynamic(String featureName, List<String> iModuleNames, String mode) {
+    def main = [[module   : m("feature_$featureName", ""), project: ":feature_$featureName",
+                 localPath: "feature_$featureName/p_main", mode: mode]]
+
+    def iModule = []
+    iModuleNames.forEach { name ->
+        iModule.add([module   : m("i_feature_${featureName}_$name", ""), project: ":i_feature_${featureName}_${name}",
+                     localPath: "feature_${featureName}/p_$name", mode: mode])
+    }
+
+    def api = [[module   : m("feature_${featureName}_api", ""), project: ":feature_${featureName}_api",
+                localPath: "feature_${featureName}/api", mode: mode]]
+    return main + iModule + api
+}
+
+static def featureM(String featureName, List<String> iModuleNames) {
+    def main = [("feature_" + featureName): m("feature_$featureName")]
+    def iModule = [:]
+    iModuleNames.forEach { name ->
+        iModule.put("i_feature_" + "${featureName}_${name}", m("i_feature_${featureName}_${name}"))
+    }
+    def api = [("feature_" + featureName + "_api"): m("feature_${featureName}_api")]
+    return main + iModule + api
+}
+
+static def otherM(String type, String name, String mode) {
+    return [module   : m("${type}_$name", ""), project: ":${type}_$name",
+            localPath: "${type}s/${type}_$name", mode: mode]
 }
 
 def findVersionNameByModuleName(all) {
