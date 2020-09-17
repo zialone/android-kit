@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/widgets/widget_http" />
             <option value="$PROJECT_DIR$/widgets/widget_res" />
             <option value="$PROJECT_DIR$/widgets/widget_storage" />
+            <option value="$PROJECT_DIR$/widgets/widget_views_stateview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -1,0 +1,7 @@
+deps.gradleConfig.simpleModule(project)
+
+deps.gradleConfig.simpleMavenPublishing(project)
+
+dependencies {
+    api 'com.github.Kennyc1012:MultiStateView:2.1.2'
+}

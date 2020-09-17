@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stateview_empty_tip_defalut">No Results Found</string>
+
+    <string name="stateview_error_tip_defalut">Whoops! Something went wrong</string>
+    <string name="stateview_error_retry_defalut">Retry</string>
+</resources>

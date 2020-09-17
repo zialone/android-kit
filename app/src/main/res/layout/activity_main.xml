@@ -7,7 +7,8 @@
     tools:context=".MainActivity"
     tools:ignore="HardcodedText">
 
-    <TextView
+    <Button
+        android:id="@+id/hello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="hello"
@@ -16,6 +17,24 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.kennyc.view.MultiStateView
+        android:id="@+id/msv_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hello"
+        app:msv_emptyView="@layout/stateview_empty_default"
+        app:msv_loadingView="@layout/stateview_loading_default">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="stateView"
+            android:text="state view" />
+    </com.kennyc.view.MultiStateView>
+
 
     <TextView
         android:id="@+id/tv_logSwitch"
