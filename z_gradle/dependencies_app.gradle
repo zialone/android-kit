@@ -30,6 +30,7 @@ def widget = [
         widget_http           : m("widget_http", "1.0.0.0-SNAPSHOT"),
         widget_res            : m("widget_res", "1.0.0.0-SNAPSHOT"),
         widget_storage        : m("widget_storage", "1.0.0.0-SNAPSHOT"),
+        widget_webview        : m("widget_webview", "1.0.0.0-SNAPSHOT"),
         widget_views_stateview: m("widget_views_stateview", "1.0.0.0-SNAPSHOT"),
 ]
 def feature = ([
@@ -57,6 +58,7 @@ def dynamicIncludeImpl() {
                         + otherM("widget", "http", globalMode ?: "module")
                         + otherM("widget", "res", globalMode ?: "module")
                         + otherM("widget", "storage", globalMode ?: "module")
+                        + otherM("widget", "webview", globalMode ?: "module")
                         + otherM("widget", "views_stateview", globalMode ?: "module")
         )
     }

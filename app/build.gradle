@@ -27,6 +27,7 @@ dependencies {
     implementation depsApp.widget_di
     implementation depsApp.widget_res
     implementation depsApp.widget_storage
+    implementation depsApp.widget_webview
     implementation depsApp.widget_views_stateview
 
     debugImplementation deps.libs.leakcanary

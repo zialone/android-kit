@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        webView()
     }
 
     fun hello(view: View) {
@@ -71,5 +73,9 @@ class MainActivity : AppCompatActivity() {
         view.postDelayed({
             msv_test.viewState = MultiStateView.ViewState.CONTENT
         }, 1500)
+    }
+
+    private fun webView() {
+        webview_test.loadUrl("https://cn.bing.com/")
     }
 }
