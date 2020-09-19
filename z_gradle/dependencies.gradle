@@ -78,9 +78,23 @@ def vendor = [
 
         leakcanary              : 'com.squareup.leakcanary:leakcanary-android:2.4',
 
+        // 屏幕适配
         autosize                : 'me.jessyan:autosize:1.2.1',
 
+        // js-bridge
         zJsBridge               : 'com.github.hcanyz:ZJsBridge:1.0.1',
+
+        // 下载管理
+        okdownload              : 'com.liulishuo.okdownload:okdownload:1.0.7',
+        okdownloadSqlite        : 'com.liulishuo.okdownload:sqlite:1.0.7',
+        okdownloadOkhttp        : 'com.liulishuo.okdownload:okhttp:1.0.7',
+        okdownloadKtx           : 'com.liulishuo.okdownload:ktx:1.0.7',
+
+        // 运行权限申请
+        permission              : 'com.yanzhenjie:permission:2.0.3',
+
+        // qrCode
+        zxingLite               : 'com.king.zxing:zxing-lite:1.1.9-androidx',
 ]
 
 def test = [
