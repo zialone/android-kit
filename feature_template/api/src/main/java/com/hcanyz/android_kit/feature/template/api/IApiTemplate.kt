@@ -1,6 +1,5 @@
 package com.hcanyz.android_kit.feature.template.api
 
-import android.content.Context
 import com.sankuai.waimai.router.Router
 
 interface IApiTemplate {
@@ -9,8 +8,12 @@ interface IApiTemplate {
             return Router.getService(IApiTemplate::class.java, "default")
         }
     }
+}
 
-    fun hello(context: Context)
-
-    fun provideDiTemplate(): IDiTemplateProvided
+interface IApiInternalTemplate {
+    companion object {
+        fun api(): IApiInternalTemplate {
+            return Router.getService(IApiInternalTemplate::class.java, "default")
+        }
+    }
 }

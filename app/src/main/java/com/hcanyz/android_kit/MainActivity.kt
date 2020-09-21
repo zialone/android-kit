@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.genzon.reception.pad.widget.views.stateview.customizeStateEmpty
-import com.hcanyz.android_kit.feature.template.api.IApiTemplate
-import com.hcanyz.android_kit.feature.template.api.IDiTemplateProvided
 import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.log.ZLog
@@ -27,9 +25,6 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var retrofit: Retrofit
 
-    @Inject
-    lateinit var iDiTemplateProvided: IDiTemplateProvided
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,10 +33,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun hello(view: View) {
+        view.background
 
         ZLog.dTime(TAG, "hello")
-
-        IApiTemplate.api().hello(view.context)
 
         ThemeSwitchTransitionActivity.transition(this)
 
@@ -50,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         ZLog.i(TAG, this.uniqueKeyUntilUninstalled())
 
         ZLog.i(TAG, retrofit.toString())
-        ZLog.i(TAG, iDiTemplateProvided.toString())
 
         ZLog.flush(true)
         ZLog.dTime(TAG, "bye")
