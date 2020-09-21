@@ -1,5 +1,0 @@
-<manifest xmlns:tools="http://schemas.android.com/tools"
-    package="com.hcanyz.android_kit.widget.storage">
-
-    <uses-sdk tools:overrideLibrary="androidx.security" />
-</manifest>

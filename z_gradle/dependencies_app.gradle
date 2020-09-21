@@ -21,15 +21,15 @@ static def m(String featureName, String version = I.appVersionName, String group
 }
 
 def vendor = [
-        vendor_log   : m("vendor_log", "1.0.0.0-SNAPSHOT"),
-        vendor_config: m("vendor_config", "1.0.0.0-SNAPSHOT"),
+        vendor_log    : m("vendor_log", "1.0.0.0-SNAPSHOT"),
+        vendor_config : m("vendor_config", "1.0.0.0-SNAPSHOT"),
+        vendor_storage: m("vendor_storage", "1.0.0.0-SNAPSHOT"),
 ]
 def widget = [
         widget_core           : m("widget_core", "1.0.0.0-SNAPSHOT"),
         widget_di             : m("widget_di", "1.0.0.0-SNAPSHOT"),
         widget_http           : m("widget_http", "1.0.0.0-SNAPSHOT"),
         widget_res            : m("widget_res", "1.0.0.0-SNAPSHOT"),
-        widget_storage        : m("widget_storage", "1.0.0.0-SNAPSHOT"),
         widget_webview        : m("widget_webview", "1.0.0.0-SNAPSHOT"),
         widget_views_stateview: m("widget_views_stateview", "1.0.0.0-SNAPSHOT"),
 ]
@@ -52,12 +52,12 @@ def dynamicIncludeImpl() {
                 featureDynamic("template", ["base"], globalMode ?: "module")
                         + otherM("vendor", "log", globalMode ?: "module")
                         + otherM("vendor", "config", globalMode ?: "module")
+                        + otherM("vendor", "storage", globalMode ?: "module")
 
                         + otherM("widget", "core", globalMode ?: "module")
                         + otherM("widget", "di", globalMode ?: "module")
                         + otherM("widget", "http", globalMode ?: "module")
                         + otherM("widget", "res", globalMode ?: "module")
-                        + otherM("widget", "storage", globalMode ?: "module")
                         + otherM("widget", "webview", globalMode ?: "module")
                         + otherM("widget", "views_stateview", globalMode ?: "module")
         )

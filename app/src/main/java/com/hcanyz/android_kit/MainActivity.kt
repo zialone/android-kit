@@ -8,8 +8,8 @@ import com.genzon.reception.pad.widget.views.stateview.customizeStateEmpty
 import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.log.ZLog
+import com.hcanyz.android_kit.vendor.storage.uniqueKeyUntilUninstalled
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
-import com.hcanyz.android_kit.widget.storage.uniqueKeyUntilUninstalled
 import com.kennyc.view.MultiStateView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
