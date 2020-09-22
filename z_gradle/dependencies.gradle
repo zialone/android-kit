@@ -219,6 +219,27 @@ def simpleDependencies() {
     }
 }
 
+def simpleDownloadDependencies() {
+    return { targetProject, params = [] ->
+        params = [compileOnly: false] + params
+
+        targetProject.dependencies {
+            // okDownload
+            if (params.compileOnly) {
+                compileOnly deps.libs.okdownload
+                compileOnly deps.libs.okdownloadSqlite
+                compileOnly deps.libs.okdownloadOkhttp
+                compileOnly deps.libs.okdownloadKtx
+            } else {
+                implementation deps.libs.okdownload
+                implementation deps.libs.okdownloadSqlite
+                implementation deps.libs.okdownloadOkhttp
+                implementation deps.libs.okdownloadKtx
+            }
+        }
+    }
+}
+
 @SuppressWarnings("GrMethodMayBeStatic")
 def simpleModule() {
     return { targetProject, params = [] ->
@@ -312,14 +333,15 @@ def simpleMavenPublishing() {
 }
 
 def gradleConfig = [
-        repositories         : repositories(),
-        simpleModule         : simpleModule(),
-        simpleAndroid        : simpleAndroid(),
-        simpleDependencies   : simpleDependencies(),
-        simpleWHRouter       : simpleWHRouter(),
-        simpleRoom           : simpleRoom(),
-        simpleHilt           : simpleHilt(),
-        simpleMavenPublishing: simpleMavenPublishing()
+        repositories              : repositories(),
+        simpleModule              : simpleModule(),
+        simpleAndroid             : simpleAndroid(),
+        simpleDependencies        : simpleDependencies(),
+        simpleDownloadDependencies: simpleDownloadDependencies(),
+        simpleWHRouter            : simpleWHRouter(),
+        simpleRoom                : simpleRoom(),
+        simpleHilt                : simpleHilt(),
+        simpleMavenPublishing     : simpleMavenPublishing()
 ]
 
 def maven = [

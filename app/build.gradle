@@ -30,5 +30,7 @@ dependencies {
     implementation depsApp.widget_webview
     implementation depsApp.widget_views_stateview
 
+    implementation deps.libs.permission
+
     debugImplementation deps.libs.leakcanary
 }

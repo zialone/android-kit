@@ -9,8 +9,12 @@ import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.vendor.storage.uniqueKeyUntilUninstalled
+import com.hcanyz.android_kit.vendor.storage.zzDownloadImage2MediaStore
+import com.hcanyz.android_kit.vendor.storage.zzGetExternalFilesDir
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
 import com.kennyc.view.MultiStateView
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.runtime.Permission
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Retrofit
@@ -70,5 +74,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun webView() {
         webview_test.loadUrl("https://cn.bing.com/")
+
+    }
+
+    fun storage(view: View) {
+        try {
+            ZLog.d(
+                TAG,
+                view.context.zzGetExternalFilesDir().absolutePath ?: ""
+            )
+        } catch (e: Exception) {
+            AndPermission.with(this).runtime()
+                .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE)
+                .rationale { _, _, executor ->
+                    executor.execute()
+                }
+                .onGranted { }
+                .onDenied { }
+                .start()
+        }
+
+        view.context.zzDownloadImage2MediaStore(
+            url = "https://avatars2.githubusercontent.com/u/8407922?s=60&v=4",
+            displayName = ""
+        )
     }
 }

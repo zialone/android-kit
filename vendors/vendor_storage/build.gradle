@@ -10,6 +10,8 @@ android {
     }
 }
 
+deps.gradleConfig.simpleDownloadDependencies(project, [compileOnly: true])
+
 dependencies {
     implementation depsApp.vendor_config
     implementation depsApp.vendor_log
@@ -17,4 +19,6 @@ dependencies {
     api deps.libs.securityCrypto
 
     api deps.libs.lifecycleLivedata
+
+    implementation deps.libs.permission
 }
