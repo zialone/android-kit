@@ -9,6 +9,7 @@ import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.log.ZLog
 
 const val SHARED_COMMON_SP_NAME = "vendor.storage.sp.common"
+const val SHARED_COMMON_ENCRYPTED_SP_NAME = "vendor.storage.sp.common"
 
 private val checkShared by lazy { mutableMapOf<String, Boolean>() }
 
