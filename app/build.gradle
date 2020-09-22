@@ -23,11 +23,11 @@ dependencies {
     implementation depsApp.vendor_log
     implementation depsApp.vendor_config
     implementation depsApp.vendor_storage
+    implementation depsApp.vendor_webview
 
     implementation depsApp.widget_core
     implementation depsApp.widget_di
     implementation depsApp.widget_res
-    implementation depsApp.widget_webview
     implementation depsApp.widget_views_stateview
 
     implementation deps.libs.permission

@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun webView() {
         webview_test.loadUrl("https://cn.bing.com/")
-
     }
 
     fun storage(view: View) {

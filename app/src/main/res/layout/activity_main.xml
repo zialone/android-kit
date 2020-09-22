@@ -53,10 +53,12 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/msv_test" />
 
-        <com.genzon.reception.pad.widget.webview.chromium.DefaultWebViewChromium
+        <com.genzon.reception.pad.vendor.webview.chromium.DefaultWebViewChromium
             android:id="@+id/webview_test"
-            android:layout_width="150dp"
-            android:layout_height="80dp"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_logSwitch" />

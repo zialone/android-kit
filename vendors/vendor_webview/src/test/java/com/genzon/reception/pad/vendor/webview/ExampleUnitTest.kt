@@ -1,4 +1,4 @@
-package com.genzon.reception.pad.widget.webview
+package com.genzon.reception.pad.vendor.webview
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

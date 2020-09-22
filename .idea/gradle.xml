@@ -18,12 +18,12 @@
             <option value="$PROJECT_DIR$/vendors/vendor_config" />
             <option value="$PROJECT_DIR$/vendors/vendor_log" />
             <option value="$PROJECT_DIR$/vendors/vendor_storage" />
+            <option value="$PROJECT_DIR$/vendors/vendor_webview" />
             <option value="$PROJECT_DIR$/widgets/widget_core" />
             <option value="$PROJECT_DIR$/widgets/widget_di" />
             <option value="$PROJECT_DIR$/widgets/widget_http" />
             <option value="$PROJECT_DIR$/widgets/widget_res" />
             <option value="$PROJECT_DIR$/widgets/widget_views_stateview" />
-            <option value="$PROJECT_DIR$/widgets/widget_webview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
