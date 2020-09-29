@@ -10,6 +10,17 @@ android {
 
         versionCode depsApp.appVersionCode
         versionName depsApp.appVersionName
+
+        manifestPlaceholders = [
+                com_baidu_lbsapi_API_KEY: "U4RIORf89grFShgz819vGdNYrbmS6TCd"
+        ]
+    }
+}
+
+/// 建议根据 vendors/vendor_map/README.md 提示发布到到自建maven仓库，更加组件化。
+repositories {
+    flatDir {
+        dirs "${rootDir}/vendors/vendor_bmap/z_raw/BaiduLBS_AndroidSDK_Lib"
     }
 }
 
@@ -24,6 +35,7 @@ dependencies {
     implementation depsApp.vendor_config
     implementation depsApp.vendor_storage
     implementation depsApp.vendor_webview
+    implementation depsApp.vendor_bmap
 
     implementation depsApp.widget_core
     implementation depsApp.widget_di

@@ -1,0 +1,1 @@
+由于百度地图没有gradle依赖地址，所以需要发布到自建maven仓库。 发布脚本参考 ./z_raw/BaiduLBS_AndroidSDK_Lib工程

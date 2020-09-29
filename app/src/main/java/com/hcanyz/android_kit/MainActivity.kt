@@ -1,9 +1,11 @@
 package com.hcanyz.android_kit
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.genzon.reception.pad.vendor.bmap.BMapDisplayLocationActivity
 import com.genzon.reception.pad.widget.views.stateview.customizeStateEmpty
 import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
@@ -97,5 +99,9 @@ class MainActivity : AppCompatActivity() {
             url = "https://avatars2.githubusercontent.com/u/8407922?s=60&v=4",
             displayName = ""
         )
+    }
+
+    fun bmap(view: View) {
+        startActivity(Intent(view.context, BMapDisplayLocationActivity::class.java))
     }
 }

@@ -1,0 +1,21 @@
+deps.gradleConfig.simpleModule(project)
+
+deps.gradleConfig.simpleHilt(project)
+
+deps.gradleConfig.simpleMavenPublishing(project)
+
+repositories {
+    flatDir {
+        dirs './z_raw/BaiduLBS_AndroidSDK_Lib'
+    }
+}
+
+dependencies {
+    api(name: 'BaiduLBS_AndroidSDK_Lib', ext: 'aar')
+
+    implementation deps.libs.permission
+
+    implementation deps.libs.appcompat
+    implementation deps.libs.lifecycleViewmodel
+    implementation deps.libs.constraintLayout
+}
