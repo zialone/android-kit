@@ -82,7 +82,7 @@ def vendor = [
         autosize                : 'me.jessyan:autosize:1.2.1',
 
         // js-bridge
-        zJsBridge               : 'com.github.hcanyz:ZJsBridge:1.0.2',
+        zJsBridge               : 'com.github.hcanyz:ZJsBridge:1.0.3',
 
         // 下载管理
         okdownload              : 'com.liulishuo.okdownload:okdownload:1.0.7',
