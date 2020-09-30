@@ -1,4 +1,4 @@
-package com.genzon.reception.pad.vendor.bmap
+package com.hcanyz.android_kit.vendor.bmap
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
