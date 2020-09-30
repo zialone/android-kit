@@ -2,7 +2,7 @@ apply plugin: 'maven-publish'
 
 def maven_groupId = "com.baidu.map"
 def maven_artifactId = "map"
-def maven_version = "7.0.0-genzon"
+def maven_version = "7.0.0"
 
 publishing {
     afterEvaluate {
