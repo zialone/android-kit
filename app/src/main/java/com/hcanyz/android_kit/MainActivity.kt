@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.genzon.reception.pad.widget.views.stateview.customizeStateEmpty
 import com.hcanyz.android_kit.vendor.bmap.BMapDisplayLocationActivity
 import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
@@ -14,6 +13,7 @@ import com.hcanyz.android_kit.vendor.storage.uniqueKeyUntilUninstalled
 import com.hcanyz.android_kit.vendor.storage.zzDownloadImage2MediaStore
 import com.hcanyz.android_kit.vendor.storage.zzGetExternalFilesDir
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
+import com.hcanyz.android_kit.widget.views.stateview.customizeStateEmpty
 import com.kennyc.view.MultiStateView
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission

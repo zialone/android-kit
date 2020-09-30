@@ -1,4 +1,4 @@
-package com.genzon.reception.pad.widget.views.stateview
+package com.hcanyz.android_kit.widget.views.stateview
 
 import android.view.View
 import android.widget.TextView

@@ -1,4 +1,4 @@
-package com.genzon.reception.pad.widget.views.stateview
+package com.hcanyz.android_kit.widget.views.stateview
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.genzon.reception.pad.widget.views.stateview", appContext.packageName)
+        assertEquals("com.hcanyz.android_kit.widget.views.stateview", appContext.packageName)
     }
 }
