@@ -1,4 +1,4 @@
-package com.genzon.reception.pad.vendor.webview.chromium
+package com.hcanyz.android_kit.vendor.webview.chromium
 
 import android.content.Context
 import android.os.Looper

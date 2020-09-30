@@ -1,4 +1,4 @@
-package com.genzon.reception.pad.vendor.webview
+package com.hcanyz.android_kit.vendor.webview
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
