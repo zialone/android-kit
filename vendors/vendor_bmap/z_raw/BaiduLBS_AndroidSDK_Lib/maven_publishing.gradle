@@ -1,0 +1,28 @@
+apply plugin: 'maven-publish'
+
+def maven_groupId = "com.baidu.map"
+def maven_artifactId = "map"
+def maven_version = "7.0.0-genzon"
+
+publishing {
+    afterEvaluate {
+        publications {
+            "mavenReleaseAar"(MavenPublication) {
+                artifact(file("BaiduLBS_AndroidSDK_Lib.aar"))
+                groupId = maven_groupId
+                artifactId = maven_artifactId
+                version = maven_version
+            }
+        }
+    }
+    repositories {
+        maven {
+            // name = Maven
+            url = "url"
+            credentials {
+                username 'username'
+                password 'password'
+            }
+        }
+    }
+}
