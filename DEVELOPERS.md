@@ -37,8 +37,6 @@ vendors framework层：基础库，如debug开关、日志等。与业务完全�
 
 widgets 与 vendors 没有明确的界限，尽量保持高内聚低耦合即可。widgets在vendors上层，不能反向依赖。
 
-[readme：组件化整体方案](https://github.com/hcanyz/android-dynamic-module)
-
 参考：[微信Android模块化架构重构实践](https://mp.weixin.qq.com/s/mkhCzeoLdev5TyO6DqHEdw) [美团外卖Android平台化架构演进实践](https://tech.meituan.com/2018/03/16/meituan-food-delivery-android-architecture-evolution.html)
 
 ### 资源
