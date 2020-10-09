@@ -139,9 +139,18 @@ def simpleAndroid() {
                 ndk {
                     abiFilters "armeabi-v7a"
                 }
+            }
 
-                buildConfigField("String", "BUILD_GIT_HASH", "\"${tools.gitHeadHash()}\"")
-                buildConfigField("long", "BUILD_TIME", "${tools.buildTime()}L")
+            buildTypes {
+                debug {
+                    buildConfigField("long", "BUILD_TIME", "0L")
+                    buildConfigField("String", "BUILD_GIT_HASH", "\"~\"")
+                }
+
+                release {
+                    buildConfigField("long", "BUILD_TIME", "${tools.buildTime()}L")
+                    buildConfigField("String", "BUILD_GIT_HASH", "\"${tools.gitHeadHash()}\"")
+                }
             }
 
             sourceSets {
