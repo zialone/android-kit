@@ -1,15 +1,20 @@
 package com.hcanyz.android_kit.vendor.bmap
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
 import com.baidu.mapapi.CoordType
+import com.baidu.mapapi.map.DotOptions
 import com.baidu.mapapi.map.MapStatusUpdateFactory
 import com.baidu.mapapi.map.MyLocationData
 import com.baidu.mapapi.model.LatLng
+import com.baidu.mapapi.search.core.SearchResult
+import com.baidu.mapapi.search.poi.*
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.android.synthetic.main.activity_b_map_display_location.*
@@ -24,7 +29,7 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
 
         bmap_test.applyLifecycle(this)
 
-        bmap_test.map.setMapStatus(MapStatusUpdateFactory.newLatLng(LatLng(31.027, 121.281)))
+        bmap_test.map.setMapStatus(MapStatusUpdateFactory.newLatLng(LatLng(22.61667, 114.06667)))
 
         val runtime = AndPermission.with(this).runtime()
         runtime
@@ -40,6 +45,49 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
                 runtime.setting().start(0)
             }
             .start()
+
+        val poiSearch = PoiSearch.newInstance()
+        poiSearch.applyLifecycle(this)
+
+        val listener: OnGetPoiSearchResultListener = object : OnGetPoiSearchResultListener {
+            override fun onGetPoiResult(poiResult: PoiResult) {
+                bmap_test.map.clear()
+                if (poiResult.error === SearchResult.ERRORNO.NO_ERROR) {
+
+                    poiResult.allPoi?.forEachIndexed { index, poi ->
+                        if (index == 0) {
+                            bmap_test.map.setMapStatus(MapStatusUpdateFactory.newLatLng(poi.location))
+                        }
+                        bmap_test.map.addOverlay(DotOptions().center(poi.location))
+                    }
+                }
+            }
+
+            override fun onGetPoiDetailResult(poiDetailSearchResult: PoiDetailSearchResult) {}
+            override fun onGetPoiIndoorResult(poiIndoorResult: PoiIndoorResult) {}
+
+            //废弃
+            override fun onGetPoiDetailResult(poiDetailResult: PoiDetailResult) {}
+        }
+        poiSearch.setOnGetPoiSearchResultListener(listener)
+
+        et_test.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                poiSearch.searchInCity(
+                    PoiCitySearchOption()
+                        .city("深圳") //必填
+                        .keyword(s.toString()) //必填
+                        .pageNum(0)
+                        .pageCapacity(100)
+                )
+            }
+        })
     }
 
     private fun findLocation() {

@@ -8,6 +8,7 @@ import com.baidu.location.LocationClient
 import com.baidu.mapapi.CoordType
 import com.baidu.mapapi.SDKInitializer
 import com.baidu.mapapi.map.MapView
+import com.baidu.mapapi.search.poi.PoiSearch
 
 fun Context.zzBMapLazyInit(coordType: CoordType = CoordType.BD09LL) {
     SDKInitializer.initialize(this.applicationContext)
@@ -58,6 +59,18 @@ fun LocationClient.applyLifecycle(lifecycleOwner: LifecycleOwner) {
         override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
             if (event == Lifecycle.Event.ON_DESTROY) {
                 this@applyLifecycle.stop()
+                lifecycleOwner.lifecycle.removeObserver(this)
+            }
+        }
+    })
+}
+
+fun PoiSearch.applyLifecycle(lifecycleOwner: LifecycleOwner) {
+    lifecycleOwner.lifecycle.addObserver(object : LifecycleEventObserver {
+
+        override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                this@applyLifecycle.destroy()
                 lifecycleOwner.lifecycle.removeObserver(this)
             }
         }
