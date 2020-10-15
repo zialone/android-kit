@@ -1,7 +1,5 @@
 deps.gradleConfig.simpleModule(project)
 
-deps.gradleConfig.simpleHilt(project)
-
 deps.gradleConfig.simpleMavenPublishing(project)
 
 repositories {

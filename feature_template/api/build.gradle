@@ -2,6 +2,4 @@ deps.gradleConfig.simpleModule(project, [includeTest: false])
 
 deps.gradleConfig.simpleWHRouter(project, [includeCompiler: false])
 
-deps.gradleConfig.simpleHilt(project)
-
 deps.gradleConfig.simpleMavenPublishing(project)
