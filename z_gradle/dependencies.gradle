@@ -8,14 +8,14 @@ def versions = [
 ]
 
 def builds = [
-        buildToolsVersion: "29.0.3",
+        buildToolsVersion: "30.0.2",
         minSdkVersion    : 21,
         compileSdkVersion: 29,
         targetSdkVersion : 29,
 ]
 
 def google = [
-        androidPlugin     : "com.android.tools.build:gradle:4.0.1",
+        androidPlugin     : "com.android.tools.build:gradle:4.1.0",
         androidxCore      : "androidx.core:core:${versions.support}",
         appcompat         : "androidx.appcompat:appcompat:${versions.support}",
         recyclerview      : "androidx.recyclerview:recyclerview:1.1.0",
