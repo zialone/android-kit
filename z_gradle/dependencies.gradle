@@ -95,6 +95,8 @@ def vendor = [
 
         // qrCode
         zxingLite               : 'com.king.zxing:zxing-lite:1.1.9-androidx',
+
+        wechatSdk               : 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.4'
 ]
 
 def test = [

@@ -21,11 +21,12 @@ static def m(String featureName, String version = I.appVersionName, String group
 }
 
 def vendor = [
-        vendor_log    : m("vendor_log", "1.0.0.0-SNAPSHOT"),
-        vendor_config : m("vendor_config", "1.0.0.0-SNAPSHOT"),
-        vendor_storage: m("vendor_storage", "1.0.0.0-SNAPSHOT"),
-        vendor_webview: m("vendor_webview", "1.0.0.0-SNAPSHOT"),
-        vendor_bmap   : m("vendor_bmap", "1.0.0.0-SNAPSHOT"),
+        vendor_log         : m("vendor_log", "1.0.0.0-SNAPSHOT"),
+        vendor_config      : m("vendor_config", "1.0.0.0-SNAPSHOT"),
+        vendor_storage     : m("vendor_storage", "1.0.0.0-SNAPSHOT"),
+        vendor_webview     : m("vendor_webview", "1.0.0.0-SNAPSHOT"),
+        vendor_bmap        : m("vendor_bmap", "1.0.0.0-SNAPSHOT"),
+        vendor_wechat_login: m("vendor_wechat_login", "1.0.0.0-SNAPSHOT"),
 ]
 def widget = [
         widget_core           : m("widget_core", "1.0.0.0-SNAPSHOT"),
@@ -56,6 +57,7 @@ def dynamicIncludeImpl() {
                         + otherM("vendor", "storage", globalMode ?: "module")
                         + otherM("vendor", "webview", globalMode ?: "module")
                         + otherM("vendor", "bmap", globalMode ?: "module")
+                        + otherM("vendor", "wechat_login", globalMode ?: "module")
 
                         + otherM("widget", "core", globalMode ?: "module")
                         + otherM("widget", "di", globalMode ?: "module")

@@ -36,6 +36,7 @@ dependencies {
     implementation depsApp.vendor_storage
     implementation depsApp.vendor_webview
     implementation depsApp.vendor_bmap
+    implementation depsApp.vendor_wechat_login
 
     implementation depsApp.widget_core
     implementation depsApp.widget_di

@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/vendors/vendor_log" />
             <option value="$PROJECT_DIR$/vendors/vendor_storage" />
             <option value="$PROJECT_DIR$/vendors/vendor_webview" />
+            <option value="$PROJECT_DIR$/vendors/vendor_wechat_login" />
             <option value="$PROJECT_DIR$/widgets/widget_core" />
             <option value="$PROJECT_DIR$/widgets/widget_di" />
             <option value="$PROJECT_DIR$/widgets/widget_http" />
