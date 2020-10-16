@@ -1,0 +1,10 @@
+deps.gradleConfig.simpleModule(project)
+
+deps.gradleConfig.simpleMavenPublishing(project)
+
+dependencies {
+    api deps.libs.androidUtils
+
+    api deps.libs.immersionbar
+    api deps.libs.liveEventBus
+}
