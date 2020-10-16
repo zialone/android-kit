@@ -1,4 +1,4 @@
-package com.hcanyz.android_kit.widget.http
+package com.hcanyz.android_kit.vendor.http
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

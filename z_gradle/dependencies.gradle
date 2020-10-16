@@ -59,7 +59,8 @@ def vendor = [
         androidtiffbitmapfactory: "com.github.beyka:androidtiffbitmapfactory:0.9.8.7",
 
         retrofit                : "com.squareup.retrofit2:retrofit:2.9.0",
-        retrofitLogging         : "com.squareup.okhttp3:logging-interceptor:3.9.0",
+        retrofitGson            : "com.squareup.retrofit2:converter-gson:2.9.0",
+        retrofitLogging         : "com.squareup.okhttp3:logging-interceptor:4.9.0",
 
         xlog                    : "com.tencent.mars:mars-xlog:1.2.4",
 

@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/feature_template/p_main" />
             <option value="$PROJECT_DIR$/vendors/vendor_bmap" />
             <option value="$PROJECT_DIR$/vendors/vendor_config" />
+            <option value="$PROJECT_DIR$/vendors/vendor_http" />
             <option value="$PROJECT_DIR$/vendors/vendor_log" />
             <option value="$PROJECT_DIR$/vendors/vendor_storage" />
             <option value="$PROJECT_DIR$/vendors/vendor_utils" />
@@ -23,7 +24,6 @@
             <option value="$PROJECT_DIR$/vendors/vendor_wechat_login" />
             <option value="$PROJECT_DIR$/widgets/widget_core" />
             <option value="$PROJECT_DIR$/widgets/widget_di" />
-            <option value="$PROJECT_DIR$/widgets/widget_http" />
             <option value="$PROJECT_DIR$/widgets/widget_res" />
             <option value="$PROJECT_DIR$/widgets/widget_views_stateview" />
           </set>

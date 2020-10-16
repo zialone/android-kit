@@ -5,5 +5,6 @@ deps.gradleConfig.simpleHilt(project)
 deps.gradleConfig.simpleMavenPublishing(project)
 
 dependencies {
-    api depsApp.widget_http
+    api depsApp.vendor_http
+    api depsApp.vendor_log
 }

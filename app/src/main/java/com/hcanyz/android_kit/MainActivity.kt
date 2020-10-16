@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hcanyz.android_kit.vendor.bmap.BMapDisplayLocationActivity
 import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
+import com.hcanyz.android_kit.vendor.http.ZService
 import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.vendor.storage.uniqueKeyUntilUninstalled
 import com.hcanyz.android_kit.vendor.storage.zzDownloadImage2MediaStore
@@ -19,6 +20,10 @@ import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -30,6 +35,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var retrofit: Retrofit
+
+    @Inject
+    lateinit var zService: ZService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,13 +73,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun stateView(view: View) {
+        view.context
+
         msv_test.customizeStateEmpty("$title")
 
         msv_test.viewState = MultiStateView.ViewState.LOADING
 
-        view.postDelayed({
-            msv_test.viewState = MultiStateView.ViewState.CONTENT
-        }, 1500)
+        zService
+            .get("https://cn.bing.com/")
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    msv_test.viewState = MultiStateView.ViewState.CONTENT
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    msv_test.viewState = MultiStateView.ViewState.ERROR
+                }
+            })
+
+        zService
+            .post("https://cn.bing.com/")
+        zService
+            .postJson("https://cn.bing.com/", mapOf("10" to arrayListOf(1)))
+        zService
+            .postForm("https://cn.bing.com/", mapOf("10" to arrayListOf(1)))
     }
 
     private fun webView() {
