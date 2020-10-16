@@ -3,5 +3,5 @@ deps.gradleConfig.simpleModule(project)
 deps.gradleConfig.simpleMavenPublishing(project)
 
 dependencies {
-    api deps.libs.zJsBridge
+    api deps.libs.ZJsBridge
 }
