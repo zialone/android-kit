@@ -20,12 +20,12 @@
             <option value="$PROJECT_DIR$/vendors/vendor_log" />
             <option value="$PROJECT_DIR$/vendors/vendor_storage" />
             <option value="$PROJECT_DIR$/vendors/vendor_utils" />
+            <option value="$PROJECT_DIR$/vendors/vendor_views_stateview" />
             <option value="$PROJECT_DIR$/vendors/vendor_webview" />
             <option value="$PROJECT_DIR$/vendors/vendor_wechat_login" />
             <option value="$PROJECT_DIR$/widgets/widget_core" />
             <option value="$PROJECT_DIR$/widgets/widget_di" />
             <option value="$PROJECT_DIR$/widgets/widget_res" />
-            <option value="$PROJECT_DIR$/widgets/widget_views_stateview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

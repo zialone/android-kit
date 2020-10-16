@@ -1,4 +1,4 @@
-package com.hcanyz.android_kit.widget.views.stateview
+package com.hcanyz.android_kit.vendor.views.stateview
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

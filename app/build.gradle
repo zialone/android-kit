@@ -39,11 +39,11 @@ dependencies {
     implementation depsApp.vendor_webview
     implementation depsApp.vendor_bmap
     implementation depsApp.vendor_wechat_login
+    implementation depsApp.vendor_views_stateview
 
     implementation depsApp.widget_core
     implementation depsApp.widget_di
     implementation depsApp.widget_res
-    implementation depsApp.widget_views_stateview
 
     implementation deps.libs.permission
 

@@ -30,6 +30,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/hello"
             app:msv_emptyView="@layout/stateview_empty_default"
+            app:msv_errorView="@layout/stateview_error_default"
             app:msv_loadingView="@layout/stateview_loading_default">
 
             <Button

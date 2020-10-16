@@ -13,8 +13,9 @@ import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.vendor.storage.uniqueKeyUntilUninstalled
 import com.hcanyz.android_kit.vendor.storage.zzDownloadImage2MediaStore
 import com.hcanyz.android_kit.vendor.storage.zzGetExternalFilesDir
+import com.hcanyz.android_kit.vendor.views.stateview.customizeStateEmpty
+import com.hcanyz.android_kit.vendor.views.stateview.customizeStateError
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
-import com.hcanyz.android_kit.widget.views.stateview.customizeStateEmpty
 import com.kennyc.view.MultiStateView
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         view.context
 
         msv_test.customizeStateEmpty("$title")
+        msv_test.customizeStateError("$title", View.OnClickListener { stateView(view) })
 
         msv_test.viewState = MultiStateView.ViewState.LOADING
 
