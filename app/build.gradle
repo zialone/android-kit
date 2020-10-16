@@ -24,6 +24,8 @@ repositories {
     }
 }
 
+deps.gradleConfig.simpleDownloadDependencies(project)
+
 dependencies {
     implementation deps.libs.appcompat
     implementation deps.libs.constraintLayout
