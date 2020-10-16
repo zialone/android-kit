@@ -35,7 +35,7 @@ class ZDiModuleCommon {
                 override fun log(message: String) {
                     ZLog.d("ZHttp", message)
                 }
-            }))
+            }).setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 
