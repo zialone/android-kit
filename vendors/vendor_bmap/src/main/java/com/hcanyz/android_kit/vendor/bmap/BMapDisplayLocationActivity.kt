@@ -67,7 +67,9 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
             override fun onGetPoiIndoorResult(poiIndoorResult: PoiIndoorResult) {}
 
             //废弃
-            override fun onGetPoiDetailResult(poiDetailResult: PoiDetailResult) {}
+            @Suppress("DEPRECATION")
+            override fun onGetPoiDetailResult(poiDetailResult: PoiDetailResult) {
+            }
         }
         poiSearch.setOnGetPoiSearchResultListener(listener)
 
