@@ -44,6 +44,7 @@ dependencies {
     implementation depsApp.widget_core
     implementation depsApp.widget_di
     implementation depsApp.widget_res
+    debugImplementation depsApp.widget_api_mock
 
     implementation deps.libs.permission
 
