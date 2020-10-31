@@ -8,7 +8,10 @@ import retrofit2.http.*
 
 interface ZService {
     @GET
-    fun get(@Url url: String, @QueryMap queryMap: Map<String, String> = mapOf()): Call<ResponseBody>
+    fun get(
+        @Url url: String,
+        @QueryMap queryMap: Map<String, String> = emptyMap()
+    ): Call<ResponseBody>
 
     @POST
     fun post(@Url url: String): Call<ResponseBody>
@@ -22,13 +25,13 @@ interface ZService {
     @Headers("Content-Type: application/json;charset=UTF-8")
     fun postJson(
         @Url url: String,
-        @Body jsonMap: @JvmSuppressWildcards Map<String, Any>
+        @Body jsonMap: @JvmSuppressWildcards Map<String, Any> = emptyMap()
     ): Call<ResponseBody>
 
     @POST
     @FormUrlEncoded
     fun postForm(
         @Url url: String,
-        @FieldMap formMap: @JvmSuppressWildcards Map<String, Any>
+        @FieldMap formMap: @JvmSuppressWildcards Map<String, Any> = emptyMap()
     ): Call<ResponseBody>
 }

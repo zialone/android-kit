@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.ToastUtils
 import com.hcanyz.android_kit.vendor.bmap.BMapDisplayLocationActivity
 import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
@@ -102,6 +103,15 @@ class MainActivity : AppCompatActivity() {
             .postJson("https://cn.bing.com/", mapOf("10" to arrayListOf(1)))
         zService
             .postForm("https://cn.bing.com/", mapOf("10" to arrayListOf(1)))
+
+        zService.get("demo/1").enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                ToastUtils.showShort(response.body()?.string())
+            }
+        })
     }
 
     private fun webView() {

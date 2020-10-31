@@ -1,11 +1,15 @@
 package com.hcanyz.android_kit.widget.di
 
+import android.content.Context
+import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.http.ZService
 import com.hcanyz.android_kit.vendor.log.ZLog
+import com.hcanyz.android_kit.widget.core.server_url
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,9 +22,13 @@ import javax.inject.Singleton
 class ZDiModuleCommon {
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        @ApplicationContext appContext: Context
+    ): Retrofit {
+        IZConfig.getInstance(appContext)
         return Retrofit.Builder()
-            .baseUrl("https://example.com")
+            .baseUrl(server_url)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
