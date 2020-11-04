@@ -70,9 +70,6 @@ def vendor = [
 
         liveEventBus            : 'com.jeremyliao:live-event-bus:1.7.2',
 
-        immersionbar            : 'com.gyf.immersionbar:immersionbar:3.0.0',
-        immersionbarKtx         : 'com.gyf.immersionbar:immersionbar-ktx:3.0.0',
-
         x5webview               : "com.tencent.tbs.tbssdk:sdk:43697",
 
         gson                    : 'com.google.code.gson:gson:2.8.2',
@@ -98,15 +95,18 @@ def vendor = [
         okdownloadOkhttp        : 'com.liulishuo.okdownload:okhttp:1.0.7',
         okdownloadKtx           : 'com.liulishuo.okdownload:ktx:1.0.7',
 
-        // 运行权限申请
-        permission              : 'com.yanzhenjie:permission:2.0.3',
-
         // qrCode
         zxingLite               : 'com.king.zxing:zxing-lite:1.1.9-androidx',
 
         wechatSdk               : 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.4',
 
-        androidUtils            : 'com.blankj:utilcodex:1.29.0'
+        androidUtils            : 'com.blankj:utilcodex:1.29.0',
+
+        immersionbar            : 'com.gyf.immersionbar:immersionbar:3.0.0',
+        immersionbarKtx         : 'com.gyf.immersionbar:immersionbar-ktx:3.0.0',
+        //
+        //        // 运行权限申请
+        //        permission              : 'com.yanzhenjie:permission:2.0.3',
 ]
 
 def test = [

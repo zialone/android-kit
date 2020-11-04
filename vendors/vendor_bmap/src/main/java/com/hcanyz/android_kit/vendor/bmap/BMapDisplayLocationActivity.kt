@@ -15,8 +15,8 @@ import com.baidu.mapapi.map.MyLocationData
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.core.SearchResult
 import com.baidu.mapapi.search.poi.*
-import com.yanzhenjie.permission.AndPermission
-import com.yanzhenjie.permission.runtime.Permission
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.PermissionUtils
 import kotlinx.android.synthetic.main.activity_b_map_display_location.*
 
 
@@ -31,20 +31,16 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
 
         bmap_test.map.setMapStatus(MapStatusUpdateFactory.newLatLng(LatLng(22.61667, 114.06667)))
 
-        val runtime = AndPermission.with(this).runtime()
-        runtime
-            .permission(
-                Permission.READ_PHONE_STATE,
-                Permission.ACCESS_COARSE_LOCATION,
-                Permission.ACCESS_FINE_LOCATION
-            )
-            .onGranted {
-                findLocation()
+        PermissionUtils.permission(PermissionConstants.PHONE, PermissionConstants.LOCATION)
+            .rationale { _, shouldRequest -> shouldRequest.again(true) }
+            .callback { isAllGranted, _, deniedForever, _ ->
+                if (isAllGranted) {
+                    findLocation()
+                } else if (deniedForever.isNotEmpty()) {
+                    PermissionUtils.launchAppDetailsSettings()
+                }
             }
-            .onDenied {
-                runtime.setting().start(0)
-            }
-            .start()
+            .request()
 
         val poiSearch = PoiSearch.newInstance()
         poiSearch.applyLifecycle(this)

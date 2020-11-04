@@ -46,7 +46,5 @@ dependencies {
     implementation depsApp.widget_res
     debugImplementation depsApp.widget_api_mock
 
-    implementation deps.libs.permission
-
     debugImplementation deps.libs.leakcanary
 }

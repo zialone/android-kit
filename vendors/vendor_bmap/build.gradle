@@ -11,7 +11,7 @@ repositories {
 dependencies {
     api(name: 'BaiduLBS_AndroidSDK_Lib', ext: 'aar')
 
-    implementation deps.libs.permission
+    implementation depsApp.vendor_utils
 
     implementation deps.libs.appcompat
     implementation deps.libs.lifecycleViewmodel

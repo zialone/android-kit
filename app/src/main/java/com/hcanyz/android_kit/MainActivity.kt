@@ -2,10 +2,14 @@ package com.hcanyz.android_kit
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.gyf.immersionbar.ktx.immersionBar
 import com.hcanyz.android_kit.vendor.bmap.BMapDisplayLocationActivity
 import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
@@ -18,8 +22,6 @@ import com.hcanyz.android_kit.vendor.views.stateview.customizeStateEmpty
 import com.hcanyz.android_kit.vendor.views.stateview.customizeStateError
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
 import com.kennyc.view.MultiStateView
-import com.yanzhenjie.permission.AndPermission
-import com.yanzhenjie.permission.runtime.Permission
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.ResponseBody
@@ -44,6 +46,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        immersionBar {
+            transparentBar()
+            fitsSystemWindows(true)
+            statusBarDarkFont(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK != Configuration.UI_MODE_NIGHT_YES)
+        }
 
         webView()
     }
@@ -124,21 +132,21 @@ class MainActivity : AppCompatActivity() {
                 TAG,
                 view.context.zzGetExternalFilesDir().absolutePath ?: ""
             )
-        } catch (e: Exception) {
-            AndPermission.with(this).runtime()
-                .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE)
-                .rationale { _, _, executor ->
-                    executor.execute()
-                }
-                .onGranted { }
-                .onDenied { }
-                .start()
-        }
 
-        view.context.zzDownloadImage2MediaStore(
-            url = "https://avatars2.githubusercontent.com/u/8407922?s=60&v=4",
-            displayName = ""
-        )
+            view.context.zzDownloadImage2MediaStore(
+                url = "https://avatars2.githubusercontent.com/u/8407922?s=60&v=4",
+                displayName = ""
+            )
+        } catch (e: Exception) {
+            PermissionUtils.permission(PermissionConstants.STORAGE)
+                .rationale { _, shouldRequest -> shouldRequest.again(true) }
+                .callback { isAllGranted, _, deniedForever, _ ->
+                    if (!isAllGranted && deniedForever.isNotEmpty()) {
+                        PermissionUtils.launchAppDetailsSettings()
+                    }
+                }
+                .request()
+        }
     }
 
     fun bmap(view: View) {

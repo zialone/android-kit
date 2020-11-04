@@ -2,16 +2,15 @@ package com.hcanyz.android_kit.vendor.storage
 
 import android.content.ContentValues
 import android.content.Context
-import android.os.Build
 import android.provider.MediaStore
 import androidx.core.content.edit
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.PermissionUtils
 import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.vendor.storage.shared.SHARED_COMMON_ENCRYPTED_SP_NAME
 import com.hcanyz.android_kit.vendor.storage.shared.getSharedPreferences
 import com.liulishuo.okdownload.DownloadTask
 import com.liulishuo.okdownload.kotlin.enqueue
-import com.yanzhenjie.permission.AndPermission
-import com.yanzhenjie.permission.runtime.Permission
 import java.io.File
 import java.util.*
 
@@ -50,12 +49,7 @@ fun Context.zzGetExternalFilesDir(
     type: String? = null,
     unavailableDowngrade: Boolean = false
 ): File {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P || AndPermission.hasPermissions(
-            this,
-            Permission.READ_EXTERNAL_STORAGE,
-            Permission.WRITE_EXTERNAL_STORAGE
-        )
-    ) {
+    if (PermissionUtils.isGranted(*PermissionConstants.getPermissions(PermissionConstants.STORAGE))) {
         val externalFilesDir = getExternalFilesDir(type)
         if (externalFilesDir != null) {
             return externalFilesDir

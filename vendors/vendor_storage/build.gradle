@@ -15,10 +15,9 @@ deps.gradleConfig.simpleDownloadDependencies(project, [compileOnly: true])
 dependencies {
     implementation depsApp.vendor_config
     implementation depsApp.vendor_log
+    implementation depsApp.vendor_utils
 
     api deps.libs.securityCrypto
 
     api deps.libs.lifecycleLivedata
-
-    implementation deps.libs.permission
 }
