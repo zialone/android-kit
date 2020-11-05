@@ -21,6 +21,7 @@ import com.hcanyz.android_kit.vendor.storage.db.ZDbCommon
 import com.hcanyz.android_kit.vendor.storage.uniqueKeyUntilUninstalled
 import com.hcanyz.android_kit.vendor.storage.zzDownloadImage2MediaStore
 import com.hcanyz.android_kit.vendor.storage.zzGetExternalFilesDir
+import com.hcanyz.android_kit.vendor.utils.idle.IdleTaskManager
 import com.hcanyz.android_kit.vendor.utils.utilcodex.SimpleTaskRunnable
 import com.hcanyz.android_kit.vendor.views.stateview.customizeStateEmpty
 import com.hcanyz.android_kit.vendor.views.stateview.customizeStateError
@@ -131,7 +132,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun webView() {
-        webview_test.loadUrl("https://cn.bing.com/")
+        IdleTaskManager().addTask {
+            webview_test.loadUrl("https://cn.bing.com/")
+        }.start()
     }
 
     fun storage(view: View) {
