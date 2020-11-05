@@ -104,9 +104,10 @@ def vendor = [
 
         immersionbar            : 'com.gyf.immersionbar:immersionbar:3.0.0',
         immersionbarKtx         : 'com.gyf.immersionbar:immersionbar-ktx:3.0.0',
-        //
-        //        // 运行权限申请
-        //        permission              : 'com.yanzhenjie:permission:2.0.3',
+
+        andserver                : 'com.yanzhenjie.andserver:api:2.1.6',
+        andserverPlugin          : 'com.yanzhenjie.andserver:plugin:2.1.6',
+        andserverProcessor       : 'com.yanzhenjie.andserver:processor:2.1.6'
 ]
 
 def test = [

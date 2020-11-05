@@ -10,7 +10,7 @@ buildscript {
         classpath deps.libs.kotlinPlugin
         classpath deps.libs.hiltPlguin
         classpath deps.libs.wmRouterPlugin
-        classpath 'com.yanzhenjie.andserver:plugin:2.1.6'
+        classpath deps.libs.andserverPlugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

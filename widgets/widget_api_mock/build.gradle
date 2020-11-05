@@ -7,8 +7,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.yanzhenjie.andserver'
 
 dependencies {
-    implementation 'com.yanzhenjie.andserver:api:2.1.6'
-    kapt 'com.yanzhenjie.andserver:processor:2.1.6'
+    implementation deps.libs.andserver
+    kapt deps.libs.andserverProcessor
 
     implementation deps.libs.startupRuntime
 }
