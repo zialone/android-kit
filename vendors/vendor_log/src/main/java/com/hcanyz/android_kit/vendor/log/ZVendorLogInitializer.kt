@@ -50,7 +50,6 @@ class ZVendorLogInitializer : Initializer<Unit> {
         ZLog.v(TAG, "init success,canLog:$canLog")
 
         // Log.appenderClose()
-        return
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {

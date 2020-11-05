@@ -9,7 +9,7 @@ class ZWidgetApiMockInitializer : Initializer<Unit> {
         ServerManager.init(context).startServer()
     }
 
-    override fun dependencies(): MutableList<Class<out Initializer<*>>> {
-        return mutableListOf()
+    override fun dependencies(): List<Class<out Initializer<*>>> {
+        return emptyList()
     }
 }
