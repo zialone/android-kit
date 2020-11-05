@@ -1,4 +1,4 @@
-package com.hcanyz.android_kit.vendor.utils
+package com.hcanyz.android_kit.vendor.utils.utilcodex
 
 import com.blankj.utilcode.util.ThreadUtils
 
