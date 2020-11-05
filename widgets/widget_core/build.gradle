@@ -1,3 +1,9 @@
 deps.gradleConfig.simpleModule(project)
 
+deps.gradleConfig.simpleWHRouter(project, [includeCompiler: false])
+
 deps.gradleConfig.simpleMavenPublishing(project)
+
+dependencies {
+    implementation deps.libs.startupRuntime
+}
