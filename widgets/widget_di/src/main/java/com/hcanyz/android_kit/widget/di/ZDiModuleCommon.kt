@@ -1,9 +1,10 @@
 package com.hcanyz.android_kit.widget.di
 
 import android.content.Context
-import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.http.ZService
 import com.hcanyz.android_kit.vendor.log.ZLog
+import com.hcanyz.android_kit.vendor.storage.db.ZDbCommon
+import com.hcanyz.android_kit.vendor.storage.zzCreateCommonDb
 import com.hcanyz.android_kit.widget.core.server_url
 import dagger.Module
 import dagger.Provides
@@ -23,10 +24,8 @@ class ZDiModuleCommon {
     @Provides
     @Singleton
     fun provideRetrofit(
-        okHttpClient: OkHttpClient,
-        @ApplicationContext appContext: Context
+        okHttpClient: OkHttpClient
     ): Retrofit {
-        IZConfig.getInstance(appContext)
         return Retrofit.Builder()
             .baseUrl(server_url)
             .addConverterFactory(GsonConverterFactory.create())
@@ -51,5 +50,13 @@ class ZDiModuleCommon {
     @Singleton
     fun provideZService(retrofit: Retrofit): ZService {
         return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideZDbCommon(
+        @ApplicationContext appContext: Context
+    ): ZDbCommon {
+        return appContext.zzCreateCommonDb()
     }
 }

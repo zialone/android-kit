@@ -317,7 +317,7 @@ def simpleRoom() {
 
         if (params.includeLib) {
             targetProject.dependencies {
-                implementation deps.libs.room
+                api deps.libs.room
             }
         }
     }

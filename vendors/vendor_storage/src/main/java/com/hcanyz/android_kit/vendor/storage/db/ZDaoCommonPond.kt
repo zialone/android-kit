@@ -1,15 +1,12 @@
 package com.hcanyz.android_kit.vendor.storage.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface ZDaoCommonPond {
-    @Insert
-    fun insert(users: ZCommonPond)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertOrUpdate(pond: ZCommonPond)
 
     @Delete
     fun delete(user: ZCommonPond)

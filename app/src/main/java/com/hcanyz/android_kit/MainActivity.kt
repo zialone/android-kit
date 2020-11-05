@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.gyf.immersionbar.ktx.immersionBar
 import com.hcanyz.android_kit.vendor.bmap.BMapDisplayLocationActivity
@@ -15,9 +16,12 @@ import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.http.ZService
 import com.hcanyz.android_kit.vendor.log.ZLog
+import com.hcanyz.android_kit.vendor.storage.db.ZCommonPond
+import com.hcanyz.android_kit.vendor.storage.db.ZDbCommon
 import com.hcanyz.android_kit.vendor.storage.uniqueKeyUntilUninstalled
 import com.hcanyz.android_kit.vendor.storage.zzDownloadImage2MediaStore
 import com.hcanyz.android_kit.vendor.storage.zzGetExternalFilesDir
+import com.hcanyz.android_kit.vendor.utils.SimpleTaskRunnable
 import com.hcanyz.android_kit.vendor.views.stateview.customizeStateEmpty
 import com.hcanyz.android_kit.vendor.views.stateview.customizeStateError
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
@@ -29,6 +33,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,6 +47,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var zService: ZService
+
+    @Inject
+    lateinit var zDbCommon: ZDbCommon
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,6 +135,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun storage(view: View) {
+        ThreadUtils.executeByIo(SimpleTaskRunnable {
+            zDbCommon.commonPondDao()
+                .insertOrUpdate(ZCommonPond("test", UUID.randomUUID().toString()))
+        })
+
         try {
             ZLog.d(
                 TAG,

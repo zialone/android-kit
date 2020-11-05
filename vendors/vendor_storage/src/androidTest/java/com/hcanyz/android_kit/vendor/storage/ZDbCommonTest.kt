@@ -44,10 +44,10 @@ class ZDbCommonTest {
     @Throws(Exception::class)
     fun pondDaoTest() {
         val pondDao = dbCommon.commonPondDao()
-        pondDao.insert(ZCommonPond("feature_login_accountInfo", "{}"))
-        pondDao.insert(ZCommonPond("feature_login_accountInfo_135xxxxxxxx", "{\"name\":\"135\"}"))
-        pondDao.insert(ZCommonPond("feature_login_accountInfo_152xxxxxxxx", "{}"))
-        pondDao.insert(ZCommonPond("vendor_config_global_config", "{}"))
+        pondDao.insertOrUpdate(ZCommonPond("feature_login_accountInfo", "{}"))
+        pondDao.insertOrUpdate(ZCommonPond("feature_login_accountInfo_135xxxxxxxx", "{\"name\":\"135\"}"))
+        pondDao.insertOrUpdate(ZCommonPond("feature_login_accountInfo_152xxxxxxxx", "{}"))
+        pondDao.insertOrUpdate(ZCommonPond("vendor_config_global_config", "{}"))
 
         val all = pondDao.getAll()
         assertThat(all.size, equalTo(4))

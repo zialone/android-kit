@@ -4,9 +4,11 @@ import android.content.ContentValues
 import android.content.Context
 import android.provider.MediaStore
 import androidx.core.content.edit
+import androidx.room.Room
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import com.hcanyz.android_kit.vendor.log.ZLog
+import com.hcanyz.android_kit.vendor.storage.db.ZDbCommon
 import com.hcanyz.android_kit.vendor.storage.shared.SHARED_COMMON_ENCRYPTED_SP_NAME
 import com.hcanyz.android_kit.vendor.storage.shared.getSharedPreferences
 import com.liulishuo.okdownload.DownloadTask
@@ -75,4 +77,11 @@ fun Context.zzDownloadImage2MediaStore(url: String, displayName: String) {
         val task = DownloadTask.Builder(url, imageUri).build()
         task.enqueue { _, _, _ -> }
     }
+}
+
+fun Context.zzCreateCommonDb(): ZDbCommon {
+    return Room.databaseBuilder(
+        this, ZDbCommon::class.java
+        , ZDbCommon::class.java.simpleName
+    ).build()
 }
