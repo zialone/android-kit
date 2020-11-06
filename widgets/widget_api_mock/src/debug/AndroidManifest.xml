@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hcanyz.android_kit.widget.core">
+    package="com.hcanyz.android_kit.widget.api_mock">
 
     <application
         android:usesCleartextTraffic="true"

@@ -65,6 +65,12 @@ class MainActivity : AppCompatActivity() {
         webView()
     }
 
+    private fun webView() {
+        IdleTaskManager().addTask {
+            webview_test.loadUrl("https://cn.bing.com/")
+        }.start()
+    }
+
     fun hello(view: View) {
         view.background
 
@@ -113,6 +119,10 @@ class MainActivity : AppCompatActivity() {
                     msv_test.viewState = MultiStateView.ViewState.ERROR
                 }
             })
+    }
+
+    fun api(view: View) {
+        view.context
 
         zService
             .post("https://cn.bing.com/")
@@ -129,12 +139,6 @@ class MainActivity : AppCompatActivity() {
                 ToastUtils.showShort(response.body()?.string())
             }
         })
-    }
-
-    private fun webView() {
-        IdleTaskManager().addTask {
-            webview_test.loadUrl("https://cn.bing.com/")
-        }.start()
     }
 
     fun storage(view: View) {

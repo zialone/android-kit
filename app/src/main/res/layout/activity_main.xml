@@ -41,6 +41,16 @@
                 android:textAllCaps="false" />
         </com.kennyc.view.MultiStateView>
 
+        <Button
+            android:id="@+id/tv_api"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="api"
+            android:text="api"
+            android:textAllCaps="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/msv_test" />
 
         <Button
             android:id="@+id/tv_logSwitch"
@@ -52,7 +62,7 @@
             android:textAllCaps="false"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/msv_test" />
+            app:layout_constraintTop_toBottomOf="@id/tv_api" />
 
         <com.hcanyz.android_kit.vendor.webview.chromium.DefaultWebViewChromium
             android:id="@+id/webview_test"
