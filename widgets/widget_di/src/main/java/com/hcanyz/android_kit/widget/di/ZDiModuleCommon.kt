@@ -5,7 +5,7 @@ import com.hcanyz.android_kit.vendor.http.ZService
 import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.vendor.storage.db.ZDbCommon
 import com.hcanyz.android_kit.vendor.storage.zzCreateCommonDb
-import com.hcanyz.android_kit.widget.core.server_url
+import com.hcanyz.android_kit.widget.core.EvCoreConfigManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,10 +24,14 @@ class ZDiModuleCommon {
     @Provides
     @Singleton
     fun provideRetrofit(
+        @ApplicationContext appContext: Context,
         okHttpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(server_url)
+            .baseUrl(
+                EvCoreConfigManager.getSingleton(appContext)
+                    .getEvItemCurrentValue(EvCoreConfigManager.EV_ITEM_SERVERURL)
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

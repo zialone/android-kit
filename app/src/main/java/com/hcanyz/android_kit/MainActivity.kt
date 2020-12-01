@@ -25,7 +25,9 @@ import com.hcanyz.android_kit.vendor.utils.idle.IdleTaskManager
 import com.hcanyz.android_kit.vendor.utils.utilcodex.SimpleTaskRunnable
 import com.hcanyz.android_kit.vendor.views.stateview.customizeStateEmpty
 import com.hcanyz.android_kit.vendor.views.stateview.customizeStateError
+import com.hcanyz.android_kit.widget.core.EvCoreConfigManager
 import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
+import com.hcanyz.environmentvariable.setting.ui.EvSwitchActivity
 import com.kennyc.view.MultiStateView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -101,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         view.context
 
         msv_test.customizeStateEmpty("$title")
-        msv_test.customizeStateError("$title", View.OnClickListener { stateView(view) })
+        msv_test.customizeStateError("$title") { stateView(view) }
 
         msv_test.viewState = MultiStateView.ViewState.LOADING
 
@@ -171,5 +173,9 @@ class MainActivity : AppCompatActivity() {
 
     fun bmap(view: View) {
         startActivity(Intent(view.context, BMapDisplayLocationActivity::class.java))
+    }
+
+    fun evSwitch(view: View) {
+        EvSwitchActivity.skip(view.context, arrayListOf(EvCoreConfigManager::class.java))
     }
 }

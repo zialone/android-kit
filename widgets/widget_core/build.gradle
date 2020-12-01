@@ -2,7 +2,20 @@ deps.gradleConfig.simpleModule(project)
 
 deps.gradleConfig.simpleWHRouter(project, [includeCompiler: false])
 
+deps.gradleConfig.simpleEvVariable(project)
+
 deps.gradleConfig.simpleMavenPublishing(project)
+
+android {
+    buildTypes {
+        debug {
+            buildConfigField("String", "EV_VARIANT", "\"dev\"")
+        }
+        release {
+            buildConfigField("String", "EV_VARIANT", "\"release\"")
+        }
+    }
+}
 
 dependencies {
     implementation deps.libs.startupRuntime

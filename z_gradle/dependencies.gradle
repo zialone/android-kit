@@ -89,6 +89,10 @@ def vendor = [
         // recyclerview adapter
         ZAdapter                : 'com.github.hcanyz.ZAdapter:ZAdapter:1.0.3.1',
 
+        zEvVariable             : 'com.github.hcanyz:android-environment-variable:1.0.1',
+        zEvVariableSetting      : 'com.github.hcanyz.android-environment-variable:environment-variable-setting:1.0.1',
+        zEvVariableCompiler     : 'com.github.hcanyz.android-environment-variable:compiler:1.0.1',
+
         // 下载管理
         okdownload              : 'com.liulishuo.okdownload:okdownload:1.0.7',
         okdownloadSqlite        : 'com.liulishuo.okdownload:sqlite:1.0.7',
@@ -348,6 +352,28 @@ def simpleHilt() {
     }
 }
 
+def simpleEvVariable() {
+    return { targetProject, params = [] ->
+        params = [includeCompiler: true, includeLib: true] + params
+
+        if (params.includeCompiler) {
+            if (!targetProject.getPlugins().findPlugin("kotlin-kapt")) {
+                targetProject.apply plugin: 'kotlin-kapt'
+            }
+
+            targetProject.dependencies {
+                kapt deps.libs.zEvVariableCompiler
+            }
+        }
+
+        if (params.includeLib) {
+            targetProject.dependencies {
+                api deps.libs.zEvVariableSetting
+            }
+        }
+    }
+}
+
 def simpleMavenPublishing() {
     return { targetProject ->
         targetProject.apply from: "$rootDir/z_gradle/maven_publishing.gradle"
@@ -363,6 +389,7 @@ def gradleConfig = [
         simpleWHRouter            : simpleWHRouter(),
         simpleRoom                : simpleRoom(),
         simpleHilt                : simpleHilt(),
+        simpleEvVariable          : simpleEvVariable(),
         simpleMavenPublishing     : simpleMavenPublishing()
 ]
 
