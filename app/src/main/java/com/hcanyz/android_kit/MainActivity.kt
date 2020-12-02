@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.gyf.immersionbar.ktx.immersionBar
+import com.hcanyz.android_kit.databinding.ActivityMainBinding
 import com.hcanyz.android_kit.vendor.bmap.BMapDisplayLocationActivity
 import com.hcanyz.android_kit.vendor.config.BuildConfig
 import com.hcanyz.android_kit.vendor.config.IZConfig
@@ -30,7 +31,6 @@ import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
 import com.hcanyz.environmentvariable.setting.ui.EvSwitchActivity
 import com.kennyc.view.MultiStateView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,6 +41,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     companion object {
         private const val TAG = "TAG.Main"
     }
@@ -54,9 +55,11 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var zDbCommon: ZDbCommon
 
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         immersionBar {
             transparentBar()
@@ -69,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun webView() {
         IdleTaskManager().addTask {
-            webview_test.loadUrl("https://cn.bing.com/")
+            binding.webviewTest.loadUrl("https://cn.bing.com/")
         }.start()
     }
 
@@ -96,16 +99,16 @@ class MainActivity : AppCompatActivity() {
 
         izConfig.canLog = !izConfig.canLog
 
-        tv_logSwitch.text = "logSwitch: ${izConfig.canLog}"
+        binding.tvLogSwitch.text = "logSwitch: ${izConfig.canLog}"
     }
 
     fun stateView(view: View) {
         view.context
 
-        msv_test.customizeStateEmpty("$title")
-        msv_test.customizeStateError("$title") { stateView(view) }
+        binding.msvTest.customizeStateEmpty("$title")
+        binding.msvTest.customizeStateError("$title") { stateView(view) }
 
-        msv_test.viewState = MultiStateView.ViewState.LOADING
+        binding.msvTest.viewState = MultiStateView.ViewState.LOADING
 
         zService
             .get("https://cn.bing.com/")
@@ -114,11 +117,11 @@ class MainActivity : AppCompatActivity() {
                     call: Call<ResponseBody>,
                     response: Response<ResponseBody>
                 ) {
-                    msv_test.viewState = MultiStateView.ViewState.CONTENT
+                    binding.msvTest.viewState = MultiStateView.ViewState.CONTENT
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    msv_test.viewState = MultiStateView.ViewState.ERROR
+                    binding.msvTest.viewState = MultiStateView.ViewState.ERROR
                 }
             })
     }

@@ -7,4 +7,6 @@ dependencies {
     api deps.libs.immersionbar
     api deps.libs.immersionbarKtx
     api deps.libs.liveEventBus
+    api deps.libs.ZAdapter
+    api deps.libs.viewbindingDelegate
 }

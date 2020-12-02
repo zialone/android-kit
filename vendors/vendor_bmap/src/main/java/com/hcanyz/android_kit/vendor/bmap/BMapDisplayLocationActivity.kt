@@ -17,19 +17,28 @@ import com.baidu.mapapi.search.core.SearchResult
 import com.baidu.mapapi.search.poi.*
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
-import kotlinx.android.synthetic.main.activity_b_map_display_location.*
+import com.hcanyz.android_kit.vendor.bmap.databinding.ActivityBMapDisplayLocationBinding
 
 
 class BMapDisplayLocationActivity : AppCompatActivity() {
+
+    private val binding by lazy { ActivityBMapDisplayLocationBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.zzBMapLazyInit()
         setContentView(R.layout.activity_b_map_display_location)
 
-        bmap_test.applyLifecycle(this)
+        binding.bmapTest.applyLifecycle(this)
 
-        bmap_test.map.setMapStatus(MapStatusUpdateFactory.newLatLng(LatLng(22.61667, 114.06667)))
+        binding.bmapTest.map.setMapStatus(
+            MapStatusUpdateFactory.newLatLng(
+                LatLng(
+                    22.61667,
+                    114.06667
+                )
+            )
+        )
 
         PermissionUtils.permission(PermissionConstants.PHONE, PermissionConstants.LOCATION)
             .rationale { _, shouldRequest -> shouldRequest.again(true) }
@@ -47,14 +56,14 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
 
         val listener: OnGetPoiSearchResultListener = object : OnGetPoiSearchResultListener {
             override fun onGetPoiResult(poiResult: PoiResult) {
-                bmap_test.map.clear()
+                binding.bmapTest.map.clear()
                 if (poiResult.error === SearchResult.ERRORNO.NO_ERROR) {
 
                     poiResult.allPoi?.forEachIndexed { index, poi ->
                         if (index == 0) {
-                            bmap_test.map.setMapStatus(MapStatusUpdateFactory.newLatLng(poi.location))
+                            binding.bmapTest.map.setMapStatus(MapStatusUpdateFactory.newLatLng(poi.location))
                         }
-                        bmap_test.map.addOverlay(DotOptions().center(poi.location))
+                        binding.bmapTest.map.addOverlay(DotOptions().center(poi.location))
                     }
                 }
             }
@@ -69,7 +78,7 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
         }
         poiSearch.setOnGetPoiSearchResultListener(listener)
 
-        et_test.addTextChangedListener(object : TextWatcher {
+        binding.etTest.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -89,7 +98,7 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
     }
 
     private fun findLocation() {
-        bmap_test.map.isMyLocationEnabled = true
+        binding.bmapTest.map.isMyLocationEnabled = true
 
         val locationClient = LocationClient(this)
         locationClient.applyLifecycle(this)
@@ -120,7 +129,7 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
                 .latitude(location.latitude)
                 .longitude(location.longitude)
                 .build()
-            bmap_test.map.setMyLocationData(locData)
+            binding.bmapTest.map.setMyLocationData(locData)
         }
     }
 }

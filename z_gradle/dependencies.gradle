@@ -1,7 +1,7 @@
 apply from: "$rootDir/z_gradle/tools.gradle"
 
 def versions = [
-        kotlin          : "1.4.10",
+        kotlin          : "1.4.20",
         support         : "1.2.0",
         lifecycleVersion: '2.2.0',
         roomVersion     : '2.2.5',
@@ -102,6 +102,8 @@ def vendor = [
         // qrCode
         zxingLite               : 'com.king.zxing:zxing-lite:1.1.9-androidx',
 
+        viewbindingDelegate     : 'com.kirich1409.viewbindingpropertydelegate:vbpd-noreflection:1.3.1',
+
         wechatSdk               : 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.4',
 
         androidUtils            : 'com.blankj:utilcodex:1.29.0',
@@ -186,6 +188,10 @@ def simpleAndroid() {
 
             kotlinOptions { jvmTarget = 1.8 }
 
+            buildFeatures {
+                viewBinding = true
+            }
+
             if (targetProject.getPlugins().findPlugin("com.android.library")) {
                 // packageBuildConfig(false)
             } else if (targetProject.getPlugins().findPlugin("com.android.application")) {
@@ -269,11 +275,13 @@ def simpleDownloadDependencies() {
 @SuppressWarnings("GrMethodMayBeStatic")
 def simpleModule() {
     return { targetProject, params = [] ->
-        params = [isApplication: false, includeTest: true] + params
+        params = [isApplication: false, includeTest: true, includeKotlinParcelize: false] + params
 
         targetProject.apply plugin: params.isApplication ? 'com.android.application' : 'com.android.library'
         targetProject.apply plugin: 'kotlin-android'
-        targetProject.apply plugin: 'kotlin-android-extensions'
+        if (params.includeKotlinParcelize) {
+            targetProject.apply plugin: 'kotlin-parcelize'
+        }
 
         deps.gradleConfig.simpleAndroid(targetProject)
         deps.gradleConfig.simpleDependencies(targetProject, [includeTest: params.includeTest])
