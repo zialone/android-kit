@@ -7,7 +7,7 @@ import com.yanzhenjie.andserver.annotation.RestController
 class DemoController {
 
     @GetMapping("/demo/1")
-    fun login(): String? {
-        return "successful."
+    fun login(): String {
+        return "DemoController /demo/1 successful."
     }
 }

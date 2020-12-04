@@ -138,6 +138,7 @@ class MainActivity : AppCompatActivity() {
 
         zService.get("demo/1").enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                ToastUtils.showShort(t.toString())
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
