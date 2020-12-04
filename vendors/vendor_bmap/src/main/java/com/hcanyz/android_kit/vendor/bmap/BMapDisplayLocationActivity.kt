@@ -18,6 +18,7 @@ import com.baidu.mapapi.search.poi.*
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import com.hcanyz.android_kit.vendor.bmap.databinding.ActivityBMapDisplayLocationBinding
+import java.lang.ref.WeakReference
 
 
 class BMapDisplayLocationActivity : AppCompatActivity() {
@@ -112,15 +113,20 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
 
         locationClient.locOption = option
 
-        val myLocationListener = MyLocationListener()
+        val myLocationListener = MyLocationListener(this)
         locationClient.registerLocationListener(myLocationListener)
 
         locationClient.start()
     }
 
-    private inner class MyLocationListener() : BDAbstractLocationListener() {
+    private class MyLocationListener(activity: BMapDisplayLocationActivity) :
+        BDAbstractLocationListener() {
+
+        private val reference = WeakReference(activity)
+
         override fun onReceiveLocation(location: BDLocation?) {
-            if (location == null || isDestroyed) {
+            val activity = reference.get() ?: return
+            if (location == null || activity.isDestroyed) {
                 return
             }
             val locData = MyLocationData.Builder()
@@ -129,7 +135,7 @@ class BMapDisplayLocationActivity : AppCompatActivity() {
                 .latitude(location.latitude)
                 .longitude(location.longitude)
                 .build()
-            binding.bmapTest.map.setMyLocationData(locData)
+            activity.binding.bmapTest.map.setMyLocationData(locData)
         }
     }
 }
