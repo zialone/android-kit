@@ -21,6 +21,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ApplicationComponent::class)
 class ZDiModuleCommon {
+
     @Provides
     @Singleton
     fun provideRetrofit(
@@ -39,14 +40,10 @@ class ZDiModuleCommon {
 
     @Provides
     @Singleton
-    @Suppress("ObjectLiteralToLambda")
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-                override fun log(message: String) {
-                    ZLog.d("ZHttp", message)
-                }
-            }).setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(HttpLoggingInterceptor { message -> ZLog.d("ZHttp", message) }
+                .setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 
