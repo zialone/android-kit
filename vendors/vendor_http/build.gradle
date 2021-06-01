@@ -5,5 +5,5 @@ deps.gradleConfig.simpleMavenPublishing(project)
 dependencies {
     api deps.libs.retrofit
     api deps.libs.retrofitGson
-    api deps.libs.retrofitLogging
+    deps.libs.retrofitLogging(it)
 }

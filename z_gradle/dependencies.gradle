@@ -1,25 +1,28 @@
 apply from: "$rootDir/z_gradle/tools.gradle"
 
 def versions = [
-        kotlin          : "1.4.20",
+        kotlin          : "1.5.10",
         support         : "1.2.0",
         lifecycleVersion: '2.2.0',
-        roomVersion     : '2.2.5',
+        roomVersion     : '2.3.0',
 ]
 
 def builds = [
         buildToolsVersion: "30.0.2",
         minSdkVersion    : 21,
-        compileSdkVersion: 29,
-        targetSdkVersion : 29,
+        compileSdkVersion: 30,
+        targetSdkVersion : 30,
 ]
 
 def google = [
-        androidPlugin     : "com.android.tools.build:gradle:4.1.1",
+        androidPlugin     : "com.android.tools.build:gradle:4.2.1",
         androidxCore      : "androidx.core:core:${versions.support}",
         appcompat         : "androidx.appcompat:appcompat:${versions.support}",
-        fragmentKtx       : 'androidx.fragment:fragment-ktx:${versions.support}',
-        recyclerview      : "androidx.recyclerview:recyclerview:1.1.0",
+        fragment          : "androidx.fragment:fragment:1.3.3",
+        fragmentKtx       : "androidx.fragment:fragment-ktx:1.3.3",
+        activity          : "androidx.activity:activity:1.2.3",
+        activityKtx       : "androidx.activity:activity-ktx:1.2.3",
+        recyclerview      : "androidx.recyclerview:recyclerview:1.2.0",
         constraintLayout  : "androidx.constraintlayout:constraintlayout:2.0.4",
 
         lifecycleViewmodel: "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycleVersion}",
@@ -29,57 +32,62 @@ def google = [
         lifecycleExtension: "androidx.lifecycle:lifecycle-extension:${versions.lifecycleVersion}",
 
         coordinatorlayout : "androidx.coordinatorlayout:coordinatorlayout:1.1.0",
-        material          : "com.google.android.material:material:1.2.1",
+        material          : "com.google.android.material:material:1.3.0",
         viewpager2        : "androidx.viewpager2:viewpager2:1.0.0",
 
-        startupRuntime    : 'androidx.startup:startup-runtime:1.0.0-alpha02',
+        startupRuntime    : 'androidx.startup:startup-runtime:1.0.0',
 
         room              : "androidx.room:room-runtime:${versions.roomVersion}",
         roomKtx           : "androidx.room:room-ktx:${versions.roomVersion}",
         roomCompiler      : "androidx.room:room-compiler:${versions.roomVersion}",
 
-        securityCrypto    : "androidx.security:security-crypto:1.0.0-rc03",
+        securityCrypto    : "androidx.security:security-crypto:1.0.0",
 
-        hiltPlguin        : "com.google.dagger:hilt-android-gradle-plugin:2.28-alpha",
-        hilt              : "com.google.dagger:hilt-android:2.28-alpha",
-        hiltCompiler      : "com.google.dagger:hilt-android-compiler:2.28-alpha"
+        hiltPlguin        : "com.google.dagger:hilt-android-gradle-plugin:2.36",
+        hilt              : "com.google.dagger:hilt-android:2.36",
+        hiltCompiler      : "com.google.dagger:hilt-android-compiler:2.36"
 ]
 
 def kotlin = [
         kotlinPlugin   : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
         reflect        : "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}",
-        stdLib         : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",
-        androidxKtxCore: "androidx.core:core-ktx:1.3.2",
+        stdLib         : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
+        androidxKtxCore: "androidx.core:core-ktx:1.5.0-rc02",
 ]
 
 def vendor = [
-        glide                   : "com.github.bumptech.glide:glide:4.11.0",
-        glideCompiler           : "com.github.bumptech.glide:compiler:4.11.0",
+        glide                   : "com.github.bumptech.glide:glide:4.12.0",
+        glideCompiler           : "com.github.bumptech.glide:compiler:4.12.0",
 
-        androidtiffbitmapfactory: "com.github.beyka:androidtiffbitmapfactory:0.9.8.7",
+        androidtiffbitmapfactory: "com.github.beyka:androidtiffbitmapfactory:0.9.8.8",
 
         retrofit                : "com.squareup.retrofit2:retrofit:2.9.0",
         retrofitGson            : "com.squareup.retrofit2:converter-gson:2.9.0",
-        retrofitLogging         : "com.squareup.okhttp3:logging-interceptor:4.9.0",
+        retrofitLogging         : { dependencies ->
+            dependencies.api("com.squareup.okhttp3:logging-interceptor:4.9.1") {
+                exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+                exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+            }
+        },
 
-        xlog                    : "com.tencent.mars:mars-xlog:1.2.4",
+        xlog                    : "com.tencent.mars:mars-xlog:1.2.6",
 
-        smartRefreshLayout      : 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1',
+        smartRefreshLayout      : 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.3',
 
-        photoView               : 'com.github.chrisbanes:PhotoView:2.0.0',
+        photoView               : 'com.github.chrisbanes:PhotoView:2.3.0',
 
-        liveEventBus            : 'com.jeremyliao:live-event-bus:1.7.2',
+        liveEventBus            : 'com.jeremyliao:live-event-bus:1.7.3',
 
-        x5webview               : "com.tencent.tbs.tbssdk:sdk:43967",
+        x5webview               : "com.tencent.tbs.tbssdk:sdk:43993",
 
-        gson                    : 'com.google.code.gson:gson:2.8.2',
+        gson                    : 'com.google.code.gson:gson:2.8.7',
 
         // TODO 这个版本可以升级，一些优化方法没有release
         wmRouter                : 'com.sankuai.waimai.router:router:1.2.0',
         wmRouterCompiler        : 'com.sankuai.waimai.router:compiler:1.2.0',
         wmRouterPlugin          : 'com.sankuai.waimai.router:plugin:1.2.0',
 
-        leakcanary              : 'com.squareup.leakcanary:leakcanary-android:2.4',
+        leakcanary              : 'com.squareup.leakcanary:leakcanary-android:2.7',
 
         // 屏幕适配
         autosize                : 'me.jessyan:autosize:1.2.1',
@@ -93,27 +101,27 @@ def vendor = [
         zEvVariableSetting      : 'com.github.hcanyz.android-environment-variable:environment-variable-setting:1.0.1.1',
         zEvVariableCompiler     : 'com.github.hcanyz.android-environment-variable:compiler:1.0.1.1',
 
-        // 下载管理
+        // 下载管理 - TODO Aria
         okdownload              : 'com.liulishuo.okdownload:okdownload:1.0.7',
         okdownloadSqlite        : 'com.liulishuo.okdownload:sqlite:1.0.7',
         okdownloadOkhttp        : 'com.liulishuo.okdownload:okhttp:1.0.7',
         okdownloadKtx           : 'com.liulishuo.okdownload:ktx:1.0.7',
 
         // qrCode
-        zxingLite               : 'com.king.zxing:zxing-lite:1.1.9-androidx',
+        zxingLite               : 'com.king.zxing:zxing-lite:2.0.3',
 
-        viewbindingDelegate     : 'com.kirich1409.viewbindingpropertydelegate:vbpd-noreflection:1.3.1',
+        viewbindingDelegate     : 'com.kirich1409.viewbindingpropertydelegate:vbpd-noreflection:1.4.1',
 
-        wechatSdk               : 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.4',
+        wechatSdk               : 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.7.0',
 
-        androidUtils            : 'com.blankj:utilcodex:1.29.0',
+        androidUtils            : 'com.blankj:utilcodex:1.30.5',
 
         immersionbar            : 'com.gyf.immersionbar:immersionbar:3.0.0',
         immersionbarKtx         : 'com.gyf.immersionbar:immersionbar-ktx:3.0.0',
 
-        andserver               : 'com.yanzhenjie.andserver:api:2.1.6',
-        andserverPlugin         : 'com.yanzhenjie.andserver:plugin:2.1.6',
-        andserverProcessor      : 'com.yanzhenjie.andserver:processor:2.1.6'
+        andserver               : 'com.yanzhenjie.andserver:api:2.1.9',
+        andserverPlugin         : 'com.yanzhenjie.andserver:plugin:2.1.9',
+        andserverProcessor      : 'com.yanzhenjie.andserver:processor:2.1.9'
 ]
 
 def test = [
@@ -128,10 +136,9 @@ def repositories() {
     return {
         maven { url deps.maven.SNAPSHOT_REPOSITORY_URL }
         maven { url deps.maven.RELEASE_REPOSITORY_URL }
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://maven.aliyun.com/repository/public" }
         maven { url "https://jitpack.io" }
         google()
-        jcenter()
     }
 }
 

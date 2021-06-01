@@ -13,6 +13,7 @@ dependencies {
 
     implementation depsApp.vendor_utils
 
+    implementation deps.libs.activity
     implementation deps.libs.appcompat
     implementation deps.libs.lifecycleViewmodel
     implementation deps.libs.constraintLayout

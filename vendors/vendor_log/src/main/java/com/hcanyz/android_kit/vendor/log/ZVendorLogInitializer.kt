@@ -18,8 +18,10 @@ class ZVendorLogInitializer : Initializer<Unit> {
     override fun create(context: Context) {
         val izConfig = IZConfig.getInstance(context)
 
-        val subPath = "/zlog${izConfig.envMark()
-            .let { return@let if (it.isBlank()) "" else "-${it}" }}"
+        val subPath = "/zlog${
+            izConfig.envMark()
+                .let { return@let if (it.isBlank()) "" else "-${it}" }
+        }"
 
         val logPath = context.filesDir.absolutePath + subPath
 
@@ -36,13 +38,13 @@ class ZVendorLogInitializer : Initializer<Unit> {
             getProcessName(context) ?: "main",
             ""
         )
-        Xlog.setConsoleLogOpen(canLog)
+        Log.setConsoleLogOpen(canLog)
 
         izConfig.canLogLiveData().observeForever {
             ZLog.v(TAG, "change log switch $it")
 
-            Xlog.setLogLevel(if (it) Xlog.LEVEL_VERBOSE else Xlog.LEVEL_INFO)
-            Xlog.setConsoleLogOpen(it)
+            Log.setLevel(if (it) Xlog.LEVEL_VERBOSE else Xlog.LEVEL_INFO, false)
+            Log.setConsoleLogOpen(it)
         }
 
         Log.setLogImp(Xlog())

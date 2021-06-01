@@ -14,9 +14,9 @@ import com.hcanyz.zjsbridge.cotainer.ZWebHelper
 
 class DefaultWebViewChromium : WebView, IZWebView {
 
-    constructor(p0: Context?) : super(p0)
-    constructor(p0: Context?, p1: AttributeSet?) : super(p0, p1)
-    constructor(p0: Context?, p1: AttributeSet?, p2: Int) : super(p0, p1, p2)
+    constructor(p0: Context) : super(p0)
+    constructor(p0: Context, p1: AttributeSet?) : super(p0, p1)
+    constructor(p0: Context, p1: AttributeSet?, p2: Int) : super(p0, p1, p2)
 
     private val zWebHelper: ZWebHelper by lazy { ZWebHelper(this) }
 
@@ -35,7 +35,7 @@ class DefaultWebViewChromium : WebView, IZWebView {
     }
 
     override fun getCurUrl(): String {
-        return url
+        return url.orEmpty()
     }
 
     override fun getCurContext(): Context {
@@ -61,9 +61,9 @@ class DefaultWebViewChromium : WebView, IZWebView {
 
     override fun execJs(sourceJs: String, valueCallback: ValueCallback<String>?) {
         if (ZJsBridge.ZJS_DEBUG) ZJsBridge.log("evaluateJavascript:javascript:$sourceJs")
-        runOnMainThread(Runnable {
+        runOnMainThread {
             evaluateJavascript("javascript:$sourceJs", valueCallback)
-        })
+        }
     }
 
     override fun runOnMainThread(runnable: Runnable) {

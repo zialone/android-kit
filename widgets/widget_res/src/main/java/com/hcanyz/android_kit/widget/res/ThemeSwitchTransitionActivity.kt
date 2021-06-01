@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
+@Suppress("DEPRECATION")
 class ThemeSwitchTransitionActivity : AppCompatActivity() {
 
     companion object {

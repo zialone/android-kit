@@ -79,7 +79,11 @@ class ZLog {
         }
 
         fun flush(isSync: Boolean) {
-            Log.appenderFlush(isSync)
+            if (isSync) {
+                Log.appenderFlushSync(false)
+            } else {
+                Log.appenderFlush()
+            }
         }
     }
 }

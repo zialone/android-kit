@@ -3,6 +3,7 @@ deps.gradleConfig.simpleModule(project)
 deps.gradleConfig.simpleMavenPublishing(project)
 
 dependencies {
+    implementation deps.libs.activity
     implementation deps.libs.appcompat
     implementation deps.libs.lifecycleViewmodel
 
