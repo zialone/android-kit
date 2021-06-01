@@ -24,12 +24,10 @@ repositories {
     }
 }
 
+deps.gradleConfig.simpleUIDependencies(project)
 deps.gradleConfig.simpleDownloadDependencies(project)
 
 dependencies {
-    implementation deps.libs.appcompat
-    implementation deps.libs.constraintLayout
-
     implementation depsApp.feature_template
     implementation depsApp.feature_template_api
 

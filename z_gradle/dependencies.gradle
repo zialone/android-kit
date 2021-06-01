@@ -50,6 +50,7 @@ def google = [
 
 def kotlin = [
         kotlinPlugin   : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+        coroutines     : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0",
         reflect        : "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}",
         stdLib         : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
         androidxKtxCore: "androidx.core:core-ktx:1.5.0-rc02",
@@ -246,6 +247,7 @@ def simpleDependencies() {
 
             // kotlin
             implementation deps.libs.stdLib
+            implementation deps.libs.coroutines
             implementation deps.libs.androidxKtxCore
 
             // test
@@ -254,6 +256,22 @@ def simpleDependencies() {
                 androidTestImplementation deps.libs.runner
                 androidTestImplementation deps.libs.espresso
             }
+        }
+    }
+}
+
+def simpleUIDependencies() {
+    return { targetProject, params = [] ->
+        // params = [] + params
+
+        targetProject.dependencies {
+            // kotlin
+            implementation deps.libs.activity
+            implementation deps.libs.activityKtx
+            implementation deps.libs.fragment
+            implementation deps.libs.fragmentKtx
+            implementation deps.libs.appcompat
+            implementation deps.libs.lifecycleViewmodel
         }
     }
 }
@@ -400,6 +418,7 @@ def gradleConfig = [
         simpleModule              : simpleModule(),
         simpleAndroid             : simpleAndroid(),
         simpleDependencies        : simpleDependencies(),
+        simpleUIDependencies      : simpleUIDependencies(),
         simpleDownloadDependencies: simpleDownloadDependencies(),
         simpleWHRouter            : simpleWHRouter(),
         simpleRoom                : simpleRoom(),

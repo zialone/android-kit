@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ThreadUtils
@@ -67,7 +68,9 @@ class MainActivity : AppCompatActivity() {
             statusBarDarkFont(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK != Configuration.UI_MODE_NIGHT_YES)
         }
 
-        webView()
+        lifecycleScope.launchWhenCreated {
+            webView()
+        }
     }
 
     private fun webView() {
