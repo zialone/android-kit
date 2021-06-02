@@ -22,13 +22,24 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="night"
+            android:text="night"
+            android:textAllCaps="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hello" />
+
         <com.kennyc.view.MultiStateView
             android:id="@+id/msv_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/hello"
+            app:layout_constraintTop_toBottomOf="@id/night"
             app:msv_emptyView="@layout/stateview_empty_default"
             app:msv_errorView="@layout/stateview_error_default"
             app:msv_loadingView="@layout/stateview_loading_default">

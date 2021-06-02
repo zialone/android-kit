@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
@@ -96,6 +97,15 @@ class MainActivity : AppCompatActivity() {
         ZLog.dTime(TAG, "bye")
     }
 
+    @Suppress("UNUSED_PARAMETER")
+    fun night(view: View) {
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+        } else {
+            delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     fun logSwitch(view: View) {
         val izConfig = IZConfig.getInstance(view.context)
@@ -144,7 +154,10 @@ class MainActivity : AppCompatActivity() {
                 ToastUtils.showShort(t.toString())
             }
 
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
                 ToastUtils.showShort(response.body()?.string())
             }
         })

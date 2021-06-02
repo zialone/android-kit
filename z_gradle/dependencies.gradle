@@ -262,7 +262,7 @@ def simpleDependencies() {
 
 def simpleUIDependencies() {
     return { targetProject, params = [] ->
-        // params = [] + params
+        params = [includeViewWidget: true] + params
 
         targetProject.dependencies {
             // kotlin
@@ -272,6 +272,13 @@ def simpleUIDependencies() {
             implementation deps.libs.fragmentKtx
             implementation deps.libs.appcompat
             implementation deps.libs.lifecycleViewmodel
+
+            if (params.includeViewWidget) {
+                // widget
+
+                implementation deps.libs.constraintLayout
+                implementation deps.libs.material
+            }
         }
     }
 }
