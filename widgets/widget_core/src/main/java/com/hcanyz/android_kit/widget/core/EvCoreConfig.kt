@@ -4,7 +4,10 @@ import com.hcanyz.environmentvariable.base.annotations.EvGroup
 import com.hcanyz.environmentvariable.base.annotations.EvItem
 import com.hcanyz.environmentvariable.base.annotations.EvVariant
 
-@EvGroup(defaultVariant = BuildConfig.EV_VARIANT)
+@EvGroup(
+    defaultVariant = BuildConfig.EV_VARIANT,
+    hideNonDefault = BuildConfig.EV_VARIANT == "release"
+)
 class EvCoreConfig {
 
     @EvItem

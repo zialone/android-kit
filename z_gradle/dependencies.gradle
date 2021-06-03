@@ -98,9 +98,9 @@ def vendor = [
         // recyclerview adapter
         ZAdapter                : 'com.github.hcanyz.ZAdapter:ZAdapter:1.0.3.1',
 
-        zEvVariable             : 'com.github.hcanyz:android-environment-variable:1.0.1.1',
-        zEvVariableSetting      : 'com.github.hcanyz.android-environment-variable:environment-variable-setting:1.0.1.1',
-        zEvVariableCompiler     : 'com.github.hcanyz.android-environment-variable:compiler:1.0.1.1',
+        zEvVariable             : 'com.github.hcanyz.android-environment-variable:environment-variable:1.0.2',
+        zEvVariableSetting      : 'com.github.hcanyz.android-environment-variable:environment-variable-setting:1.0.2',
+        zEvVariableCompiler     : 'com.github.hcanyz.android-environment-variable:compiler:1.0.2',
 
         // 下载管理 - TODO Aria
         okdownload              : 'com.liulishuo.okdownload:okdownload:1.0.7',
