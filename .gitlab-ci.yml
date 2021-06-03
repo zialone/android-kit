@@ -1,0 +1,102 @@
+# 一个基础 gitlab ci 配置
+# 需要填写一下配置：
+# NEXUS_URL NEXUS_HTML_VIEW_URL - maven地址，用于编译产物上传，预览地址，会打印在控制台，方便访问
+# $CI_PACKAGES_USER $CI_PACKAGES_PASSWORD - 配置到 gitlab 变量中，maven 账密
+# $JKS_PATH1 $JKS_PATH2 $JKS_STORE_PASSWORD $JKS_KEY_ALIAS $JKS_KEY_PASSWORD - 配置到 gitlab 变量中（！加密隐藏处理），jks 签名文件的路径&账密
+# jks 文件需要丢到 gitlab-runner 机器的 /home/gitlab-runner/$JKS_PATH1/$JKS_PATH2 路径，如果是 docker 运行则要运维配置部署。需要注意生成 jks 安全问题。
+stages:
+  - lintAndtest
+  - build_snapshot
+  - build_release
+
+variables:
+  APP_HOST: "app"
+  APK_OUTPUT_PATH: "${APP_HOST}/build/outputs/*/*/*.apk"
+  NEXUS_URL: ".../repository/mobilegroup-raw/android/artifacts" TODO
+  NEXUS_HTML_VIEW_URL: ".../service/rest/repository/browse/mobilegroup-raw/android/artifacts" TODO
+
+lintAndTest_job:
+  stage: lintAndtest
+  script:
+    - gradle testDebugUnitTest
+    - gradle lintDebug
+  when: manual
+  allow_failure: true
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/test*/**/TEST-*.xml
+  tags:
+    - master_runner_gradle
+
+.build_job:
+  script:
+    - sudo /usr/bin/chmod +x ./gradlew
+    - echo "~ run - gradlew :${APP_HOST}:${BUILD_TASK} $BUILD_PARAMS"
+    - ./gradlew :${APP_HOST}:${BUILD_TASK} $BUILD_PARAMS
+    - export APK_NAME_FULL_PATH=`ls $(pwd)/$APK_OUTPUT_PATH`
+    - echo "~ output path - $(pwd)/$APK_OUTPUT_PATH"
+    - curl -v -f --connect-timeout 5 --retry-delay 2 --retry 3 --user "$CI_PACKAGES_USER:$CI_PACKAGES_PASSWORD" --upload-file $APK_NAME_FULL_PATH $NEXUS_URL/$CI_PROJECT_NAME/$CI_COMMIT_REF_SLUG/$CI_PIPELINE_ID/
+    - echo "~ maven url - $NEXUS_HTML_VIEW_URL/$CI_PROJECT_NAME/$CI_COMMIT_REF_SLUG/$CI_PIPELINE_ID/"
+  tags:
+    - master_runner_gradle
+
+build_release_job:
+  extends: .build_job
+  stage: build_release
+  rules:
+    - if: $CI_COMMIT_BRANCH != "master"
+      when: never
+    - if: $CI_COMMIT_MESSAGE =~ /\[build[ _-]release?\]/
+      when: always
+    - if: $CI_COMMIT_MESSAGE !~ /\[build[ _-]release?\]/
+      when: manual
+      allow_failure: true
+  variables:
+    BUILD_TASK: "assembleRelease"
+    BUILD_PARAMS: "-Pandroid.injected.signing.store.file=/home/gitlab-runner/$JKS_PATH1/$JKS_PATH2 -Pandroid.injected.signing.store.password=$JKS_STORE_PASSWORD -Pandroid.injected.signing.key.alias=$JKS_KEY_ALIAS  -Pandroid.injected.signing.key.password=$JKS_KEY_PASSWORD"
+
+build_sit_job:
+  extends: .build_job
+  stage: build_snapshot
+  rules:
+    - if: $CI_COMMIT_BRANCH != "dev"
+      when: never
+    - if: $CI_COMMIT_MESSAGE =~ /\[build[ _-]sit?\]/
+      when: always
+    - if: $CI_COMMIT_MESSAGE !~ /\[build[ _-]sit?\]/
+      when: manual
+      allow_failure: true
+  variables:
+    BUILD_TASK: "assembleSit"
+    BUILD_PARAMS: ""
+
+build_uat_job:
+  extends: .build_job
+  stage: build_snapshot
+  rules:
+    - if: $CI_COMMIT_BRANCH != "dev"
+      when: never
+    - if: $CI_COMMIT_MESSAGE =~ /\[build[ _-]uat?\]/
+      when: always
+    - if: $CI_COMMIT_MESSAGE !~ /\[build[ _-]uat?\]/
+      when: manual
+      allow_failure: true
+  variables:
+    BUILD_TASK: "assembleUat"
+    BUILD_PARAMS: ""
+
+build_debug_job:
+  extends: .build_job
+  stage: build_snapshot
+  rules:
+    - if: $CI_COMMIT_BRANCH != "dev"
+      when: never
+    - if: $CI_COMMIT_MESSAGE =~ /\[build[ _-]debug?\]/
+      when: always
+    - if: $CI_COMMIT_MESSAGE !~ /\[build[ _-]debug?\]/
+      when: manual
+      allow_failure: true
+  variables:
+    BUILD_TASK: "assembleDebug"
+    BUILD_PARAMS: ""
