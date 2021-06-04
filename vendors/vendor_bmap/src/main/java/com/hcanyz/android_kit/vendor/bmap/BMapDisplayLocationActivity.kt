@@ -1,9 +1,11 @@
 package com.hcanyz.android_kit.vendor.bmap
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
@@ -21,15 +23,17 @@ import com.hcanyz.android_kit.vendor.bmap.databinding.ActivityBMapDisplayLocatio
 import java.lang.ref.WeakReference
 
 
-class BMapDisplayLocationActivity : AppCompatActivity() {
+class BMapDisplayLocationActivity : AppCompatActivity(R.layout.activity_b_map_display_location) {
 
-    private val binding by lazy { ActivityBMapDisplayLocationBinding.inflate(layoutInflater) }
+    private val binding by viewBinding(ActivityBMapDisplayLocationBinding::bind)
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+        this.zzBMapLazyInit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.zzBMapLazyInit()
-        setContentView(R.layout.activity_b_map_display_location)
-
         binding.bmapTest.applyLifecycle(this)
 
         binding.bmapTest.map.setMapStatus(

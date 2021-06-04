@@ -262,10 +262,10 @@ def simpleDependencies() {
 
 def simpleUIDependencies() {
     return { targetProject, params = [] ->
-        params = [includeViewWidget: true] + params
+        params = [includeViewWidget: true, includeViewUtils: true] + params
 
         targetProject.dependencies {
-            // kotlin
+            // component
             implementation deps.libs.activity
             implementation deps.libs.activityKtx
             implementation deps.libs.fragment
@@ -273,9 +273,13 @@ def simpleUIDependencies() {
             implementation deps.libs.appcompat
             implementation deps.libs.lifecycleViewmodel
 
-            if (params.includeViewWidget) {
-                // widget
+            // util
+            if (params.includeViewUtils) {
+                api deps.libs.viewbindingDelegate
+            }
 
+            // widget
+            if (params.includeViewWidget) {
                 implementation deps.libs.constraintLayout
                 implementation deps.libs.material
             }

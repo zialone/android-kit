@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ThreadUtils
@@ -42,7 +43,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     companion object {
         private const val TAG = "TAG.Main"
@@ -57,12 +58,10 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var zDbCommon: ZDbCommon
 
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val binding by viewBinding(ActivityMainBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-
         immersionBar {
             transparentBar()
             fitsSystemWindows(true)
