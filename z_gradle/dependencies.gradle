@@ -271,6 +271,7 @@ def simpleUIDependencies() {
             implementation deps.libs.fragment
             implementation deps.libs.fragmentKtx
             implementation deps.libs.appcompat
+            implementation deps.libs.lifecycleLivedata
             implementation deps.libs.lifecycleViewmodel
 
             // util

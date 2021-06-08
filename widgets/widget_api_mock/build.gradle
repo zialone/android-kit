@@ -8,6 +8,8 @@ apply plugin: 'com.yanzhenjie.andserver'
 
 dependencies {
     implementation deps.libs.andserver
+    // andServer 还没有适配 jdk 11 (android studio 4.2.1)
+    implementation 'javax.activation:javax.activation-api:1.2.0'
     kapt deps.libs.andserverProcessor
 
     implementation deps.libs.startupRuntime
