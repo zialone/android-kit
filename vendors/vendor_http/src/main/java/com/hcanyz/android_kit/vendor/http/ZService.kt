@@ -11,10 +11,10 @@ interface ZService {
     fun get(
         @Url url: String,
         @QueryMap queryMap: Map<String, String> = emptyMap()
-    ): Call<ResponseBody>
+    ): Call<Response<ResponseBody>>
 
     @POST
-    fun post(@Url url: String): Call<ResponseBody>
+    fun post(@Url url: String): Call<Response<ResponseBody>>
 
     @POST
     fun post(
@@ -26,12 +26,40 @@ interface ZService {
     fun postJson(
         @Url url: String,
         @Body jsonMap: @JvmSuppressWildcards Map<String, Any> = emptyMap()
-    ): Call<ResponseBody>
+    ): Call<Response<ResponseBody>>
 
     @POST
     @FormUrlEncoded
     fun postForm(
         @Url url: String,
         @FieldMap formMap: @JvmSuppressWildcards Map<String, Any> = emptyMap()
-    ): Call<ResponseBody>
+    ): Call<Response<ResponseBody>>
+
+    @GET
+    suspend fun getS(
+        @Url url: String,
+        @QueryMap queryMap: Map<String, String> = emptyMap()
+    ): Response<ResponseBody>
+
+    @POST
+    suspend fun postS(@Url url: String): Response<ResponseBody>
+
+    @POST
+    suspend fun postS(
+        @Url url: String, @Body body: MultipartBody
+    ): Response<ResponseBody>
+
+    @POST
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    suspend fun postJsonS(
+        @Url url: String,
+        @Body jsonMap: @JvmSuppressWildcards Map<String, Any> = emptyMap()
+    ): Response<ResponseBody>
+
+    @POST
+    @FormUrlEncoded
+    suspend fun postFormS(
+        @Url url: String,
+        @FieldMap formMap: @JvmSuppressWildcards Map<String, Any> = emptyMap()
+    ): Response<ResponseBody>
 }
