@@ -20,4 +20,6 @@ dependencies {
     api deps.libs.securityCrypto
 
     api deps.libs.lifecycleLivedata
+
+    androidTestImplementation deps.libs.appcompat
 }
