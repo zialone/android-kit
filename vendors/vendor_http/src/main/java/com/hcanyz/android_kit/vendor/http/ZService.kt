@@ -11,29 +11,29 @@ interface ZService {
     fun get(
         @Url url: String,
         @QueryMap queryMap: Map<String, String> = emptyMap()
-    ): Call<Response<ResponseBody>>
+    ): Call<ResponseBody>
 
     @POST
-    fun post(@Url url: String): Call<Response<ResponseBody>>
+    fun post(@Url url: String): Call<ResponseBody>
 
     @POST
     fun post(
         @Url url: String, @Body body: MultipartBody
-    ): Call<Response<ResponseBody>>
+    ): Call<ResponseBody>
 
     @POST
     @Headers("Content-Type: application/json;charset=UTF-8")
     fun postJson(
         @Url url: String,
         @Body jsonMap: @JvmSuppressWildcards Map<String, Any> = emptyMap()
-    ): Call<Response<ResponseBody>>
+    ): Call<ResponseBody>
 
     @POST
     @FormUrlEncoded
     fun postForm(
         @Url url: String,
         @FieldMap formMap: @JvmSuppressWildcards Map<String, Any> = emptyMap()
-    ): Call<Response<ResponseBody>>
+    ): Call<ResponseBody>
 
     @GET
     suspend fun getS(

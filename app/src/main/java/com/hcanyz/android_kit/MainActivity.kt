@@ -34,6 +34,7 @@ import com.hcanyz.android_kit.widget.res.ThemeSwitchTransitionActivity
 import com.hcanyz.environmentvariable.setting.ui.EvSwitchActivity
 import com.kennyc.view.MultiStateView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -143,8 +144,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     fun api(view: View) {
         view.context
 
-        zService
-            .post("https://cn.bing.com/")
+        lifecycleScope.launch {
+            zService.postS("https://cn.bing.com/")
+        }
+
         zService
             .postJson("https://cn.bing.com/", mapOf("10" to arrayListOf(1)))
         zService
