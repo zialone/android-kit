@@ -5,8 +5,7 @@ import android.os.SystemClock
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.hcanyz.android_kit.vendor.storage.shared.SHARED_COMMON_ENCRYPTED_SP_NAME
-import com.hcanyz.android_kit.vendor.storage.shared.getSharedPreferences
+import com.hcanyz.android_kit.vendor.storage.shared.getCommonEncryptedSharedPreferences
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +19,7 @@ class ZStorageTest {
     fun uniqueKeyUntilUninstalled() {
         val context = ApplicationProvider.getApplicationContext<Context>()
 
-        context.getSharedPreferences(SHARED_COMMON_ENCRYPTED_SP_NAME, true).edit().clear()
+        context.getCommonEncryptedSharedPreferences().edit().clear()
 
         val size = 10
 

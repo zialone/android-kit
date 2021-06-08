@@ -1,9 +1,12 @@
 package com.hcanyz.android_kit.widget.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.hcanyz.android_kit.vendor.http.ZService
 import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.vendor.storage.db.ZDbCommon
+import com.hcanyz.android_kit.vendor.storage.shared.getCommonEncryptedSharedPreferences
+import com.hcanyz.android_kit.vendor.storage.shared.getCommonSharedPreferences
 import com.hcanyz.android_kit.vendor.storage.zzCreateCommonDb
 import com.hcanyz.android_kit.widget.core.EvCoreConfigManager
 import dagger.Module
@@ -16,12 +19,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class ZDiModuleCommon {
-
     @Provides
     @Singleton
     fun provideRetrofit(
@@ -59,5 +62,31 @@ class ZDiModuleCommon {
         @ApplicationContext appContext: Context
     ): ZDbCommon {
         return appContext.zzCreateCommonDb()
+    }
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class CommonSharedPreferences
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class CommonEncryptedSharedPreferences
+
+    @Provides
+    @Singleton
+    @CommonSharedPreferences
+    fun provideCommonSharedPreferences(
+        @ApplicationContext appContext: Context
+    ): SharedPreferences {
+        return appContext.getCommonSharedPreferences()
+    }
+
+    @Provides
+    @Singleton
+    @CommonEncryptedSharedPreferences
+    fun provideCommonEncryptedSharedPreferences(
+        @ApplicationContext appContext: Context
+    ): SharedPreferences {
+        return appContext.getCommonEncryptedSharedPreferences()
     }
 }

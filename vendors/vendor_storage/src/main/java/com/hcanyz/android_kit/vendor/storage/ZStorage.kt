@@ -9,8 +9,7 @@ import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
 import com.hcanyz.android_kit.vendor.log.ZLog
 import com.hcanyz.android_kit.vendor.storage.db.ZDbCommon
-import com.hcanyz.android_kit.vendor.storage.shared.SHARED_COMMON_ENCRYPTED_SP_NAME
-import com.hcanyz.android_kit.vendor.storage.shared.getSharedPreferences
+import com.hcanyz.android_kit.vendor.storage.shared.getCommonEncryptedSharedPreferences
 import com.liulishuo.okdownload.DownloadTask
 import com.liulishuo.okdownload.kotlin.enqueue
 import java.io.File
@@ -25,7 +24,7 @@ private const val UNIQUE_KEY_UNTIL_UNINSTALLED =
  * 常用于数据库密码或者deviceId
  */
 fun Context.uniqueKeyUntilUninstalled(): String {
-    val sp = getSharedPreferences(SHARED_COMMON_ENCRYPTED_SP_NAME, true)
+    val sp = getCommonEncryptedSharedPreferences()
     var uniqueKeyUntilUninstalled = sp.getString(UNIQUE_KEY_UNTIL_UNINSTALLED, null)
 
     if (uniqueKeyUntilUninstalled == null) {
@@ -43,7 +42,14 @@ fun Context.uniqueKeyUntilUninstalled(): String {
  * 获取sdcard file目录
  * 这个方法会存在一定误判，有些国产系统，没有WRITE_EXTERNAL_STORAGE权限时也会有ExternalFiles权限
  * @see "https://developer.android.google.cn/training/data-storage/shared/media#request-permissions"
- * @param type 子目录
+ * @param type 子目录 constants for a subdirectory:
+ * {@link android.os.Environment#DIRECTORY_MUSIC},
+ * {@link android.os.Environment#DIRECTORY_PODCASTS},
+ * {@link android.os.Environment#DIRECTORY_RINGTONES},
+ * {@link android.os.Environment#DIRECTORY_ALARMS},
+ * {@link android.os.Environment#DIRECTORY_NOTIFICATIONS},
+ * {@link android.os.Environment#DIRECTORY_PICTURES}, or
+ * {@link android.os.Environment#DIRECTORY_MOVIES}.
  * @param unavailableDowngrade 是否接受sdcard不可用降级处理，降级后会存储到 /data/data/files下
  * @throws IllegalStateException
  */
@@ -81,7 +87,6 @@ fun Context.zzDownloadImage2MediaStore(url: String, displayName: String) {
 
 fun Context.zzCreateCommonDb(): ZDbCommon {
     return Room.databaseBuilder(
-        this, ZDbCommon::class.java
-        , ZDbCommon::class.java.simpleName
+        this, ZDbCommon::class.java, ZDbCommon::class.java.simpleName
     ).build()
 }

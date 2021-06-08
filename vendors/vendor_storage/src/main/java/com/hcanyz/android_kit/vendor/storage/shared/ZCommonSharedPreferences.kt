@@ -8,11 +8,36 @@ import androidx.security.crypto.MasterKeys
 import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.log.ZLog
 
-const val SHARED_COMMON_SP_NAME = "vendor.storage.sp.common"
-const val SHARED_COMMON_ENCRYPTED_SP_NAME = "vendor.storage.sp.common"
+private const val SHARED_COMMON_SP_NAME = "vendor.storage.sp.common"
+private const val SHARED_COMMON_ENCRYPTED_SP_NAME = "vendor.storage.sp.common.encrypted"
 
 private val checkShared by lazy { mutableMapOf<String, Boolean>() }
 
+/**
+ * 公共未加密 SharedPreferences
+ * @receiver Context
+ * @return SharedPreferences
+ */
+fun Context.getCommonSharedPreferences(): SharedPreferences {
+    return getSharedPreferences(SHARED_COMMON_SP_NAME, false)
+}
+
+/**
+ * 公共已加密 SharedPreferences
+ * @receiver Context
+ * @return SharedPreferences
+ */
+fun Context.getCommonEncryptedSharedPreferences(): SharedPreferences {
+    return getSharedPreferences(SHARED_COMMON_ENCRYPTED_SP_NAME, true)
+}
+
+/**
+ * 获取一个 SharedPreferences，同一个 [name] 的 [encrypted] 需要保持一致
+ * @receiver Context
+ * @param name String
+ * @param encrypted Boolean
+ * @return SharedPreferences
+ */
 fun Context.getSharedPreferences(name: String, encrypted: Boolean = false): SharedPreferences {
     val izConfig = IZConfig.getInstance(this)
 
