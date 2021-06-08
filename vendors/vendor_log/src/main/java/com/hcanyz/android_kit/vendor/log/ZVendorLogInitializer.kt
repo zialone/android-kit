@@ -29,16 +29,19 @@ class ZVendorLogInitializer : Initializer<Unit> {
         val cachePath = context.cacheDir.absolutePath + subPath
 
         val canLog = izConfig.canLog
-        Xlog.open(
-            true,
+
+        System.loadLibrary("c++_shared")
+        System.loadLibrary("marsxlog")
+        Log.setLogImp(Xlog())
+        Log.setConsoleLogOpen(canLog)
+        Log.appenderOpen(
             if (canLog) Xlog.LEVEL_VERBOSE else Xlog.LEVEL_INFO,
             Xlog.AppednerModeAsync,
             cachePath,
             logPath,
             getProcessName(context) ?: "main",
-            ""
+            0
         )
-        Log.setConsoleLogOpen(canLog)
 
         izConfig.canLogLiveData().observeForever {
             ZLog.v(TAG, "change log switch $it")
@@ -46,8 +49,6 @@ class ZVendorLogInitializer : Initializer<Unit> {
             Log.setLevel(if (it) Xlog.LEVEL_VERBOSE else Xlog.LEVEL_INFO, false)
             Log.setConsoleLogOpen(it)
         }
-
-        Log.setLogImp(Xlog())
 
         ZLog.v(TAG, "init success,canLog:$canLog")
 

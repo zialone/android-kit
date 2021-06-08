@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding by viewBinding(ActivityMainBinding::bind)
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         immersionBar {
@@ -71,6 +72,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         lifecycleScope.launchWhenCreated {
             webView()
         }
+
+        IZConfig.getInstance(this).canLogLiveData().observe(this, {
+            binding.tvLogSwitch.text = "logSwitch: $it"
+        })
     }
 
     private fun webView() {
@@ -105,13 +110,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     fun logSwitch(view: View) {
         val izConfig = IZConfig.getInstance(view.context)
 
         izConfig.canLog = !izConfig.canLog
-
-        binding.tvLogSwitch.text = "logSwitch: ${izConfig.canLog}"
     }
 
     fun stateView(view: View) {
