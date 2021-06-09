@@ -3,8 +3,8 @@ deps.gradleConfig.simpleModule(project, [includeTest: false])
 deps.gradleConfig.simpleMavenPublishing(project)
 
 dependencies {
+    implementation depsApp.vendor_config
+
     implementation deps.libs.startupRuntime
     implementation deps.libs.xlog
-
-    implementation depsApp.vendor_config
 }
