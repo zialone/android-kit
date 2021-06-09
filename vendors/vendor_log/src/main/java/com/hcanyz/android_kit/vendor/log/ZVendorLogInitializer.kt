@@ -28,29 +28,28 @@ class ZVendorLogInitializer : Initializer<Unit> {
         // this is necessary, or may crash for SIGBUS
         val cachePath = context.cacheDir.absolutePath + subPath
 
-        val canLog = izConfig.canLog
-
         System.loadLibrary("c++_shared")
         System.loadLibrary("marsxlog")
         Log.setLogImp(Xlog())
-        Log.setConsoleLogOpen(canLog)
         Log.appenderOpen(
-            if (canLog) Xlog.LEVEL_VERBOSE else Xlog.LEVEL_INFO,
+            Xlog.LEVEL_VERBOSE,
             Xlog.AppednerModeAsync,
             cachePath,
             logPath,
             getProcessName(context) ?: "main",
             0
         )
+        // 初始化时需要为 true，如果时 false 则后面再调用 setConsoleLogOpen(true) 会不生效
+        Log.setConsoleLogOpen(true)
+
+        android.util.Log.v(TAG, "init success")
 
         izConfig.canLogLiveData().observeForever {
-            ZLog.v(TAG, "change log switch $it")
+            android.util.Log.v(TAG, "change log switch $it")
 
             Log.setLevel(if (it) Xlog.LEVEL_VERBOSE else Xlog.LEVEL_INFO, false)
             Log.setConsoleLogOpen(it)
         }
-
-        ZLog.v(TAG, "init success,canLog:$canLog")
 
         // Log.appenderClose()
     }
