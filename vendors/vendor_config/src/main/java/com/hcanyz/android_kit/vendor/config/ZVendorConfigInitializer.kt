@@ -8,9 +8,9 @@ import androidx.startup.Initializer
 class ZVendorConfigInitializer : Initializer<IZConfig> {
 
     override fun create(context: Context): IZConfig {
-        val canDebugInit =
+        val appDebuggable =
             context.applicationInfo != null && context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
-        return ZConfigImpl(canDebugInit, canDebugInit)
+        return ZConfigImpl(context.applicationContext, appDebuggable)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {
