@@ -8,8 +8,8 @@ import androidx.security.crypto.MasterKeys
 import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.log.ZLog
 
-private const val SHARED_COMMON_SP_NAME = "vendor.storage.sp.common"
-private const val SHARED_COMMON_ENCRYPTED_SP_NAME = "vendor.storage.sp.common.encrypted"
+private const val SHARED_COMMON_SP_NAME = "sp.vendor.storage.common"
+private const val SHARED_COMMON_ENCRYPTED_SP_NAME = "sp.vendor.storage.common.encrypted"
 
 private val checkShared by lazy { mutableMapOf<String, Boolean>() }
 

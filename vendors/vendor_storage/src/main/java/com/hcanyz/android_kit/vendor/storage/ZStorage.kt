@@ -17,7 +17,7 @@ import java.util.*
 
 
 private const val UNIQUE_KEY_UNTIL_UNINSTALLED =
-    "vendor.storage.sp.common.uniqueKeyUntilUninstalled"
+    "sp.key.vendor.storage.common.uniqueKeyUntilUninstalled"
 
 /**
  * 获取一个uuid。 这个值会一直存在，直到应用被卸载
