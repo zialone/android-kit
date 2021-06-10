@@ -18,14 +18,21 @@ variables:
 lintAndTest_job:
   stage: lintAndtest
   script:
-    - gradle testDebugUnitTest
-    - gradle lintDebug
+    - sudo /usr/bin/chmod +x ./gradlew
+    - ./gradlew testDebugUnitTest
+    - ./gradlew lintDebug
   when: manual
   allow_failure: true
   artifacts:
     when: always
+    expire_in: 1 week
+    paths:
+      - "**/build/reports/tests/**/**"
+      - "**/**/build/reports/tests/**/**"
     reports:
-      junit: build/test-results/test*/**/TEST-*.xml
+      junit:
+        - "**/build/test-results/**/TEST-*.xml"
+        - "**/**/build/test-results/**/TEST-*.xml"
   tags:
     - master_runner_gradle
 
