@@ -10,72 +10,49 @@ import com.tencent.mars.xlog.Log
  */
 class ZLog {
     companion object {
+        /**
+         * tag 固定前缀
+         */
+        private const val TAG_PREFIX = "ZLog-"
+
         private val timeMap by lazy { hashMapOf<String, Long>() }
 
-        fun dTime(tag: String, format: String, vararg obj: Any?) {
+        fun dTime(tag: String, log: String) {
             val time = timeMap[tag]
             if (time == null) {
-                d(tag, "begin time: ${System.currentTimeMillis()}\n$format", obj)
+                d(tag, "begin time: ${System.currentTimeMillis()}\n$log")
             } else {
-                d(tag, "interval last time: ${System.currentTimeMillis() - time}\n$format", obj)
+                d(tag, "interval last time: ${System.currentTimeMillis() - time}\n$log")
             }
             timeMap[tag] = System.currentTimeMillis()
         }
 
-        fun f(tag: String, format: String, vararg obj: Any?) {
-            try {
-                Log.f(tag, format, obj)
-            } catch (e: Exception) {
-                Log.f(tag, format)
-            }
+        fun f(tag: String, log: String) {
+            Log.f(tag.prefix(), log)
         }
 
-        fun e(tag: String, format: String, vararg obj: Any?) {
-            try {
-                Log.e(tag, format, obj)
-            } catch (e: Exception) {
-                Log.e(tag, format)
-            }
+        fun e(tag: String, log: String) {
+            Log.e(tag.prefix(), log)
         }
 
-        fun w(tag: String, format: String, vararg obj: Any?) {
-            try {
-                Log.w(tag, format, obj)
-            } catch (e: Exception) {
-                Log.w(tag, format)
-            }
+        fun w(tag: String, log: String) {
+            Log.w(tag.prefix(), log)
         }
 
-        fun i(tag: String, format: String, vararg obj: Any?) {
-            try {
-                Log.i(tag, format, obj)
-            } catch (e: Exception) {
-                Log.i(tag, format)
-            }
+        fun i(tag: String, log: String) {
+            Log.i(tag.prefix(), log)
         }
 
-        fun d(tag: String, format: String, vararg obj: Any?) {
-            try {
-                Log.d(tag, format, obj)
-            } catch (e: Exception) {
-                Log.d(tag, format)
-            }
+        fun d(tag: String, log: String) {
+            Log.d(tag.prefix(), log)
         }
 
-        fun v(tag: String, format: String, vararg obj: Any?) {
-            try {
-                Log.v(tag, format, obj)
-            } catch (e: Exception) {
-                Log.v(tag, format)
-            }
+        fun v(tag: String, log: String) {
+            Log.v(tag.prefix(), log)
         }
 
-        fun printErrStackTrace(tag: String, tr: Throwable?, format: String, vararg obj: Any?) {
-            try {
-                Log.printErrStackTrace(tag, tr, format, obj)
-            } catch (e: Exception) {
-                Log.printErrStackTrace(tag, tr, format)
-            }
+        fun printErrStackTrace(tag: String, tr: Throwable?, log: String) {
+            Log.printErrStackTrace(tag.prefix(), tr, log)
         }
 
         fun flush(isSync: Boolean) {
@@ -84,6 +61,10 @@ class ZLog {
             } else {
                 Log.appenderFlush()
             }
+        }
+
+        private fun String.prefix(): String {
+            return TAG_PREFIX + this
         }
     }
 }

@@ -12,7 +12,7 @@ import com.tencent.mars.xlog.Xlog
 class ZVendorLogInitializer : Initializer<Unit> {
 
     companion object {
-        private const val TAG = "VendorLogInitializer"
+        private const val TAG = "ZLog-VendorLogInit"
     }
 
     override fun create(context: Context) {
