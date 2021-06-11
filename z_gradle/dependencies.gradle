@@ -84,9 +84,9 @@ def vendor = [
         gson                    : 'com.google.code.gson:gson:2.8.7',
 
         // TODO 这个版本可以升级，一些优化方法没有release
-        wmRouter                : 'com.sankuai.waimai.router:router:1.2.0',
-        wmRouterCompiler        : 'com.sankuai.waimai.router:compiler:1.2.0',
-        wmRouterPlugin          : 'com.sankuai.waimai.router:plugin:1.2.0',
+        wmRouter                : 'io.github.meituan-dianping:router:1.2.1',
+        wmRouterCompiler        : 'io.github.meituan-dianping:compiler:1.2.1',
+        wmRouterPlugin          : 'io.github.meituan-dianping:plugin:1.2.1',
 
         leakcanary              : 'com.squareup.leakcanary:leakcanary-android:2.7',
         blockcanary             : 'com.github.markzhai:blockcanary-android:1.5.0',
@@ -100,9 +100,9 @@ def vendor = [
         // recyclerview adapter
         ZAdapter                : 'com.github.hcanyz.ZAdapter:ZAdapter:1.0.3.1',
 
-        zEvVariable             : 'com.github.hcanyz.android-environment-variable:environment-variable:1.0.2',
-        zEvVariableSetting      : 'com.github.hcanyz.android-environment-variable:environment-variable-setting:1.0.2',
-        zEvVariableCompiler     : 'com.github.hcanyz.android-environment-variable:compiler:1.0.2',
+        zEvVariable             : 'com.github.hcanyz.android-environment-variable:environment-variable:1.0.3',
+        zEvVariableSetting      : 'com.github.hcanyz.android-environment-variable:environment-variable-setting:1.0.3',
+        zEvVariableCompiler     : 'com.github.hcanyz.android-environment-variable:compiler:1.0.3',
 
         // 下载管理 - TODO Aria
         okdownload              : 'com.liulishuo.okdownload:okdownload:1.0.7',
