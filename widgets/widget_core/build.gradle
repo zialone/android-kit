@@ -19,6 +19,8 @@ android {
 
 dependencies {
     implementation depsApp.vendor_config
+    implementation depsApp.vendor_utils
+    implementation depsApp.vendor_log
 
     implementation deps.libs.startupRuntime
 }

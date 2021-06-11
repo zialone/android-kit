@@ -2,8 +2,10 @@ package com.hcanyz.android_kit.widget.core
 
 import android.content.Context
 import androidx.startup.Initializer
+import com.blankj.utilcode.util.CrashUtils
 import com.hcanyz.android_kit.vendor.config.IZConfig
 import com.hcanyz.android_kit.vendor.config.ZVendorConfigInitializer
+import com.hcanyz.android_kit.vendor.log.ZLog
 import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.common.DefaultRootUriHandler
 import com.sankuai.waimai.router.components.DefaultLogger
@@ -29,6 +31,17 @@ class ZWidgetCoreInitializer : Initializer<Unit> {
         Debugger.setEnableLog(izConfig.canLog)
         // 调试开关，建议测试环境下开启。调试模式下，严重问题直接抛异常，及时暴漏出来。
         Debugger.setEnableDebug(izConfig.canDebug)
+
+        // Crash handle init
+        val subPath = "/zlog${
+            izConfig.envMark()
+                .let { return@let if (it.isBlank()) "" else "-${it}" }
+        }"
+        val crashPath = context.filesDir.absolutePath + subPath
+
+        CrashUtils.init(crashPath) {
+            ZLog.e("crash", it.toString())
+        }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {
