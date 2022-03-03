@@ -74,9 +74,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             webView()
         }
 
-        IZConfig.getInstance(this).canLogLiveData().observe(this, {
+        IZConfig.getInstance(this).canLogLiveData().observe(this) {
             binding.tvLogSwitch.text = "logSwitch: $it"
-        })
+        }
     }
 
     private fun webView() {
