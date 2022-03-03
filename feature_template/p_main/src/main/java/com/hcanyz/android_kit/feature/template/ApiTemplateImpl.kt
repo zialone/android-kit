@@ -7,8 +7,8 @@ import com.sankuai.waimai.router.annotation.RouterService
 
 @RouterService(
     interfaces = [IApiTemplate::class, IApiInternalTemplate::class],
-    key = ["default"],
-    singleton = true
+    singleton = true,
+    defaultImpl = true
 )
 class ApiTemplateImpl : IApiTemplate, ApiInternalTemplateImpl {
 }

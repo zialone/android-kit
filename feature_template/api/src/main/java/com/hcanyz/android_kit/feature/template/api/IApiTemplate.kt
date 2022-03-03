@@ -5,7 +5,7 @@ import com.sankuai.waimai.router.Router
 interface IApiTemplate {
     companion object {
         fun api(): IApiTemplate {
-            return Router.getService(IApiTemplate::class.java, "default")
+            return Router.getService(IApiTemplate::class.java)
         }
     }
 }
@@ -13,7 +13,7 @@ interface IApiTemplate {
 interface IApiInternalTemplate {
     companion object {
         fun api(): IApiInternalTemplate {
-            return Router.getService(IApiInternalTemplate::class.java, "default")
+            return Router.getService(IApiInternalTemplate::class.java)
         }
     }
 }
